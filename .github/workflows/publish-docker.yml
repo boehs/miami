@@ -12,7 +12,6 @@ on: [push]
 jobs:
   build:
     name: Build, push, and deploy
-    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
 
     strategy:
