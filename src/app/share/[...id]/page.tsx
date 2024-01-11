@@ -6,5 +6,5 @@ export default function ({ params: { id } }) {
 }
 
 export const metadata: Metadata = {
-  title: 'umami',
+  title: process.env.brandingName,
 };
