@@ -152,7 +152,7 @@ export const ROLE_PERMISSIONS = {
 
 export const THEME_COLORS = {
   light: {
-    primary: '#2680eb',
+    primary: process.env.themeColour,
     gray50: '#ffffff',
     gray75: '#fafafa',
     gray100: '#f5f5f5',
@@ -166,7 +166,7 @@ export const THEME_COLORS = {
     gray900: '#2c2c2c',
   },
   dark: {
-    primary: '#2680eb',
+    primary: process.env.themeColour,
     gray50: '#252525',
     gray75: '#2f2f2f',
     gray100: '#323232',

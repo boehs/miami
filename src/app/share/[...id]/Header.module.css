@@ -29,7 +29,7 @@
 }
 
 .icon {
-  width: var(--width700);
+  width: var(--size700);
 }
 
 @media only screen and (max-width: 992px) {

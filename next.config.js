@@ -91,6 +91,7 @@ const config = {
     brandingName: process.env.BRANDING_NAME || 'umami',
     brandingLink: process.env.BRANDING_LINK || 'https://umami.is',
     brandingImage: process.env.BRANDING_IMAGE,
+    themeColour: process.env.THEME_COLOUR || '#89ecbc',
   },
   basePath,
   output: 'standalone',
