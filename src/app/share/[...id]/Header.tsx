@@ -11,11 +11,20 @@ export function Header() {
   return (
     <header className={styles.header}>
       <div>
-        <Link href="https://umami.is" target="_blank" className={styles.title}>
+        <Link
+          href={process.env.brandingLink || 'https://umami.is'}
+          target="_blank"
+          className={styles.title}
+        >
           <Icon size="lg">
-            <Icons.Logo />
+            {process.env.brandingImage != undefined ? (
+              <img src={process.env.brandingImage} alt="branding image" className={styles.icon} />
+            ) : (
+              <Icons.Logo />
+            )}
           </Icon>
-          <Text>umami</Text>
+
+          <Text>{process.env.brandingName}</Text>
         </Link>
       </div>
       <div className={styles.buttons}>

@@ -28,6 +28,10 @@
   justify-content: flex-end;
 }
 
+.icon {
+  width: var(--width700);
+}
+
 @media only screen and (max-width: 992px) {
   .header .buttons {
     flex: 1;
