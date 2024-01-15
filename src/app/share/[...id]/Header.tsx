@@ -17,7 +17,7 @@ export function Header() {
           className={styles.title}
         >
           <Icon size="lg">
-            {process.env.brandingImage != undefined ? (
+            {process.env.brandingImage != '' ? (
               <img src={process.env.brandingImage} alt="branding image" className={styles.icon} />
             ) : (
               <Icons.Logo />
