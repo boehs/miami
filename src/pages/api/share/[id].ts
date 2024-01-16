@@ -1,5 +1,5 @@
 import { secret } from 'lib/crypto';
-import { useValidate } from 'lib/middleware';
+import { useCors, useValidate } from 'lib/middleware';
 import { NextApiRequestQueryBody } from 'lib/types';
 import { NextApiResponse } from 'next';
 import { createToken, methodNotAllowed, notFound, ok } from 'next-basics';
@@ -25,6 +25,7 @@ export default async (
   req: NextApiRequestQueryBody<ShareRequestQuery>,
   res: NextApiResponse<ShareResponse>,
 ) => {
+  await useCors(req, res);
   await useValidate(schema, req, res);
 
   const { id: shareId } = req.query;
