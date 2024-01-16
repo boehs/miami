@@ -74,7 +74,7 @@ export interface Auth {
   };
   grant?: Permission[];
   shareToken?: {
-    websiteId: string;
+    id: string;
   };
 }
 

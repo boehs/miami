@@ -1,8 +1,7 @@
-import { secret } from 'lib/crypto';
 import { useCors, useValidate } from 'lib/middleware';
 import { NextApiRequestQueryBody } from 'lib/types';
 import { NextApiResponse } from 'next';
-import { createToken, methodNotAllowed, notFound, ok } from 'next-basics';
+import { methodNotAllowed, notFound, ok } from 'next-basics';
 import { getWebsiteByShareId } from 'queries';
 import * as yup from 'yup';
 
@@ -35,9 +34,8 @@ export default async (
 
     if (website) {
       const data = { websiteId: website.id };
-      const token = createToken(data, secret());
 
-      return ok(res, { ...data, token });
+      return ok(res, { ...data, token: shareId });
     }
 
     return notFound(res);

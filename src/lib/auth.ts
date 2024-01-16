@@ -3,8 +3,8 @@ import debug from 'debug';
 import redis from '@umami/redis-client';
 import { PERMISSIONS, ROLE_PERMISSIONS, SHARE_TOKEN_HEADER } from 'lib/constants';
 import { secret } from 'lib/crypto';
-import { createSecureToken, ensureArray, getRandomChars, parseToken } from 'next-basics';
-import { findTeamWebsiteByUserId, getTeamUser, getTeamWebsite } from 'queries';
+import { createSecureToken, ensureArray, getRandomChars } from 'next-basics';
+import { findTeamWebsiteByUserId, getTeamUser, getTeamWebsite, getWebsiteByShareId } from 'queries';
 import { loadWebsite } from './load';
 import { Auth } from './types';
 import { NextApiRequest } from 'next';
@@ -32,9 +32,9 @@ export function getAuthToken(req: NextApiRequest) {
   }
 }
 
-export function parseShareToken(req: Request) {
+export async function parseShareToken(req: Request) {
   try {
-    return parseToken(req.headers[SHARE_TOKEN_HEADER], secret());
+    return (await getWebsiteByShareId(req.headers[SHARE_TOKEN_HEADER])) || null;
   } catch (e) {
     log(e);
     return null;
@@ -46,11 +46,15 @@ export async function canViewWebsite({ user, shareToken }: Auth, websiteId: stri
     return true;
   }
 
-  if (shareToken?.websiteId === websiteId) {
+  if (shareToken?.id === websiteId) {
     return true;
   }
 
   const website = await loadWebsite(websiteId);
+
+  if (user == undefined) {
+    return false;
+  }
 
   if (user.id === website?.userId) {
     return true;
