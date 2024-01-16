@@ -6,11 +6,11 @@ export async function parseDateRangeQuery(req: NextApiRequest) {
   const { id: websiteId, startAt, endAt, unit } = req.query;
 
   // All-time
-  if (+startAt === 0 && +endAt === 1) {
+  if ((+startAt === 0 && +endAt === 1) || (startAt == undefined && endAt == undefined)) {
     const result = await getWebsiteDateRange(websiteId as string);
-    const { min, max } = result[0];
-    const startDate = new Date(min);
-    const endDate = new Date(max);
+    const { mindate, maxdate } = result;
+    const startDate = new Date(mindate);
+    const endDate = new Date(maxdate);
 
     return {
       startDate,

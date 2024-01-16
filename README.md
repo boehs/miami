@@ -1,6 +1,12 @@
-# umami
+# mymami
 
 Umami is a simple, fast, privacy-focused alternative to Google Analytics.
+
+Mymami is a fork of Umami that introduces the following features:
+
+- Custom branding
+- Some requests do not need to be bound by date
+- Getting a share token from the share id is not required for API requests
 
 ## Getting started
 

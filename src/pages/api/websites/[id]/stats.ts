@@ -28,8 +28,8 @@ import * as yup from 'yup';
 const schema = {
   GET: yup.object().shape({
     id: yup.string().uuid().required(),
-    startAt: yup.number().required(),
-    endAt: yup.number().required(),
+    startAt: yup.number(),
+    endAt: yup.number(),
     url: yup.string(),
     referrer: yup.string(),
     title: yup.string(),
