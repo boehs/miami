@@ -65,7 +65,7 @@
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const webVitals = () => {
     /** @type {PerformanceNavigationTiming?} */
-    const vitals = performance?.getEntriesByType('navigation')[0];
+    const vitals = (performance && performance.getEntriesByType('navigation')[0]) || {};
 
     // Vitals via https://github.com/GoogleChrome/web-vitals/tree/main/src
 
@@ -80,19 +80,21 @@
     const cope = key => sanity(key + 'End', key + 'Start');
 
     let lcp = 0;
-    new PerformanceObserver(list => {
-      const entries = list.getEntries();
-      lcp = entries[entries.length - 1].renderTime || 0;
-    }).observe({ type: 'largest-contentful-paint', buffered: true });
+    PerformanceObserver &&
+      new PerformanceObserver(list => {
+        const entries = list.getEntries();
+        lcp = entries[entries.length - 1].renderTime || 0;
+      }).observe({ type: 'largest-contentful-paint', buffered: true });
 
     let cls = 0;
-    new PerformanceObserver(entryList => {
-      for (const entry of entryList.getEntries()) {
-        if (!entry.hadRecentInput) {
-          cls += entry.value;
+    PerformanceObserver &&
+      new PerformanceObserver(entryList => {
+        for (const entry of entryList.getEntries()) {
+          if (!entry.hadRecentInput) {
+            cls += entry.value;
+          }
         }
-      }
-    }).observe({ type: 'layout-shift', buffered: true });
+      }).observe({ type: 'layout-shift', buffered: true });
 
     return {
       // https://developers.cloudflare.com/analytics/web-analytics/understanding-web-analytics/page-load-time-summary/
