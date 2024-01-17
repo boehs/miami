@@ -9,6 +9,7 @@ import 'styles/index.css';
 import 'styles/variables.css';
 
 export default function ({ children }) {
+  const primary = process.env.THEME_COLOUR;
   return (
     <html lang="en" data-scroll="0">
       <head>
@@ -24,7 +25,7 @@ export default function ({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="noindex,nofollow" />
       </head>
-      <body>
+      <body primary={primary || '#2680eb'}>
         <Providers>{children}</Providers>
       </body>
     </html>
