@@ -7,24 +7,19 @@ import SettingsButton from 'components/input/SettingsButton';
 import Icons from 'components/icons';
 import styles from './Header.module.css';
 
-export function Header() {
+export function Header({ image, link, name }) {
   return (
     <header className={styles.header}>
       <div>
-        <Link
-          href={process.env.brandingLink || 'https://umami.is'}
-          target="_blank"
-          className={styles.title}
-        >
+        <Link href={link || 'https://umami.is'} target="_blank" className={styles.title}>
           <Icon size="lg">
-            {process.env.brandingImage != '' ? (
-              <img src={process.env.brandingImage} alt="branding image" className={styles.icon} />
+            {image ? (
+              <img src={image} alt="branding image" className={styles.icon} />
             ) : (
               <Icons.Logo />
             )}
           </Icon>
-
-          <Text>{process.env.brandingName}</Text>
+          <Text>{name || 'umami'}</Text>
         </Link>
       </div>
       <div className={styles.buttons}>
