@@ -62,6 +62,56 @@
 
   /* Tracking functions */
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const webVitals = () => {
+    /** @type {PerformanceNavigationTiming?} */
+    const vitals = performance?.getEntriesByType('navigation')[0];
+
+    // Vitals via https://github.com/GoogleChrome/web-vitals/tree/main/src
+
+    /**
+     *
+     * @param {keyof PerformanceNavigationTiming} a
+     * @param {(keyof PerformanceNavigationTiming)?} b
+     * @returns
+     */
+    const sanity = (a, b) =>
+      Math.max(vitals[a] - (vitals[b] || 0) - vitals.activationStart, 0) || null;
+    const cope = key => sanity(key + 'End', key + 'Start');
+
+    let lcp = 0;
+    new PerformanceObserver(list => {
+      const entries = list.getEntries();
+      lcp = entries[entries.length - 1].renderTime || 0;
+    }).observe({ type: 'largest-contentful-paint', buffered: true });
+
+    let cls = 0;
+    new PerformanceObserver(entryList => {
+      for (const entry of entryList.getEntries()) {
+        if (!entry.hadRecentInput) {
+          cls += entry.value;
+        }
+      }
+    }).observe({ type: 'layout-shift', buffered: true });
+
+    return {
+      // https://developers.cloudflare.com/analytics/web-analytics/understanding-web-analytics/page-load-time-summary/
+      load: sanity('loadEventEnd'),
+      dns: cope('domainLookup'),
+      tcp: cope('connect'),
+      // The time elapsed between making an HTTP request and receiving the first byte of the response.
+      request: sanity('responseStart', 'requestStart'),
+      // Download time
+      response: sanity('responseEnd', 'responseStart'),
+      // How long it took to render the page
+      processing: sanity('domComplete', 'domInteractive'),
+      // this is basically request + stalled time but does stalled time really matter
+      ttfp: sanity('responseStart'),
+      cls,
+      lcp,
+    };
+  };
+
   const doNotTrack = () => {
     const { doNotTrack, navigator, external } = window;
 
