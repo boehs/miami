@@ -32,7 +32,6 @@ export function WebsitesTable({
 	return (
 		<GridTable data={data} cardMode={['xs', 'sm', 'md'].includes(breakpoint)}>
 			<GridColumn name="name" label={formatMessage(labels.name)} />
-			<GridColumn name="domain" label={formatMessage(labels.domain)} />
 			{showTeam && (
 				<GridColumn name="teamName" label={formatMessage(labels.teamName)}>
 					{row => row.teamWebsite[0]?.team.name}

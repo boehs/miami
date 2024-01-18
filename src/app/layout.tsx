@@ -7,8 +7,10 @@ import 'react-basics/dist/styles.css';
 import 'styles/locale.css';
 import 'styles/index.css';
 import 'styles/variables.css';
+import { unstable_noStore } from 'next/cache';
 
 export default function ({ children }) {
+	unstable_noStore();
 	const primary = process.env.THEME_COLOUR;
 	return (
 		<html lang="en" data-scroll="0">
