@@ -1,12 +1,15 @@
-# mymami
+# miami
 
-Umami is a simple, fast, privacy-focused alternative to Google Analytics.
+Umami is a simple, fast, privacy-focused alternative to Google Analytics, and Miami is a fork of it that introduces many new features:
 
-Mymami is a fork of Umami that introduces the following features:
-
-- Custom branding
-- Some requests do not need to be bound by date
-- Getting a share token from the share id is not required for API requests
+- Design:
+  - Custom branding
+- API:
+  - Some API requests do not need to be bound by date
+  - The share id _is_ the token, so additional requests are not needed
+- QOL:
+  - Click map to set country
+    - Set region and city from home page
 
 ## Getting started
 
@@ -19,21 +22,16 @@ A detailed getting started guide can be found at [https://umami.is/docs/](https:
 - A server with Node.js version 16.13 or newer
 - A database. Umami supports [MySQL](https://www.mysql.com/) and [Postgresql](https://www.postgresql.org/) databases.
 
-### Install Yarn
+### Install
 
 ```
 npm install -g yarn
-```
-
-### Get the source code and install packages
-
-```
 git clone https://github.com/umami-software/umami.git
 cd umami
 yarn install
 ```
 
-### Configure umami
+### Configure
 
 Create an `.env` file with the following
 
@@ -49,7 +47,7 @@ postgresql://username:mypassword@localhost:5432/mydb
 mysql://username:mypassword@localhost:3306/mydb
 ```
 
-### Build the application
+### Build
 
 ```bash
 yarn build
@@ -57,7 +55,7 @@ yarn build
 
 The build step will also create tables in your database if you ae installing for the first time. It will also create a login user with username **admin** and password **umami**.
 
-### Start the application
+### Start
 
 ```bash
 yarn start
@@ -75,17 +73,7 @@ To build the umami container and start up a Postgres database, run:
 docker compose up -d
 ```
 
-Alternatively, to pull just the Umami Docker image with PostgreSQL support:
-
-```bash
-docker pull ghcr.io/umami-software/umami:postgresql-latest
-```
-
-Or with MySQL support:
-
-```bash
-docker pull ghcr.io/umami-software/umami:mysql-latest
-```
+There are not currently prebuilt docker images for miami
 
 ## Getting updates
 
