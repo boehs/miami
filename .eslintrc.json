@@ -8,7 +8,8 @@
 		"eslint:recommended",
 		"plugin:import/recommended",
 		"plugin:@typescript-eslint/recommended",
-		"next"
+		"next",
+		"prettier"
 	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
