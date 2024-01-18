@@ -15,7 +15,7 @@ export function RealtimeCountries({ data }) {
 		({ x: code }) => (
 			<span className={classNames(locale, styles.row)}>
 				<img
-					width="20px"
+					width={20}
 					src={`${process.env.basePath}/images/flags/${code?.toLowerCase() || 'xx'}.png`}
 					alt={code}
 				/>

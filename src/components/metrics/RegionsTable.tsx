@@ -20,7 +20,7 @@ export function RegionsTable(props: MetricsTableProps) {
 		return (
 			<FilterLink id="region" className={locale} value={code} label={renderLabel(code, country)}>
 				<img
-					width="20px"
+					width={20}
 					src={`${process.env.basePath}/images/flags/${country?.toLowerCase() || 'xx'}.png`}
 					alt={code}
 				/>

@@ -13,8 +13,8 @@ export function BrowsersTable(props: MetricsTableProps) {
 				<img
 					src={`${process.env.basePath}/images/browsers/${browser || 'unknown'}.png`}
 					alt={browser}
-					width={16}
-					height={16}
+					width={20}
+					height={20}
 				/>
 			</FilterLink>
 		);

@@ -27,7 +27,7 @@ export function CountriesTable({
 				label={formatCountry(code)}
 			>
 				<img
-					width="20px"
+					width={20}
 					src={`${process.env.basePath}/images/flags/${code?.toLowerCase() || 'xx'}.png`}
 					alt={code}
 				/>
