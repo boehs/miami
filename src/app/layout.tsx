@@ -25,7 +25,7 @@ export default function ({ children }) {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<meta name="robots" content="noindex,nofollow" />
 			</head>
-			<body primary={primary || '#2680eb'}>
+			<body style={{ '--primary': primary || '#2680eb' }}>
 				<Providers>{children}</Providers>
 			</body>
 		</html>

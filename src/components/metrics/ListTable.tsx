@@ -87,20 +87,22 @@ const AnimatedRow = ({ label, value = 0, percent, animate, showPercentage = true
 
 	return (
 		<div className={styles.row}>
-			<div className={styles.label}>{label}</div>
-			<div className={styles.value}>
-				<animated.div className={styles.value} title={props?.y as any}>
-					{props.y?.to(formatLongNumber)}
-				</animated.div>
-			</div>
 			{showPercentage && (
 				<div className={styles.percent}>
 					<animated.div className={styles.bar} style={{ width: props.width.to(n => `${n}%`) }} />
+				</div>
+			)}
+			<div className={styles.content}>
+				<div className={styles.label}>{label}</div>
+				<div>
+					<animated.div className={styles.value} title={props?.y as any}>
+						{props.y?.to(formatLongNumber)}
+					</animated.div>
 					<animated.span className={styles.percentValue}>
 						{props.width.to(n => `${n?.toFixed?.(0)}%`)}
 					</animated.span>
 				</div>
-			)}
+			</div>
 		</div>
 	);
 };

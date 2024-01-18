@@ -14,7 +14,7 @@ export function useTheme() {
 				: 'light'
 			: 'light';
 	const theme = useStore(selector) || getItem(THEME_CONFIG) || defaultTheme;
-	const primaryColor = colord(document.body.getAttribute('primary'));
+	const primaryColor = colord(document.body.style.getPropertyValue('--primary'));
 
 	const colors = {
 		theme: {
@@ -37,10 +37,10 @@ export function useTheme() {
 			},
 		},
 		map: {
-			baseColor: document.body.getAttribute('primary'),
+			baseColor: document.body.style.getPropertyValue('--primary'),
 			fillColor: THEME_COLORS[theme].gray100,
-			strokeColor: document.body.getAttribute('primary'),
-			hoverColor: document.body.getAttribute('primary'),
+			strokeColor: document.body.style.getPropertyValue('--primary'),
+			hoverColor: document.body.style.getPropertyValue('--primary'),
 		},
 	};
 

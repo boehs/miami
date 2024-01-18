@@ -33,19 +33,16 @@
 .row {
 	position: relative;
 	height: 30px;
-	line-height: 30px;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 5px;
-	overflow: hidden;
 }
 
 .label {
+	flex: 1;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	flex: 2;
 }
 
 .label a {
@@ -66,19 +63,25 @@
 }
 
 .value {
-	width: 50px;
 	text-align: end;
-	margin-inline-end: 10px;
 	font-weight: 600;
+	display: inline;
 }
 
 .percent {
-	position: relative;
-	width: 50px;
-	color: var(--base600);
-	border-left: 1px solid var(--base600);
+	position: absolute;
+	width: 100%;
 	padding-inline-start: 10px;
 	z-index: 1;
+	height: 100%;
+	pointer-events: none;
+}
+
+.percentValue {
+	display: inline-block;
+	width: 40px;
+	color: var(--base600);
+	text-align: right;
 }
 
 .bar {
@@ -87,12 +90,19 @@
 	left: 0;
 	height: 30px;
 	opacity: 0.1;
-	background: var(--primary400);
+	background: var(--primary);
 	z-index: -1;
+	border-radius: 3px;
 }
 
 .empty {
 	min-height: 200px;
+}
+
+.content {
+	padding: 0 5px;
+	display: flex;
+	width: 100%;
 }
 
 @media only screen and (max-width: 992px) {
