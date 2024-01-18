@@ -4,6 +4,7 @@ import FilterLink from 'components/common/FilterLink';
 import useLocale from 'components/hooks/useLocale';
 import useMessages from 'components/hooks/useMessages';
 import useCountryNames from 'components/hooks/useCountryNames';
+import { getStateImage } from './RegionsTable';
 
 export function CitiesTable(props: MetricsTableProps) {
 	const { locale } = useLocale();
@@ -15,16 +16,10 @@ export function CitiesTable(props: MetricsTableProps) {
 		return countryName ? `${city}, ${countryName}` : city;
 	};
 
-	const renderLink = ({ x: city, country }) => {
+	const renderLink = ({ x: city, country, region }) => {
 		return (
 			<FilterLink id="city" value={city} label={renderLabel(city, country)}>
-				{country && (
-					<img
-						width={20}
-						src={`${process.env.basePath}/images/flags/${country?.toLowerCase() || 'xx'}.png`}
-						alt={country}
-					/>
-				)}
+				{country && <img width={20} src={getStateImage(region)} alt={country} />}
 			</FilterLink>
 		);
 	};

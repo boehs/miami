@@ -34,18 +34,20 @@ async function relationalQuery(
 
 	return rawQuery(
 		`
-    select 
+    select
       ${column} x,
       count(distinct website_event.session_id) y
       ${includeCountry ? ', country' : ''}
+	  ${column == 'city' ? ', subdivision1 region' : ''}
     from website_event
     ${joinSession}
     where website_event.website_id = {{websiteId::uuid}}
       and website_event.created_at between {{startDate}} and {{endDate}}
       and website_event.event_type = {{eventType}}
     ${filterQuery}
-    group by 1 
+    group by 1
     ${includeCountry ? ', 3' : ''}
+	${column == 'city' ? ', 4' : ''}
     order by 2 desc
     limit ${limit}`,
 		params,
@@ -70,21 +72,23 @@ async function clickhouseQuery(
     select
       ${column} x,
       count(distinct session_id) y
+	  ${column == 'city' ? ', subdivision1 region, ' : ''}
       ${includeCountry ? ', country' : ''}
     from website_event
     where website_id = {websiteId:UUID}
       and created_at between {startDate:DateTime64} and {endDate:DateTime64}
       and event_type = {eventType:UInt32}
       ${filterQuery}
-    group by x 
+    group by x
     ${includeCountry ? ', country' : ''}
+	${column == 'city' ? ', region, ' : ''}
     order by y desc
     limit ${limit}
     `,
 		params,
 	).then(a => {
 		return Object.values(a).map(a => {
-			return { x: a.x, y: Number(a.y), country: a.country };
+			return { x: a.x, y: Number(a.y), country: a.country, region: a.region };
 		});
 	});
 }

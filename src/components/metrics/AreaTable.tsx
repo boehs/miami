@@ -20,7 +20,6 @@ export function AreaTable({
 	const { query, makeUrl } = useNavigation();
 	const types = ['country', 'region', 'city'];
 	const active = types.findIndex(t => query[t] == undefined);
-
 	return (
 		<>
 			{active > 0 && (

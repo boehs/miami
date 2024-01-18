@@ -6,6 +6,14 @@ import useCountryNames from 'components/hooks/useCountryNames';
 import MetricsTable, { MetricsTableProps } from './MetricsTable';
 import regions from 'public/iso-3166-2.json';
 
+export const getStateImage = (code: string) => {
+	code = code?.toLowerCase() || 'xx';
+	if (code.startsWith('us-') && !code.includes('dc')) {
+		return `${process.env.basePath}/images/flags/us-states/${code}.png`;
+	}
+	return `${process.env.basePath}/images/flags/${code.split('-')[0] || 'xx'}.png`;
+};
+
 export function RegionsTable(props: MetricsTableProps) {
 	const { locale } = useLocale();
 	const { formatMessage, labels } = useMessages();
@@ -19,11 +27,7 @@ export function RegionsTable(props: MetricsTableProps) {
 	const renderLink = ({ x: code, country }) => {
 		return (
 			<FilterLink id="region" className={locale} value={code} label={renderLabel(code, country)}>
-				<img
-					width={20}
-					src={`${process.env.basePath}/images/flags/${country?.toLowerCase() || 'xx'}.png`}
-					alt={code}
-				/>
+				<img width={20} src={getStateImage(code)} alt={code} />
 			</FilterLink>
 		);
 	};
