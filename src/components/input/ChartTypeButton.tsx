@@ -29,7 +29,7 @@ export function ChartTypeButton() {
 		<Button className={styles.button} onClick={handleClick}>
 			{transitions((style, item) => (
 				<animated.div key={item} style={style}>
-					<Icon className={styles.icon}>{item === 'line' ? <LineChart /> : <BarChart />}</Icon>
+					<Icon className={styles.icon}>{item === 'line' ? <BarChart /> : <LineChart />}</Icon>
 				</animated.div>
 			))}
 		</Button>
