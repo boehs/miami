@@ -5,6 +5,7 @@ import useMessages from 'components/hooks/useMessages';
 import useCountryNames from 'components/hooks/useCountryNames';
 import MetricsTable, { MetricsTableProps } from './MetricsTable';
 import regions from 'public/iso-3166-2.json';
+import { getFlagEmoji } from 'lib/emoji';
 
 export function RegionsTable(props: MetricsTableProps) {
   const { locale } = useLocale();
