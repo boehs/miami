@@ -1,6 +1,6 @@
 import { useTransition, animated } from '@react-spring/web';
 import { Button } from 'react-basics';
-import styles from './ThemeButton.module.css';
+import styles from './ChartTypeButton.module.css';
 import { BarChart, LineChart } from 'lucide-react';
 import Icon from 'components/Icon';
 import useChartType from 'components/hooks/useChartType';
@@ -29,7 +29,7 @@ export function ChartTypeButton() {
 		<Button className={styles.button} onClick={handleClick}>
 			{transitions((style, item) => (
 				<animated.div key={item} style={style}>
-					<Icon className={styles.icon}>{item === 'line' ? <LineChart /> : <BarChart />}</Icon>
+					<Icon className={styles.icon}>{item === 'line' ? <BarChart /> : <LineChart />}</Icon>
 				</animated.div>
 			))}
 		</Button>

@@ -13,8 +13,8 @@ export function DevicesTable(props: MetricsTableProps) {
 				<img
 					src={`${process.env.basePath}/images/device/${device?.toLowerCase() || 'unknown'}.png`}
 					alt={device}
-					width={20}
-					height={20}
+					width={16}
+					height={16}
 				/>
 			</FilterLink>
 		);

@@ -19,8 +19,8 @@ export function OSTable(props: MetricsTableProps) {
 						os?.toLowerCase().replaceAll(/\W/g, '-') || 'unknown'
 					}.png`}
 					alt={os}
-					width={20}
-					height={20}
+					width={16}
+					height={16}
 				/>
 			</FilterLink>
 		);

@@ -6,7 +6,6 @@ import MetricsBar from 'components/metrics/MetricsBar';
 import { formatShortTime } from 'lib/format';
 import WebsiteFilterButton from './WebsiteFilterButton';
 import styles from './WebsiteMetricsBar.module.css';
-import { ChartTypeButton } from 'components/input/ChartTypeButton';
 
 export function WebsiteMetricsBar({
 	websiteId,
@@ -111,7 +110,6 @@ export function WebsiteMetricsBar({
 				)}
 			</MetricsBar>
 			<div className={styles.actions}>
-				<ChartTypeButton />
 				{showFilter && <WebsiteFilterButton websiteId={websiteId} className={styles.button} />}
 				<WebsiteDateFilter websiteId={websiteId} />
 			</div>

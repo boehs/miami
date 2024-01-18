@@ -10,6 +10,7 @@ import { DEFAULT_ANIMATION_DURATION } from 'lib/constants';
 import { renderNumberLabels } from 'lib/charts';
 import styles from './BarChart.module.css';
 import useChartType from 'components/hooks/useChartType';
+import ChartTypeButton from 'components/input/ChartTypeButton';
 
 export interface BarChartProps {
 	datasets?: any[];
@@ -187,6 +188,7 @@ export function BarChart({
 	return (
 		<>
 			<div className={classNames(styles.chart, className)}>
+				<ChartTypeButton />
 				{isLoading && <Loading position="page" icon="dots" />}
 				<canvas ref={canvas} />
 			</div>

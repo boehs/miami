@@ -19,7 +19,7 @@ export function CitiesTable(props: MetricsTableProps) {
 	const renderLink = ({ x: city, country, region }) => {
 		return (
 			<FilterLink id="city" value={city} label={renderLabel(city, country)}>
-				{country && <img width={20} src={getStateImage(region)} alt={country} />}
+				{country && <img width={16} src={getStateImage(region)} alt={country} />}
 			</FilterLink>
 		);
 	};
