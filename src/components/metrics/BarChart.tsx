@@ -9,6 +9,7 @@ import useTheme from 'components/hooks/useTheme';
 import { DEFAULT_ANIMATION_DURATION } from 'lib/constants';
 import { renderNumberLabels } from 'lib/charts';
 import styles from './BarChart.module.css';
+import useChartType from 'components/hooks/useChartType';
 
 export interface BarChartProps {
 	datasets?: any[];
@@ -46,6 +47,7 @@ export function BarChart({
 	const [tooltip, setTooltipPopup] = useState(null);
 	const { locale } = useLocale();
 	const { theme, colors } = useTheme();
+	const { chartType } = useChartType();
 
 	const getOptions = useCallback(() => {
 		return {
@@ -122,8 +124,25 @@ export function BarChart({
 	const createChart = () => {
 		Chart.defaults.font.family = 'Inter';
 
+		if (chartType == 'line') {
+			datasets = datasets.map(dataset => {
+				dataset.borderWidth = 3;
+				dataset.pointRadius = 4;
+				//dataset.fill = true
+				dataset.pointHoverBackgroundColor =
+					dataset.pointHoverBorderColor =
+					dataset.hoverBackgroundColor =
+						dataset.hoverBorderColor;
+				dataset.pointBackgroundColor =
+					dataset.pointBorderColor =
+					dataset.borderColor =
+						dataset.backgroundColor;
+				return dataset;
+			});
+		}
+
 		chart.current = new Chart(canvas.current, {
-			type: 'bar',
+			type: chartType,
 			data: {
 				datasets,
 			},
@@ -150,13 +169,20 @@ export function BarChart({
 
 	useEffect(() => {
 		if (datasets) {
-			if (!chart.current) {
-				createChart();
-			} else {
+			if (chart.current) {
 				updateChart();
 			}
 		}
 	}, [datasets, unit, theme, animationDuration, locale]);
+
+	useEffect(() => {
+		if (datasets) {
+			if (chart.current) {
+				chart.current.destroy();
+			}
+			createChart();
+		}
+	}, [chartType]);
 
 	return (
 		<>

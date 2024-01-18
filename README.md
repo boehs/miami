@@ -4,12 +4,14 @@ Umami is a simple, fast, privacy-focused alternative to Google Analytics, and Mi
 
 - Design:
   - Custom branding
+  - Higher quality icons
 - API:
   - Some API requests do not need to be bound by date
   - The share id _is_ the token, so additional requests are not needed
 - QOL:
   - Click map to set country
     - Set region and city from home page
+  - Line charts
 
 You can see a demo of miami [here](https://espy.boehs.org/share/JGBYO4bVg3kZVQUb).
 

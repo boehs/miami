@@ -16,6 +16,7 @@ const initialState = {
 	shareToken: null,
 	user: null,
 	config: null,
+	chartType: 'bar',
 };
 
 const store = create(() => ({ ...initialState }));
@@ -42,6 +43,10 @@ export function setConfig(config) {
 
 export function setDateRange(dateRange) {
 	store.setState({ dateRange });
+}
+
+export function setChartType(chartType) {
+	store.setState({ chartType });
 }
 
 export default store;
