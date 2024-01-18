@@ -519,3 +519,9 @@ export const ISO_COUNTRIES = {
   ZWE: 'ZW',
   XKX: 'XK',
 };
+
+export const DEVICE_EMOJIS = {
+  desktop: '🖥️',
+  laptop: '💻',
+  mobile: '📱',
+};

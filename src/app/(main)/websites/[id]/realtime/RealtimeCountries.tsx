@@ -5,6 +5,7 @@ import useCountryNames from 'components/hooks/useCountryNames';
 import useMessages from 'components/hooks/useMessages';
 import classNames from 'classnames';
 import styles from './RealtimeCountries.module.css';
+import { getFlagEmoji } from 'lib/emoji';
 
 export function RealtimeCountries({ data }) {
   const { formatMessage, labels } = useMessages();
@@ -14,10 +15,7 @@ export function RealtimeCountries({ data }) {
   const renderCountryName = useCallback(
     ({ x: code }) => (
       <span className={classNames(locale, styles.row)}>
-        <img
-          src={`${process.env.basePath}/images/flags/${code?.toLowerCase() || 'xx'}.png`}
-          alt={code}
-        />
+        {getFlagEmoji(code?.toUpperCase())}
         {countryNames[code]}
       </span>
     ),

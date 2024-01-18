@@ -4,6 +4,7 @@ import FilterLink from 'components/common/FilterLink';
 import useLocale from 'components/hooks/useLocale';
 import useMessages from 'components/hooks/useMessages';
 import useCountryNames from 'components/hooks/useCountryNames';
+import { getFlagEmoji } from 'lib/emoji';
 
 export function CitiesTable(props: MetricsTableProps) {
   const { locale } = useLocale();
@@ -18,12 +19,7 @@ export function CitiesTable(props: MetricsTableProps) {
   const renderLink = ({ x: city, country }) => {
     return (
       <FilterLink id="city" value={city} label={renderLabel(city, country)}>
-        {country && (
-          <img
-            src={`${process.env.basePath}/images/flags/${country?.toLowerCase() || 'xx'}.png`}
-            alt={country}
-          />
-        )}
+        <span style={{ fontSize: '20px' }}>{getFlagEmoji(country?.toUpperCase())}</span>
       </FilterLink>
     );
   };

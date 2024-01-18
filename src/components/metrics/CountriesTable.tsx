@@ -2,6 +2,7 @@ import FilterLink from 'components/common/FilterLink';
 import useCountryNames from 'components/hooks/useCountryNames';
 import { useLocale, useMessages, useFormat } from 'components/hooks';
 import MetricsTable, { MetricsTableProps } from './MetricsTable';
+import { getFlagEmoji } from 'lib/emoji';
 
 export function CountriesTable({
   onDataLoad,
@@ -26,10 +27,7 @@ export function CountriesTable({
         value={countryNames[code] && code}
         label={formatCountry(code)}
       >
-        <img
-          src={`${process.env.basePath}/images/flags/${code?.toLowerCase() || 'xx'}.png`}
-          alt={code}
-        />
+        <span style={{ fontSize: '20px' }}>{getFlagEmoji(code?.toUpperCase())}</span>
       </FilterLink>
     );
   };

@@ -19,10 +19,7 @@ export function RegionsTable(props: MetricsTableProps) {
   const renderLink = ({ x: code, country }) => {
     return (
       <FilterLink id="region" className={locale} value={code} label={renderLabel(code, country)}>
-        <img
-          src={`${process.env.basePath}/images/flags/${country?.toLowerCase() || 'xx'}.png`}
-          alt={code}
-        />
+        <span style={{ fontSize: '20px' }}>{getFlagEmoji(code?.toUpperCase())}</span>
       </FilterLink>
     );
   };
