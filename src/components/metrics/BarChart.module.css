@@ -2,6 +2,15 @@
 	display: grid;
 }
 
+.chart > button {
+	opacity: 0;
+	transition: opacity 0.25s;
+}
+
+.chart:hover > button {
+	opacity: 1;
+}
+
 .chart {
 	position: relative;
 	height: 400px;

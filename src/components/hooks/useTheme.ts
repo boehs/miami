@@ -50,7 +50,7 @@ export function useTheme() {
 	}
 
 	useEffect(() => {
-		document.body.setAttribute('data-theme', theme);
+		document.documentElement.setAttribute('data-theme', theme);
 	}, [theme]);
 
 	useEffect(() => {

@@ -128,13 +128,14 @@ export function BarChart({
 		if (chartType == 'line') {
 			datasets = datasets.map(dataset => {
 				dataset.borderWidth = 3;
-				dataset.pointRadius = 4;
+				dataset.pointRadius = 0;
+				dataset.hitRadius = 20;
 				//dataset.fill = true
 				dataset.pointHoverBackgroundColor =
 					dataset.pointHoverBorderColor =
 					dataset.hoverBackgroundColor =
-						dataset.hoverBorderColor;
-				dataset.pointBackgroundColor =
+					dataset.hoverBorderColor =
+					dataset.pointBackgroundColor =
 					dataset.pointBorderColor =
 					dataset.borderColor =
 						dataset.backgroundColor;
