@@ -6,9 +6,9 @@ import BrowsersTable from 'components/metrics/BrowsersTable';
 import OSTable from 'components/metrics/OSTable';
 import DevicesTable from 'components/metrics/DevicesTable';
 import WorldMap from 'components/metrics/WorldMap';
-import CountriesTable from 'components/metrics/CountriesTable';
 import EventsTable from 'components/metrics/EventsTable';
 import EventsChart from 'components/metrics/EventsChart';
+import { AreaTable } from 'components/metrics/AreaTable';
 
 export default function WebsiteTableView({
   websiteId,
@@ -37,7 +37,7 @@ export default function WebsiteTableView({
       </GridRow>
       <GridRow columns="two-one">
         <WorldMap data={countryData} />
-        <CountriesTable {...tableProps} onDataLoad={setCountryData} />
+        <AreaTable {...tableProps} onDataLoad={setCountryData} />
       </GridRow>
       <GridRow columns="one-two">
         <EventsTable {...tableProps} />

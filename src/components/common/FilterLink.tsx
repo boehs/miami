@@ -39,7 +39,7 @@ export function FilterLink({
       {children}
       {!value && `(${label || formatMessage(labels.unknown)})`}
       {value && (
-        <Link href={makeUrl({ [id]: value })} className={styles.label} replace>
+        <Link scroll={false} href={makeUrl({ [id]: value })} className={styles.label} replace>
           {safeDecodeURI(label || value)}
         </Link>
       )}

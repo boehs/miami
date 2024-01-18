@@ -11,12 +11,14 @@ import useMessages from 'components/hooks/useMessages';
 import { formatLongNumber } from 'lib/format';
 import { percentFilter } from 'lib/filters';
 import styles from './WorldMap.module.css';
+import { useNavigation } from 'components/hooks/useNavigation';
 
 export function WorldMap({ data = [], className }: { data?: any[]; className?: string }) {
   const [tooltip, setTooltipPopup] = useState();
   const { theme, colors } = useTheme();
   const { locale } = useLocale();
   const { formatMessage, labels } = useMessages();
+  const { makeUrl, router } = useNavigation();
   const countryNames = useCountryNames(locale);
   const visitorsLabel = formatMessage(labels.visitors).toLocaleLowerCase(locale);
   const metrics = useMemo(() => (data ? percentFilter(data) : []), [data]);
@@ -73,6 +75,10 @@ export function WorldMap({ data = [], className }: { data?: any[]; className?: s
                     }}
                     onMouseOver={() => handleHover(code)}
                     onMouseOut={() => setTooltipPopup(null)}
+                    onClick={() => {
+                      setTooltipPopup(null);
+                      router.push(makeUrl({ country: code }), { scroll: false });
+                    }}
                   />
                 );
               });
