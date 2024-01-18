@@ -6,7 +6,7 @@ import Page from 'components/layout/Page';
 import Header from './Header';
 import Footer from './Footer';
 
-export default function Share({ shareId, link, image, name }) {
+export default function Share({ shareId }) {
 	const { shareToken, isLoading } = useShareToken(shareId);
 
 	if (isLoading || !shareToken) {
@@ -16,7 +16,7 @@ export default function Share({ shareId, link, image, name }) {
 	return (
 		<div className={styles.container}>
 			<Page>
-				<Header image={image} link={link} name={name} />
+				<Header websiteId={shareToken.websiteId} />
 				<WebsiteDetails websiteId={shareToken.websiteId} />
 				<Footer />
 			</Page>

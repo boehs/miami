@@ -9,10 +9,6 @@ services:
       DATABASE_URL: postgresql://umami:umami@db:5432/umami
       DATABASE_TYPE: postgresql
       APP_SECRET: replace-me-with-a-random-string
-      BRANDING_LINK: ${BRANDING_LINK}
-      THEME_COLOUR: ${BRANDING_COLOUR}
-      BRANDING_NAME: ${BRANDING_NAME}
-      BRANDING_IMAGE: ${BRANDING_IMAGE}
     depends_on:
       db:
         condition: service_healthy

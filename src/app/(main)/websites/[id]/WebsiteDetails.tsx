@@ -26,7 +26,7 @@ export default function WebsiteDetails({ websiteId }: { websiteId: string }) {
 
 	return (
 		<>
-			<WebsiteHeader websiteId={websiteId} showLinks={showLinks} />
+			{showLinks && <WebsiteHeader websiteId={websiteId} showLinks={showLinks} />}
 			<FilterTags params={{ url, referrer, os, browser, device, country, region, city, title }} />
 			<WebsiteMetricsBar websiteId={websiteId} sticky={true} />
 			<WebsiteChart websiteId={websiteId} />

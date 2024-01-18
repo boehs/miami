@@ -1,8 +1,8 @@
-import { Button, Popup, PopupTrigger, Text } from 'react-basics';
+import { Button, Popup, PopupTrigger } from 'react-basics';
 import PopupForm from 'app/(main)/reports/[id]/PopupForm';
 import FilterSelectForm from 'app/(main)/reports/[id]/FilterSelectForm';
 import { useMessages, useNavigation } from 'components/hooks';
-import { Plus } from 'lucide-react';
+import { Filter } from 'lucide-react';
 import Icon from 'components/Icon';
 
 export function WebsiteFilterButton({
@@ -34,9 +34,8 @@ export function WebsiteFilterButton({
 		<PopupTrigger>
 			<Button className={className}>
 				<Icon>
-					<Plus />
+					<Filter />
 				</Icon>
-				<Text>{formatMessage(labels.filter)}</Text>
 			</Button>
 			<Popup position="bottom" alignment="start">
 				{(close: () => void) => {
