@@ -1,10 +1,11 @@
-import { GridTable, GridColumn, Button, Icon, Text } from 'react-basics';
+import { GridTable, GridColumn, Button, Text } from 'react-basics';
 import { useMessages, useNavigation } from 'components/hooks';
 import Link from 'next/link';
 import PageHeader from 'components/layout/PageHeader';
 import Empty from 'components/common/Empty';
 import { DATA_TYPES } from 'lib/constants';
 import { ArrowLeft } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function EventDataValueTable({ data = [], event }: { data: any[]; event: string }) {
 	const { formatMessage, labels } = useMessages();

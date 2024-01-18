@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
-import { Icon, LoadingButton, InlineEditField, useToasts } from 'react-basics';
+import { LoadingButton, InlineEditField, useToasts } from 'react-basics';
 import { useMessages, useApi } from 'components/hooks';
 import { ReportContext } from './Report';
 import styles from './ReportHeader.module.css';
 import { REPORT_TYPES } from 'lib/constants';
+import Icon from 'components/Icon';
 
 export function ReportHeader({ icon }) {
 	const { report, updateReport } = useContext(ReportContext);
