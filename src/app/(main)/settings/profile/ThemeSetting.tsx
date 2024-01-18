@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import { Button, Icon } from 'react-basics';
+import { Button } from 'react-basics';
 import useTheme from 'components/hooks/useTheme';
-import Sun from 'assets/sun.svg';
-import Moon from 'assets/moon.svg';
 import styles from './ThemeSetting.module.css';
+import { Moon, Sun } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function ThemeSetting() {
 	const { theme, saveTheme } = useTheme();

@@ -77,7 +77,7 @@ export async function getWebsites(
 							{
 								domain: { contains: query, ...mode },
 							},
-					  ]
+						]
 					: [],
 			},
 		],
@@ -325,10 +325,10 @@ export async function deleteWebsite(
 						deletedAt: new Date(),
 					},
 					where: { id: websiteId },
-			  })
+				})
 			: client.website.delete({
 					where: { id: websiteId },
-			  }),
+				}),
 	]).then(async data => {
 		if (cache.enabled) {
 			await cache.deleteWebsite(websiteId);

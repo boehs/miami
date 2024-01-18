@@ -1,7 +1,9 @@
-import { Button, Icon, Icons, Modal, ModalTrigger, Text } from 'react-basics';
+import { Button, Modal, ModalTrigger, Text } from 'react-basics';
 import useMessages from 'components/hooks/useMessages';
 import useUser from 'components/hooks/useUser';
 import UserDeleteForm from './UserDeleteForm';
+import { Trash } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function UserDeleteButton({
 	userId,
@@ -19,7 +21,7 @@ export function UserDeleteButton({
 		<ModalTrigger disabled={userId === user?.id}>
 			<Button disabled={userId === user?.id}>
 				<Icon>
-					<Icons.Trash />
+					<Trash />
 				</Icon>
 				<Text>{formatMessage(labels.delete)}</Text>
 			</Button>

@@ -1,9 +1,10 @@
-import { Button, Icon, PopupTrigger, Popup, Form, FormRow } from 'react-basics';
+import { Button, PopupTrigger, Popup, Form, FormRow } from 'react-basics';
 import TimezoneSetting from 'app/(main)/settings/profile/TimezoneSetting';
 import DateRangeSetting from 'app/(main)/settings/profile/DateRangeSetting';
-import Icons from 'components/icons';
 import useMessages from 'components/hooks/useMessages';
 import styles from './SettingsButton.module.css';
+import Icon from 'components/Icon';
+import { Cog } from 'lucide-react';
 
 export function SettingsButton() {
 	const { formatMessage, labels } = useMessages();
@@ -12,7 +13,7 @@ export function SettingsButton() {
 		<PopupTrigger>
 			<Button variant="quiet">
 				<Icon>
-					<Icons.Gear />
+					<Cog />
 				</Icon>
 			</Button>
 			<Popup className={styles.popup} position="bottom" alignment="end">

@@ -1,7 +1,8 @@
-import { Button, Icon, Modal, ModalTrigger, Text } from 'react-basics';
-import Icons from 'components/icons';
+import { Button, Modal, ModalTrigger, Text } from 'react-basics';
 import useMessages from 'components/hooks/useMessages';
 import TeamAddForm from './TeamAddForm';
+import { Plus } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function TeamsAddButton({ onAdd }: { onAdd?: () => void }) {
 	const { formatMessage, labels } = useMessages();
@@ -10,7 +11,7 @@ export function TeamsAddButton({ onAdd }: { onAdd?: () => void }) {
 		<ModalTrigger>
 			<Button variant="primary">
 				<Icon>
-					<Icons.Plus />
+					<Plus />
 				</Icon>
 				<Text>{formatMessage(labels.createTeam)}</Text>
 			</Button>

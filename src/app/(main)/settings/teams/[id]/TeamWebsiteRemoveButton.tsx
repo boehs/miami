@@ -1,6 +1,8 @@
 import useApi from 'components/hooks/useApi';
 import useMessages from 'components/hooks/useMessages';
-import { Icon, Icons, LoadingButton, Text } from 'react-basics';
+import { X } from 'lucide-react';
+import { LoadingButton, Text } from 'react-basics';
+import Icon from 'components/Icon';
 
 export function TeamWebsiteRemoveButton({ teamId, websiteId, onSave }) {
 	const { formatMessage, labels } = useMessages();
@@ -20,7 +22,7 @@ export function TeamWebsiteRemoveButton({ teamId, websiteId, onSave }) {
 	return (
 		<LoadingButton variant="quiet" onClick={() => handleRemoveTeamMember()} isLoading={isPending}>
 			<Icon>
-				<Icons.Close />
+				<X />
 			</Icon>
 			<Text>{formatMessage(labels.remove)}</Text>
 		</LoadingButton>

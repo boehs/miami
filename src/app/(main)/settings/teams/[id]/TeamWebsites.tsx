@@ -1,4 +1,4 @@
-import { ActionForm, Button, Icon, Icons, Modal, ModalTrigger, Text } from 'react-basics';
+import { ActionForm, Button, Modal, ModalTrigger, Text } from 'react-basics';
 import TeamWebsitesTable from './TeamWebsitesTable';
 import TeamWebsiteAddForm from './TeamWebsiteAddForm';
 import useApi from 'components/hooks/useApi';
@@ -7,6 +7,8 @@ import useUser from 'components/hooks/useUser';
 import useFilterQuery from 'components/hooks/useFilterQuery';
 import DataTable from 'components/common/DataTable';
 import useCache from 'store/cache';
+import { Plus } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function TeamWebsites({ teamId, readOnly }: { teamId: string; readOnly: boolean }) {
 	const { formatMessage, labels, messages } = useMessages();
@@ -33,7 +35,7 @@ export function TeamWebsites({ teamId, readOnly }: { teamId: string; readOnly: b
 				<ModalTrigger>
 					<Button variant="primary">
 						<Icon>
-							<Icons.Plus />
+							<Plus />
 						</Icon>
 						<Text>{formatMessage(labels.addWebsite)}</Text>
 					</Button>

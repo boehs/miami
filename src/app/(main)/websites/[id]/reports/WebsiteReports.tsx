@@ -1,9 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { Button, Flexbox, Icon, Icons, Text } from 'react-basics';
+import { Button, Flexbox, Text } from 'react-basics';
 import { useMessages } from 'components/hooks';
 import WebsiteHeader from '../WebsiteHeader';
 import ReportsDataTable from 'app/(main)/reports/ReportsDataTable';
+import Icon from 'components/Icon';
+import { Plus } from 'lucide-react';
 
 export function WebsiteReports({ websiteId }) {
 	const { formatMessage, labels } = useMessages();
@@ -15,7 +17,7 @@ export function WebsiteReports({ websiteId }) {
 				<Link href={`/reports/create`}>
 					<Button variant="primary">
 						<Icon>
-							<Icons.Plus />
+							<Plus />
 						</Icon>
 						<Text>{formatMessage(labels.createReport)}</Text>
 					</Button>

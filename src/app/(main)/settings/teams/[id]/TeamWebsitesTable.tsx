@@ -1,8 +1,10 @@
 import Link from 'next/link';
-import { Button, GridColumn, GridTable, Icon, Icons, Text } from 'react-basics';
+import { Button, GridColumn, GridTable, Text } from 'react-basics';
 import useMessages from 'components/hooks/useMessages';
 import useUser from 'components/hooks/useUser';
 import TeamWebsiteRemoveButton from './TeamWebsiteRemoveButton';
+import { ExternalLink } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function TeamWebsitesTable({
 	data = [],
@@ -34,7 +36,7 @@ export function TeamWebsitesTable({
 							<Link href={`/websites/${websiteId}`}>
 								<Button>
 									<Icon>
-										<Icons.External />
+										<ExternalLink />
 									</Icon>
 									<Text>{formatMessage(labels.view)}</Text>
 								</Button>

@@ -1,0 +1,58 @@
+.icon {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	vertical-align: middle;
+	position: relative;
+	font-size: var(--font-size-md);
+	flex-shrink: 0;
+	box-sizing: content-box;
+}
+
+.size-xl,
+.size-xl > svg {
+	font-size: var(--font-size-xl);
+	width: var(--size1000);
+	height: var(--size1000);
+}
+
+.size-lg,
+.size-lg > svg {
+	font-size: var(--font-size-lg);
+	width: var(--size700);
+	height: var(--size700);
+}
+
+.size-md,
+.size-md > svg {
+	font-size: var(--font-size-md);
+	width: var(--size500);
+	height: var(--size500);
+}
+
+.size-sm,
+.size-sm > svg {
+	font-size: var(--font-size-sm);
+	width: var(--size400);
+	height: var(--size400);
+}
+
+.size-xs,
+.size-xs > svg {
+	font-size: var(--font-size-xs);
+	width: var(--size300);
+	height: var(--size300);
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.disabled {
+	color: var(--disabled-color);
+	pointer-events: none;
+}
+
+.input {
+	color: var(--base600);
+}

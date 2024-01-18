@@ -1,7 +1,6 @@
 import { useContext } from 'react';
-import { Form, FormRow, FormButtons, SubmitButton, PopupTrigger, Icon, Popup } from 'react-basics';
+import { Form, FormRow, FormButtons, SubmitButton, PopupTrigger, Popup } from 'react-basics';
 import Empty from 'components/common/Empty';
-import Icons from 'components/icons';
 import { useApi, useMessages } from 'components/hooks';
 import { DATA_TYPES, REPORT_PARAMETERS } from 'lib/constants';
 import { ReportContext } from '../[id]/Report';
@@ -9,6 +8,8 @@ import FieldAddForm from '../[id]/FieldAddForm';
 import ParameterList from '../[id]/ParameterList';
 import BaseParameters from '../[id]/BaseParameters';
 import styles from './EventDataParameters.module.css';
+import { Plus } from 'lucide-react';
+import Icon from 'components/Icon';
 
 function useFields(websiteId, startDate, endDate) {
 	const { get, useQuery } = useApi();
@@ -70,7 +71,7 @@ export function EventDataParameters() {
 		return (
 			<PopupTrigger>
 				<Icon>
-					<Icons.Plus />
+					<Plus />
 				</Icon>
 				<Popup position="bottom" alignment="start">
 					{(close: () => void) => {

@@ -1,8 +1,10 @@
 'use client';
 import PageHeader from 'components/layout/PageHeader';
-import { Button, Icon, Icons, Text } from 'react-basics';
+import { Button, Text } from 'react-basics';
 import { useMessages } from 'components/hooks';
 import { useRouter } from 'next/navigation';
+import Icon from 'components/Icon';
+import { Plus } from 'lucide-react';
 
 export function ReportsHeader() {
 	const { formatMessage, labels } = useMessages();
@@ -14,7 +16,7 @@ export function ReportsHeader() {
 		<PageHeader title={formatMessage(labels.reports)}>
 			<Button variant="primary" onClick={handleClick}>
 				<Icon>
-					<Icons.Plus />
+					<Plus />
 				</Icon>
 				<Text>{formatMessage(labels.createReport)}</Text>
 			</Button>

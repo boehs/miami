@@ -1,8 +1,10 @@
-import { Button, Icon, Icons, Modal, ModalTrigger, Text } from 'react-basics';
+import { Button, Modal, ModalTrigger, Text } from 'react-basics';
 import useMessages from 'components/hooks/useMessages';
 import useLocale from 'components/hooks/useLocale';
 import useUser from 'components/hooks/useUser';
 import TeamDeleteForm from './TeamLeaveForm';
+import { LogOut } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function TeamLeaveButton({
 	teamId,
@@ -21,7 +23,7 @@ export function TeamLeaveButton({
 		<ModalTrigger>
 			<Button>
 				<Icon rotate={dir === 'rtl' ? 180 : 0}>
-					<Icons.Logout />
+					<LogOut />
 				</Icon>
 				<Text>{formatMessage(labels.leave)}</Text>
 			</Button>

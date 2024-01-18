@@ -1,7 +1,8 @@
-import { Button, Icon, Modal, ModalTrigger, Text, useToasts } from 'react-basics';
-import Icons from 'components/icons';
+import { Button, Modal, ModalTrigger, Text, useToasts } from 'react-basics';
 import useMessages from 'components/hooks/useMessages';
 import TeamJoinForm from './TeamJoinForm';
+import { UserPlus } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function TeamsJoinButton() {
 	const { formatMessage, labels, messages } = useMessages();
@@ -15,7 +16,7 @@ export function TeamsJoinButton() {
 		<ModalTrigger>
 			<Button variant="secondary">
 				<Icon>
-					<Icons.AddUser />
+					<UserPlus />
 				</Icon>
 				<Text>{formatMessage(labels.joinTeam)}</Text>
 			</Button>

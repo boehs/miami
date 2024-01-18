@@ -41,8 +41,8 @@ async function relationalQuery(data: {
 			a.dynamicDataType === DATA_TYPE.number
 				? parseFloat(a.value).toFixed(4)
 				: a.dynamicDataType === DATA_TYPE.date
-				? a.value.split('.')[0] + 'Z'
-				: a.value.toString(),
+					? a.value.split('.')[0] + 'Z'
+					: a.value.toString(),
 		numberValue: a.dynamicDataType === DATA_TYPE.number ? a.value : null,
 		dateValue: a.dynamicDataType === DATA_TYPE.date ? new Date(a.value) : null,
 		dataType: a.dynamicDataType,

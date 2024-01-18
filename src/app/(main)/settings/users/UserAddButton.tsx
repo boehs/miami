@@ -1,7 +1,9 @@
-import { Button, Icon, Text, Modal, Icons, ModalTrigger, useToasts } from 'react-basics';
+import { Button, Text, Modal, ModalTrigger, useToasts } from 'react-basics';
 import UserAddForm from './UserAddForm';
 import useMessages from 'components/hooks/useMessages';
 import { setValue } from 'store/cache';
+import { Plus } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function UserAddButton({ onSave }: { onSave?: () => void }) {
 	const { formatMessage, labels, messages } = useMessages();
@@ -17,7 +19,7 @@ export function UserAddButton({ onSave }: { onSave?: () => void }) {
 		<ModalTrigger>
 			<Button variant="primary">
 				<Icon>
-					<Icons.Plus />
+					<Plus />
 				</Icon>
 				<Text>{formatMessage(labels.createUser)}</Text>
 			</Button>

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { StatusLight, Icon, Text, SearchField } from 'react-basics';
+import { StatusLight, Text, SearchField } from 'react-basics';
 import { FixedSizeList } from 'react-window';
 import { format } from 'date-fns';
 import thenby from 'thenby';
@@ -8,12 +8,13 @@ import FilterButtons from 'components/common/FilterButtons';
 import Empty from 'components/common/Empty';
 import useLocale from 'components/hooks/useLocale';
 import useCountryNames from 'components/hooks/useCountryNames';
-import Icons from 'components/icons';
 import useMessages from 'components/hooks/useMessages';
 import useFormat from 'components//hooks/useFormat';
 import { BROWSERS } from 'lib/constants';
 import { stringToColor } from 'lib/format';
 import styles from './RealtimeLog.module.css';
+import { Bolt, Eye, User } from 'lucide-react';
+import Icon from 'components/Icon';
 
 const TYPE_ALL = 'all';
 const TYPE_PAGEVIEW = 'pageview';
@@ -21,9 +22,9 @@ const TYPE_SESSION = 'session';
 const TYPE_EVENT = 'event';
 
 const icons = {
-	[TYPE_PAGEVIEW]: <Icons.Eye />,
-	[TYPE_SESSION]: <Icons.Visitor />,
-	[TYPE_EVENT]: <Icons.Bolt />,
+	[TYPE_PAGEVIEW]: <Eye />,
+	[TYPE_SESSION]: <User />,
+	[TYPE_EVENT]: <Bolt />,
 };
 
 export function RealtimeLog({ data, websiteDomain }) {

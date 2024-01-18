@@ -1,4 +1,4 @@
-import { Button, Text, Icon, Icons } from 'react-basics';
+import { Button, Text } from 'react-basics';
 import { useMemo } from 'react';
 import { firstBy } from 'thenby';
 import Link from 'next/link';
@@ -7,6 +7,8 @@ import useDashboard from 'store/dashboard';
 import WebsiteHeader from './WebsiteHeader';
 import { WebsiteMetricsBar } from './WebsiteMetricsBar';
 import { useMessages, useLocale } from 'components/hooks';
+import { ArrowRight } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export default function WebsiteChartList({
 	websites,
@@ -40,7 +42,7 @@ export default function WebsiteChartList({
 									<Text>{formatMessage(labels.viewDetails)}</Text>
 									<Icon>
 										<Icon rotate={dir === 'rtl' ? 180 : 0}>
-											<Icons.ArrowRight />
+											<ArrowRight />
 										</Icon>
 									</Icon>
 								</Button>

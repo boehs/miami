@@ -1,7 +1,9 @@
-import { Button, Icon, Icons, Modal, ModalTrigger, Text, useToasts } from 'react-basics';
+import { Button, Modal, ModalTrigger, Text, useToasts } from 'react-basics';
 import WebsiteAddForm from './WebsiteAddForm';
 import useMessages from 'components/hooks/useMessages';
 import { setValue } from 'store/cache';
+import { Plus } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function WebsiteAddButton({ onSave }: { onSave?: () => void }) {
 	const { formatMessage, labels, messages } = useMessages();
@@ -17,7 +19,7 @@ export function WebsiteAddButton({ onSave }: { onSave?: () => void }) {
 		<ModalTrigger>
 			<Button variant="primary">
 				<Icon>
-					<Icons.Plus />
+					<Plus />
 				</Icon>
 				<Text>{formatMessage(labels.addWebsite)}</Text>
 			</Button>

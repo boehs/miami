@@ -262,10 +262,10 @@ export async function deleteUser(
 							deletedAt: new Date(),
 						},
 						where: { id: { in: websiteIds } },
-				  })
+					})
 				: client.website.deleteMany({
 						where: { id: { in: websiteIds } },
-				  }),
+					}),
 			cloudMode
 				? client.user.update({
 						data: {
@@ -275,12 +275,12 @@ export async function deleteUser(
 						where: {
 							id: userId,
 						},
-				  })
+					})
 				: client.user.delete({
 						where: {
 							id: userId,
 						},
-				  }),
+					}),
 		])
 		.then(async data => {
 			if (cache.enabled) {

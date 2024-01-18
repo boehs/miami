@@ -1,7 +1,8 @@
-import { Button, Icon, Text, useToasts, ModalTrigger, Modal } from 'react-basics';
+import { Button, Text, useToasts, ModalTrigger, Modal } from 'react-basics';
 import PasswordEditForm from 'app/(main)/settings/profile/PasswordEditForm';
-import Icons from 'components/icons';
 import useMessages from 'components/hooks/useMessages';
+import { Lock } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function PasswordChangeButton() {
 	const { formatMessage, labels, messages } = useMessages();
@@ -16,7 +17,7 @@ export function PasswordChangeButton() {
 			<ModalTrigger>
 				<Button>
 					<Icon>
-						<Icons.Lock />
+						<Lock />
 					</Icon>
 					<Text>{formatMessage(labels.changePassword)}</Text>
 				</Button>

@@ -1,9 +1,10 @@
 import { ReactNode } from 'react';
-import { Icon, TooltipPopup } from 'react-basics';
-import Icons from 'components/icons';
+import { TooltipPopup } from 'react-basics';
 import Empty from 'components/common/Empty';
 import { useMessages } from 'components/hooks';
 import styles from './ParameterList.module.css';
+import { X } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export interface ParameterListProps {
 	items: any[];
@@ -27,7 +28,7 @@ export function ParameterList({ items = [], children, onRemove }: ParameterListP
 							position="right"
 						>
 							<Icon onClick={onRemove.bind(null, index)}>
-								<Icons.Close />
+								<X />
 							</Icon>
 						</TooltipPopup>
 					</div>

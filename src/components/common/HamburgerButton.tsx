@@ -1,6 +1,8 @@
-import { Button, Icon, Icons } from 'react-basics';
+import { Button } from 'react-basics';
 import { useState } from 'react';
 import MobileMenu from './MobileMenu';
+import { Menu, X } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function HamburgerButton({ menuItems }: { menuItems: any[] }) {
 	const [active, setActive] = useState(false);
@@ -11,7 +13,7 @@ export function HamburgerButton({ menuItems }: { menuItems: any[] }) {
 	return (
 		<>
 			<Button variant="quiet" onClick={handleClick}>
-				<Icon>{active ? <Icons.Close /> : <Icons.Menu />}</Icon>
+				<Icon>{active ? <X /> : <Menu />}</Icon>
 			</Button>
 			{active && <MobileMenu items={menuItems} onClose={handleClose} />}
 		</>

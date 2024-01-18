@@ -1,7 +1,8 @@
-import { TooltipPopup, Icon, Text, Flexbox, Button } from 'react-basics';
-import Icons from 'components/icons';
+import { TooltipPopup, Text, Flexbox, Button } from 'react-basics';
 import { saveDashboard } from 'store/dashboard';
 import useMessages from 'components/hooks/useMessages';
+import { BarChart2, Edit } from 'lucide-react';
+import { Icon } from 'components/Icon';
 
 export function DashboardSettingsButton() {
 	const { formatMessage, labels } = useMessages();
@@ -19,13 +20,13 @@ export function DashboardSettingsButton() {
 			<TooltipPopup label={formatMessage(labels.toggleCharts)} position="bottom">
 				<Button onClick={handleToggleCharts}>
 					<Icon>
-						<Icons.BarChart />
+						<BarChart2 />
 					</Icon>
 				</Button>
 			</TooltipPopup>
 			<Button onClick={handleEdit}>
 				<Icon>
-					<Icons.Edit />
+					<Edit />
 				</Icon>
 				<Text>{formatMessage(labels.edit)}</Text>
 			</Button>

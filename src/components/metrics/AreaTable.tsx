@@ -4,9 +4,11 @@ import { MetricsTableProps } from './MetricsTable';
 import RegionsTable from './RegionsTable';
 import CitiesTable from './CitiesTable';
 import useMessages from 'components/hooks/useMessages';
-import { Icon, Icons, Text } from 'react-basics';
+import { Text } from 'react-basics';
 import styles from './AreaTable.module.css';
 import LinkButton from 'components/common/LinkButton';
+import { X } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function AreaTable({
 	onDataLoad,
@@ -28,7 +30,7 @@ export function AreaTable({
 					scroll={false}
 				>
 					<Icon>
-						<Icons.Close />
+						<X />
 					</Icon>
 					<Text>{`${formatMessage(labels[types[active - 1]])}: ${query[types[active - 1]]}`}</Text>
 				</LinkButton>

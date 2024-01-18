@@ -1,9 +1,11 @@
-import { GridColumn, GridTable, Icon, Icons, Text, useBreakpoint } from 'react-basics';
+import { GridColumn, GridTable, Text, useBreakpoint } from 'react-basics';
 import LinkButton from 'components/common/LinkButton';
 import { useMessages } from 'components/hooks';
 import useUser from 'components/hooks/useUser';
 import { REPORT_TYPES } from 'lib/constants';
 import ReportDeleteButton from './ReportDeleteButton';
+import Icon from 'components/Icon';
+import { ArrowRight } from 'lucide-react';
 
 export function ReportsTable({ data = [], showDomain }: { data: any[]; showDomain?: boolean }) {
 	const { formatMessage, labels } = useMessages();
@@ -36,7 +38,7 @@ export function ReportsTable({ data = [], showDomain }: { data: any[]; showDomai
 							)}
 							<LinkButton href={`/reports/${id}`}>
 								<Icon>
-									<Icons.ArrowRight />
+									<ArrowRight />
 								</Icon>
 								<Text>{formatMessage(labels.view)}</Text>
 							</LinkButton>

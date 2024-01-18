@@ -5,8 +5,8 @@ import ReportMenu from '../[id]/ReportMenu';
 import ReportBody from '../[id]/ReportBody';
 import InsightsParameters from './InsightsParameters';
 import InsightsTable from './InsightsTable';
-import Lightbulb from 'assets/lightbulb.svg';
 import { REPORT_TYPES } from 'lib/constants';
+import { Lightbulb } from 'lucide-react';
 
 const defaultParameters = {
 	type: REPORT_TYPES.insights,

@@ -1,6 +1,8 @@
-import { Button, Icon, Icons, Modal, ModalTrigger, Text } from 'react-basics';
+import { Button, Modal, ModalTrigger, Text } from 'react-basics';
 import useMessages from 'components/hooks/useMessages';
 import TeamDeleteForm from './TeamDeleteForm';
+import { Trash } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function TeamDeleteButton({
 	teamId,
@@ -17,7 +19,7 @@ export function TeamDeleteButton({
 		<ModalTrigger>
 			<Button>
 				<Icon>
-					<Icons.Trash />
+					<Trash />
 				</Icon>
 				<Text>{formatMessage(labels.delete)}</Text>
 			</Button>

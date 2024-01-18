@@ -1,9 +1,11 @@
 import useDateRange from 'components/hooks/useDateRange';
 import { isAfter } from 'date-fns';
 import { incrementDateRange } from 'lib/date';
-import { Button, Icon, Icons } from 'react-basics';
+import { Button } from 'react-basics';
 import DateFilter from './DateFilter';
 import styles from './WebsiteDateFilter.module.css';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function WebsiteDateFilter({ websiteId }: { websiteId: string }) {
 	const [dateRange, setDateRange] = useDateRange(websiteId);
@@ -26,13 +28,13 @@ export function WebsiteDateFilter({ websiteId }: { websiteId: string }) {
 			{value !== 'all' && selectedUnit && (
 				<div className={styles.buttons}>
 					<Button onClick={() => handleIncrement(1)}>
-						<Icon rotate={90}>
-							<Icons.ChevronDown />
+						<Icon>
+							<ChevronLeft />
 						</Icon>
 					</Button>
 					<Button onClick={() => handleIncrement(-1)} disabled={isFutureDate}>
-						<Icon rotate={270}>
-							<Icons.ChevronDown />
+						<Icon>
+							<ChevronRight />
 						</Icon>
 					</Button>
 				</div>

@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Icon, Modal, Dropdown, Item, Text, Flexbox } from 'react-basics';
+import { Modal, Dropdown, Item, Text, Flexbox } from 'react-basics';
 import { endOfYear, isSameDay } from 'date-fns';
 import DatePickerForm from 'components/metrics/DatePickerForm';
 import useLocale from 'components/hooks/useLocale';
 import useMessages from 'components/hooks/useMessages';
-import Icons from 'components/icons';
 import { formatDate } from 'lib/date';
+import { Calendar } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export interface DateFilterProps {
 	value: string;
@@ -151,7 +152,7 @@ const CustomRange = ({ startDate, endDate, selectedUnit, onClick }) => {
 	return (
 		<Flexbox gap={10} alignItems="center" wrap="nowrap">
 			<Icon className="mr-2" onClick={handleClick}>
-				<Icons.Calendar />
+				<Calendar />
 			</Icon>
 			<Text>
 				{monthFormat ? (

@@ -1,5 +1,5 @@
 import { ReactNode, useMemo, useState } from 'react';
-import { Loading, Icon, Text, SearchField } from 'react-basics';
+import { Loading, Text, SearchField } from 'react-basics';
 import classNames from 'classnames';
 import useApi from 'components/hooks/useApi';
 import { percentFilter } from 'lib/filters';
@@ -9,11 +9,12 @@ import ErrorMessage from 'components/common/ErrorMessage';
 import LinkButton from 'components/common/LinkButton';
 import ListTable, { ListTableProps } from './ListTable';
 import { DEFAULT_ANIMATION_DURATION } from 'lib/constants';
-import Icons from 'components/icons';
 import useMessages from 'components/hooks/useMessages';
 import useLocale from 'components/hooks/useLocale';
 import useFormat from 'components//hooks/useFormat';
 import styles from './MetricsTable.module.css';
+import { ArrowRight } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export interface MetricsTableProps extends ListTableProps {
 	websiteId: string;
@@ -145,7 +146,7 @@ export function MetricsTable({
 					<LinkButton href={makeUrl({ view: type })} variant="quiet">
 						<Text>{formatMessage(labels.more)}</Text>
 						<Icon size="sm" rotate={dir === 'rtl' ? 180 : 0}>
-							<Icons.ArrowRight />
+							<ArrowRight />
 						</Icon>
 					</LinkButton>
 				)}

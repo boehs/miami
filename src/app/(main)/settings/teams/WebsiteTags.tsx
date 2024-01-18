@@ -1,5 +1,7 @@
-import { Button, Icon, Icons, Text } from 'react-basics';
+import { Button, Text } from 'react-basics';
 import styles from './WebsiteTags.module.css';
+import { X } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function WebsiteTags({
 	items = [],
@@ -26,7 +28,7 @@ export function WebsiteTags({
 								<b>{`${website.name}`}</b>
 							</Text>
 							<Icon>
-								<Icons.Close />
+								<X />
 							</Icon>
 						</Button>
 					</div>

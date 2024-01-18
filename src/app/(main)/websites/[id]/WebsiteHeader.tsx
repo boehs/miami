@@ -1,14 +1,15 @@
 'use client';
 import { ReactNode } from 'react';
 import classNames from 'classnames';
-import { Text, Button, Icon } from 'react-basics';
+import { Text, Button } from 'react-basics';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Favicon from 'components/common/Favicon';
 import ActiveUsers from 'components/metrics/ActiveUsers';
-import Icons from 'components/icons';
 import { useMessages, useWebsite } from 'components/hooks';
 import styles from './WebsiteHeader.module.css';
+import { Clock, Database, PanelsTopLeft, PieChart } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function WebsiteHeader({
 	websiteId,
@@ -27,22 +28,22 @@ export function WebsiteHeader({
 	const links = [
 		{
 			label: formatMessage(labels.overview),
-			icon: <Icons.Overview />,
+			icon: <PanelsTopLeft />,
 			path: '',
 		},
 		{
 			label: formatMessage(labels.realtime),
-			icon: <Icons.Clock />,
+			icon: <Clock />,
 			path: '/realtime',
 		},
 		{
 			label: formatMessage(labels.reports),
-			icon: <Icons.Reports />,
+			icon: <PieChart />,
 			path: '/reports',
 		},
 		{
 			label: formatMessage(labels.eventData),
-			icon: <Icons.Nodes />,
+			icon: <Database />,
 			path: '/event-data',
 		},
 	];

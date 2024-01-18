@@ -4,7 +4,7 @@ import ReportMenu from '../[id]/ReportMenu';
 import ReportBody from '../[id]/ReportBody';
 import EventDataParameters from './EventDataParameters';
 import EventDataTable from './EventDataTable';
-import Nodes from 'assets/nodes.svg';
+import { Database } from 'lucide-react';
 
 const defaultParameters = {
 	type: 'event-data',
@@ -14,7 +14,7 @@ const defaultParameters = {
 export default function EventDataReport({ reportId }: { reportId: string }) {
 	return (
 		<Report reportId={reportId} defaultParameters={defaultParameters}>
-			<ReportHeader icon={<Nodes />} />
+			<ReportHeader icon={<Database />} />
 			<ReportMenu>
 				<EventDataParameters />
 			</ReportMenu>

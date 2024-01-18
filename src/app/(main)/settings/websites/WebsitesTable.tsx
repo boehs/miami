@@ -1,9 +1,11 @@
 import { ReactNode, useContext } from 'react';
 import Link from 'next/link';
-import { Button, Text, Icon, Icons, GridTable, GridColumn, useBreakpoint } from 'react-basics';
+import { Button, Text, GridTable, GridColumn, useBreakpoint } from 'react-basics';
 import useMessages from 'components/hooks/useMessages';
 import useUser from 'components/hooks/useUser';
 import SettingsContext from '../SettingsContext';
+import Icon from 'components/Icon';
+import { Edit, ExternalLink } from 'lucide-react';
 
 export interface WebsitesTableProps {
 	data: any[];
@@ -55,7 +57,7 @@ export function WebsitesTable({
 									<Link href={`${settingsPath}/${id}`}>
 										<Button>
 											<Icon>
-												<Icons.Edit />
+												<Edit />
 											</Icon>
 											<Text>{formatMessage(labels.edit)}</Text>
 										</Button>
@@ -65,7 +67,7 @@ export function WebsitesTable({
 									<Link href={`${websitesPath}/${id}`}>
 										<Button>
 											<Icon>
-												<Icons.External />
+												<ExternalLink />
 											</Icon>
 											<Text>{formatMessage(labels.view)}</Text>
 										</Button>

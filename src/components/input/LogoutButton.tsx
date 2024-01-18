@@ -1,6 +1,8 @@
-import { Button, Icon, Icons, TooltipPopup } from 'react-basics';
+import { Button, TooltipPopup } from 'react-basics';
 import Link from 'next/link';
 import useMessages from 'components/hooks/useMessages';
+import Icon from 'components/Icon';
+import { LogOut } from 'lucide-react';
 
 export function LogoutButton({
 	tooltipPosition = 'top',
@@ -13,7 +15,7 @@ export function LogoutButton({
 			<TooltipPopup label={formatMessage(labels.logout)} position={tooltipPosition}>
 				<Button variant="quiet">
 					<Icon>
-						<Icons.Logout />
+						<LogOut />
 					</Icon>
 				</Button>
 			</TooltipPopup>

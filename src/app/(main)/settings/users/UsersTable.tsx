@@ -1,10 +1,12 @@
-import { Button, Text, Icon, Icons, GridTable, GridColumn, useBreakpoint } from 'react-basics';
+import { Button, Text, GridTable, GridColumn, useBreakpoint } from 'react-basics';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import { ROLES } from 'lib/constants';
 import useMessages from 'components/hooks/useMessages';
 import useLocale from 'components/hooks/useLocale';
 import UserDeleteButton from './UserDeleteButton';
+import { Edit } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function UsersTable({ data = [] }: { data: any[] }) {
 	const { formatMessage, labels } = useMessages();
@@ -37,7 +39,7 @@ export function UsersTable({ data = [] }: { data: any[] }) {
 							<Link href={`/settings/users/${id}`}>
 								<Button>
 									<Icon>
-										<Icons.Edit />
+										<Edit />
 									</Icon>
 									<Text>{formatMessage(labels.edit)}</Text>
 								</Button>

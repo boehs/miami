@@ -3,9 +3,11 @@ import useMessages from 'components/hooks/useMessages';
 import useUser from 'components/hooks/useUser';
 import { ROLES } from 'lib/constants';
 import Link from 'next/link';
-import { Button, GridColumn, GridTable, Icon, Icons, Text, useBreakpoint } from 'react-basics';
+import { Button, GridColumn, GridTable, Text, useBreakpoint } from 'react-basics';
 import TeamDeleteButton from './TeamDeleteButton';
 import TeamLeaveButton from './TeamLeaveButton';
+import { Edit } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function TeamsTable({ data = [] }: { data: any[] }) {
 	const { formatMessage, labels } = useMessages();
@@ -31,7 +33,7 @@ export function TeamsTable({ data = [] }: { data: any[] }) {
 							<Link href={`/settings/teams/${id}`}>
 								<Button>
 									<Icon>
-										<Icons.Edit />
+										<Edit />
 									</Icon>
 									<Text>{formatMessage(isOwner ? labels.edit : labels.view)}</Text>
 								</Button>

@@ -1,7 +1,9 @@
 import useApi from 'components/hooks/useApi';
 import useMessages from 'components/hooks/useMessages';
-import { Icon, Icons, LoadingButton, Text } from 'react-basics';
+import { X } from 'lucide-react';
+import { LoadingButton, Text } from 'react-basics';
 import { setValue } from 'store/cache';
+import Icon from 'components/Icon';
 
 export function TeamMemberRemoveButton({
 	teamId,
@@ -36,7 +38,7 @@ export function TeamMemberRemoveButton({
 			isLoading={isPending}
 		>
 			<Icon>
-				<Icons.Close />
+				<X />
 			</Icon>
 			<Text>{formatMessage(labels.remove)}</Text>
 		</LoadingButton>

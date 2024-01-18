@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { useMessages } from 'components/hooks';
 import {
-	Icon,
 	Form,
 	FormButtons,
 	FormInput,
@@ -11,12 +10,13 @@ import {
 	SubmitButton,
 	TextField,
 } from 'react-basics';
-import Icons from 'components/icons';
 import UrlAddForm from './UrlAddForm';
 import { ReportContext } from '../[id]/Report';
 import BaseParameters from '../[id]/BaseParameters';
 import ParameterList from '../[id]/ParameterList';
 import PopupForm from '../[id]/PopupForm';
+import Icon from 'components/Icon';
+import { Plus } from 'lucide-react';
 
 export function FunnelParameters() {
 	const { report, runReport, updateReport, isRunning } = useContext(ReportContext);
@@ -49,7 +49,7 @@ export function FunnelParameters() {
 		return (
 			<PopupTrigger>
 				<Icon>
-					<Icons.Plus />
+					<Plus />
 				</Icon>
 				<Popup position="right" alignment="start">
 					<PopupForm>

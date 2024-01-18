@@ -6,8 +6,8 @@ import Report from '../[id]/Report';
 import ReportHeader from '../[id]/ReportHeader';
 import ReportMenu from '../[id]/ReportMenu';
 import ReportBody from '../[id]/ReportBody';
-import Funnel from 'assets/funnel.svg';
 import { REPORT_TYPES } from 'lib/constants';
+import { Cone } from 'lucide-react';
 
 const defaultParameters = {
 	type: REPORT_TYPES.funnel,
@@ -17,7 +17,7 @@ const defaultParameters = {
 export default function FunnelReport({ reportId }) {
 	return (
 		<Report reportId={reportId} defaultParameters={defaultParameters}>
-			<ReportHeader icon={<Funnel />} />
+			<ReportHeader icon={<Cone />} />
 			<ReportMenu>
 				<FunnelParameters />
 			</ReportMenu>

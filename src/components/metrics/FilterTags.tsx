@@ -1,9 +1,11 @@
 import { safeDecodeURI } from 'next-basics';
-import { Button, Icon, Icons, Text } from 'react-basics';
+import { Button, Text } from 'react-basics';
 import useNavigation from 'components/hooks/useNavigation';
 import useMessages from 'components/hooks/useMessages';
 import useFormat from 'components/hooks/useFormat';
 import styles from './FilterTags.module.css';
+import { X } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function FilterTags({ params }) {
 	const { formatMessage, labels } = useMessages();
@@ -39,14 +41,14 @@ export function FilterTags({ params }) {
 							<b>{formatMessage(labels[key])}</b> = {formatValue(safeDecodeURI(params[key]), key)}
 						</Text>
 						<Icon>
-							<Icons.Close />
+							<X />
 						</Icon>
 					</div>
 				);
 			})}
 			<Button size="sm" variant="quiet" onClick={handleResetFilter}>
 				<Icon>
-					<Icons.Close />
+					<X />
 				</Icon>
 				<Text>{formatMessage(labels.clearAll)}</Text>
 			</Button>

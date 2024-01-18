@@ -1,6 +1,6 @@
 'use client';
 import { useContext, useEffect, useState, Key } from 'react';
-import { Item, Tabs, useToasts, Button, Text, Icon, Icons, Loading } from 'react-basics';
+import { Item, Tabs, useToasts, Button, Text, Loading } from 'react-basics';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import PageHeader from 'components/layout/PageHeader';
@@ -11,6 +11,8 @@ import ShareUrl from './[id]/ShareUrl';
 import useApi from 'components/hooks/useApi';
 import useMessages from 'components/hooks/useMessages';
 import SettingsContext from '../SettingsContext';
+import { ExternalLink } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function WebsiteSettings({ websiteId, openExternal = false }) {
 	const router = useRouter();
@@ -60,7 +62,7 @@ export function WebsiteSettings({ websiteId, openExternal = false }) {
 				<Link href={`${websitesPath}/${websiteId}`} target={openExternal ? '_blank' : null}>
 					<Button variant="primary">
 						<Icon>
-							<Icons.External />
+							<ExternalLink />
 						</Icon>
 						<Text>{formatMessage(labels.view)}</Text>
 					</Button>

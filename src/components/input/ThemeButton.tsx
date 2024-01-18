@@ -1,8 +1,9 @@
 import { useTransition, animated } from '@react-spring/web';
-import { Button, Icon } from 'react-basics';
+import { Button } from 'react-basics';
 import useTheme from 'components/hooks/useTheme';
-import Icons from 'components/icons';
 import styles from './ThemeButton.module.css';
+import { Moon, Sun } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function ThemeButton() {
 	const { theme, saveTheme } = useTheme();
@@ -28,7 +29,7 @@ export function ThemeButton() {
 		<Button variant="quiet" className={styles.button} onClick={handleClick}>
 			{transitions((style, item) => (
 				<animated.div key={item} style={style}>
-					<Icon className={styles.icon}>{item === 'light' ? <Icons.Sun /> : <Icons.Moon />}</Icon>
+					<Icon className={styles.icon}>{item === 'light' ? <Sun /> : <Moon />}</Icon>
 				</animated.div>
 			))}
 		</Button>

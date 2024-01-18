@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Icon, Text, TooltipPopup } from 'react-basics';
+import { Text, TooltipPopup } from 'react-basics';
 import classNames from 'classnames';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import Icons from 'components/icons';
 import styles from './NavGroup.module.css';
+import { ChevronDown } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export interface NavGroupProps {
 	title: string;
@@ -37,7 +38,7 @@ export function NavGroup({
 				<div className={styles.header} onClick={allowExpand ? handleExpand : undefined}>
 					<Text>{title}</Text>
 					<Icon size="sm" rotate={expanded ? 0 : -90}>
-						<Icons.ChevronDown />
+						<ChevronDown />
 					</Icon>
 				</div>
 			)}

@@ -6,11 +6,9 @@ import {
 	FormButtons,
 	SubmitButton,
 	PopupTrigger,
-	Icon,
 	Popup,
 	TooltipPopup,
 } from 'react-basics';
-import Icons from 'components/icons';
 import BaseParameters from '../[id]/BaseParameters';
 import { ReportContext } from '../[id]/Report';
 import ParameterList from '../[id]/ParameterList';
@@ -18,6 +16,8 @@ import FilterSelectForm from '../[id]/FilterSelectForm';
 import FieldSelectForm from '../[id]/FieldSelectForm';
 import PopupForm from '../[id]/PopupForm';
 import styles from './InsightsParameters.module.css';
+import Icon from 'components/Icon';
+import { Plus } from 'lucide-react';
 
 export function InsightsParameters() {
 	const { report, runReport, updateReport, isRunning } = useContext(ReportContext);
@@ -76,7 +76,7 @@ export function InsightsParameters() {
 			<PopupTrigger>
 				<TooltipPopup label={formatMessage(labels.add)} position="top">
 					<Icon>
-						<Icons.Plus />
+						<Plus />
 					</Icon>
 				</TooltipPopup>
 				<Popup position="bottom" alignment="start" className={styles.popup}>

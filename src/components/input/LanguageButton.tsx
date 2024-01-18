@@ -1,9 +1,10 @@
-import { Icon, Button, PopupTrigger, Popup, Text } from 'react-basics';
+import { Button, PopupTrigger, Popup, Text } from 'react-basics';
 import classNames from 'classnames';
 import { languages } from 'lib/lang';
 import useLocale from 'components/hooks/useLocale';
-import Icons from 'components/icons';
 import styles from './LanguageButton.module.css';
+import { Check, Globe } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function LanguageButton() {
 	const { locale, saveLocale, dir } = useLocale();
@@ -19,7 +20,7 @@ export function LanguageButton() {
 		<PopupTrigger>
 			<Button variant="quiet">
 				<Icon>
-					<Icons.Globe />
+					<Globe />
 				</Icon>
 			</Button>
 			<Popup position="bottom" alignment={dir === 'rtl' ? 'start' : 'end'}>
@@ -36,7 +37,7 @@ export function LanguageButton() {
 										<Text>{label}</Text>
 										{value === locale && (
 											<Icon className={styles.icon}>
-												<Icons.Check />
+												<Check />
 											</Icon>
 										)}
 									</div>

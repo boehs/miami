@@ -1,6 +1,8 @@
-import { Icon, Icons, Text } from 'react-basics';
+import { Text } from 'react-basics';
 import styles from './ErrorMessage.module.css';
 import useMessages from 'components/hooks/useMessages';
+import { AlertTriangle } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function ErrorMessage() {
 	const { formatMessage, messages } = useMessages();
@@ -8,7 +10,7 @@ export function ErrorMessage() {
 	return (
 		<div className={styles.error}>
 			<Icon className={styles.icon} size="lg">
-				<Icons.Alert />
+				<AlertTriangle />
 			</Icon>
 			<Text>{formatMessage(messages.error)}</Text>
 		</div>

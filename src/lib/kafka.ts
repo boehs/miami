@@ -28,7 +28,7 @@ function getClient() {
 						username,
 						password,
 					},
-			  }
+				}
 			: {};
 
 	const client: Kafka = new Kafka({

@@ -1,4 +1,4 @@
-import { Icons, Icon, Text, Dropdown, Item } from 'react-basics';
+import { Text, Dropdown, Item } from 'react-basics';
 import BrowsersTable from 'components/metrics/BrowsersTable';
 import CountriesTable from 'components/metrics/CountriesTable';
 import RegionsTable from 'components/metrics/RegionsTable';
@@ -16,6 +16,8 @@ import useNavigation from 'components/hooks/useNavigation';
 import useMessages from 'components/hooks/useMessages';
 import LinkButton from 'components/common/LinkButton';
 import styles from './WebsiteExpandedView.module.css';
+import { ArrowRight } from 'lucide-react';
+import Icon from 'components/Icon';
 
 const views = {
 	url: PagesTable,
@@ -124,7 +126,7 @@ export default function WebsiteExpandedView({
 			<div className={styles.menu}>
 				<LinkButton href={pathname} className={styles.back} variant="quiet" scroll={false}>
 					<Icon rotate={180}>
-						<Icons.ArrowRight />
+						<ArrowRight />
 					</Icon>
 					<Text>{formatMessage(labels.back)}</Text>
 				</LinkButton>

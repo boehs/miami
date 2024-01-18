@@ -1,5 +1,5 @@
 'use client';
-import { Button, Icon, Icons, Loading, Text } from 'react-basics';
+import { Button, Loading, Text } from 'react-basics';
 import Link from 'next/link';
 import PageHeader from 'components/layout/PageHeader';
 import Pager from 'components/common/Pager';
@@ -13,6 +13,8 @@ import useMessages from 'components/hooks/useMessages';
 import useLocale from 'components/hooks/useLocale';
 import useFilterQuery from 'components/hooks/useFilterQuery';
 import { useUser } from 'components/hooks';
+import { ArrowRight } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function Dashboard() {
 	const { formatMessage, labels, messages } = useMessages();
@@ -51,7 +53,7 @@ export function Dashboard() {
 					<Link href="/settings/websites">
 						<Button>
 							<Icon rotate={dir === 'rtl' ? 180 : 0}>
-								<Icons.ArrowRight />
+								<ArrowRight />
 							</Icon>
 							<Text>{formatMessage(messages.goToSettings)}</Text>
 						</Button>

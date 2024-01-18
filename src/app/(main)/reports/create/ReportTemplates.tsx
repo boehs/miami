@@ -1,12 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { Button, Icons, Text, Icon } from 'react-basics';
+import { Button, Text } from 'react-basics';
 import PageHeader from 'components/layout/PageHeader';
-import Funnel from 'assets/funnel.svg';
-import Lightbulb from 'assets/lightbulb.svg';
-import Magnet from 'assets/magnet.svg';
 import styles from './ReportTemplates.module.css';
 import { useMessages } from 'components/hooks';
+import Icon from 'components/Icon';
+import { Cone, Lightbulb, Magnet, Plus } from 'lucide-react';
 
 function ReportItem({ title, description, url, icon }) {
 	const { formatMessage, labels } = useMessages();
@@ -22,7 +21,7 @@ function ReportItem({ title, description, url, icon }) {
 				<Link href={url}>
 					<Button variant="primary">
 						<Icon>
-							<Icons.Plus />
+							<Plus />
 						</Icon>
 						<Text>{formatMessage(labels.create)}</Text>
 					</Button>
@@ -46,7 +45,7 @@ export function ReportTemplates({ showHeader = true }) {
 			title: formatMessage(labels.funnel),
 			description: formatMessage(labels.funnelDescription),
 			url: '/reports/funnel',
-			icon: <Funnel />,
+			icon: <Cone />,
 		},
 		{
 			title: formatMessage(labels.retention),

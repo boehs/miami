@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import {
 	Text,
-	Icon,
 	CalendarMonthSelect,
 	CalendarYearSelect,
 	Button,
@@ -9,10 +8,11 @@ import {
 	Popup,
 } from 'react-basics';
 import { startOfMonth, endOfMonth } from 'date-fns';
-import Icons from 'components/icons';
 import { useLocale } from 'components/hooks';
 import { formatDate } from 'lib/date';
 import styles from './MonthSelect.module.css';
+import { ChevronDown } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export function MonthSelect({ date = new Date(), onChange }) {
 	const { locale, dateLocale } = useLocale();
@@ -32,7 +32,7 @@ export function MonthSelect({ date = new Date(), onChange }) {
 					<Button className={styles.input} variant="quiet">
 						<Text>{month}</Text>
 						<Icon size="sm">
-							<Icons.ChevronDown />
+							<ChevronDown />
 						</Icon>
 					</Button>
 					<Popup className={styles.popup} alignment="start">
@@ -49,7 +49,7 @@ export function MonthSelect({ date = new Date(), onChange }) {
 					<Button className={styles.input} variant="quiet">
 						<Text>{year}</Text>
 						<Icon size="sm">
-							<Icons.ChevronDown />
+							<ChevronDown />
 						</Icon>
 					</Button>
 					<Popup className={styles.popup} alignment="start">

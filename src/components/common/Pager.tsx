@@ -1,7 +1,9 @@
 import classNames from 'classnames';
-import { Button, Icon, Icons } from 'react-basics';
+import { Button } from 'react-basics';
 import useMessages from 'components/hooks/useMessages';
 import styles from './Pager.module.css';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Icon from 'components/Icon';
 
 export interface PagerProps {
 	page: number;
@@ -37,16 +39,16 @@ export function Pager({ page, pageSize, count, onPageChange, className }: PagerP
 			<div className={styles.count}>{formatMessage(labels.numberOfRecords, { x: count })}</div>
 			<div className={styles.nav}>
 				<Button onClick={() => handlePageChange(-1)} disabled={firstPage}>
-					<Icon rotate={90}>
-						<Icons.ChevronDown />
+					<Icon>
+						<ChevronLeft />
 					</Icon>
 				</Button>
 				<div className={styles.text}>
 					{formatMessage(labels.pageOf, { current: page, total: maxPage })}
 				</div>
 				<Button onClick={() => handlePageChange(1)} disabled={lastPage}>
-					<Icon rotate={270}>
-						<Icons.ChevronDown />
+					<Icon>
+						<ChevronRight />
 					</Icon>
 				</Button>
 			</div>

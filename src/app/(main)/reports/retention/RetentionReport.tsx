@@ -5,10 +5,10 @@ import Report from '../[id]/Report';
 import ReportHeader from '../[id]/ReportHeader';
 import ReportMenu from '../[id]/ReportMenu';
 import ReportBody from '../[id]/ReportBody';
-import Magnet from 'assets/magnet.svg';
 import { REPORT_TYPES } from 'lib/constants';
 import { parseDateRange } from 'lib/date';
 import { endOfMonth, startOfMonth } from 'date-fns';
+import { Magnet } from 'lucide-react';
 
 const defaultParameters = {
 	type: REPORT_TYPES.retention,
