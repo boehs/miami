@@ -11,6 +11,8 @@ Umami is a simple, fast, privacy-focused alternative to Google Analytics, and Mi
   - Click map to set country
     - Set region and city from home page
 
+You can see a demo of miami [here](https://espy.boehs.org/share/JGBYO4bVg3kZVQUb).
+
 ## Getting started
 
 A detailed getting started guide can be found at [https://umami.is/docs/](https://umami.is/docs/)
