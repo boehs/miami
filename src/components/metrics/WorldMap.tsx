@@ -18,13 +18,22 @@ export function WorldMap({ data = [], className }: { data?: any[]; className?: s
   const { theme, colors } = useTheme();
   const { locale } = useLocale();
   const { formatMessage, labels } = useMessages();
-  const { makeUrl, router } = useNavigation();
+  const { makeUrl, router, query } = useNavigation();
   const countryNames = useCountryNames(locale);
   const visitorsLabel = formatMessage(labels.visitors).toLocaleLowerCase(locale);
   const metrics = useMemo(() => (data ? percentFilter(data) : []), [data]);
 
   function getFillColor(code: string) {
     if (code === 'AQ') return;
+
+    if (query.country !== undefined) {
+      if (query.country == code)
+        return colord(colors.map.baseColor)
+          [theme === 'light' ? 'lighten' : 'darken'](0.4 * (1.0 / 100))
+          .toHex();
+      else return colors.map.fillColor;
+    }
+
     const country = metrics?.find(({ x }) => x === code);
 
     if (!country) {
