@@ -15,7 +15,12 @@ export default {
       delimiters: ['', ''],
       preventAssignment: true,
     }),
-    buble({ objectAssign: true }),
+    buble({
+      objectAssign: true,
+      transforms: {
+        dangerousForOf: true,
+      },
+    }),
     terser({ compress: { evaluate: false } }),
   ],
 };
