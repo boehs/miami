@@ -46,16 +46,12 @@
 		"format": "prettier --write ."
 	},
 	"lint-staged": {
-		"**/*.{js,jsx,ts,tsx}": [
+		"**/*": [
 			"prettier --write",
 			"eslint"
 		],
 		"**/*.css": [
-			"stylelint --fix",
-			"prettier --write"
-		],
-		"**/*.json": [
-			"prettier --write"
+			"stylelint --fix"
 		]
 	},
 	"cacheDirectories": [
