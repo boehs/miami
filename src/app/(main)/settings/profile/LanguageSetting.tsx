@@ -5,28 +5,28 @@ import { languages } from 'lib/lang';
 import useMessages from 'components/hooks/useMessages';
 
 export function LanguageSetting() {
-  const { formatMessage, labels } = useMessages();
-  const { locale, saveLocale } = useLocale();
-  const options = Object.keys(languages);
+	const { formatMessage, labels } = useMessages();
+	const { locale, saveLocale } = useLocale();
+	const options = Object.keys(languages);
 
-  const handleReset = () => saveLocale(DEFAULT_LOCALE);
+	const handleReset = () => saveLocale(DEFAULT_LOCALE);
 
-  const renderValue = value => languages[value].label;
+	const renderValue = value => languages[value].label;
 
-  return (
-    <Flexbox gap={10}>
-      <Dropdown
-        items={options}
-        value={locale}
-        renderValue={renderValue}
-        onChange={saveLocale}
-        menuProps={{ style: { height: 300, width: 300 } }}
-      >
-        {item => <Item key={item}>{languages[item].label}</Item>}
-      </Dropdown>
-      <Button onClick={handleReset}>{formatMessage(labels.reset)}</Button>
-    </Flexbox>
-  );
+	return (
+		<Flexbox gap={10}>
+			<Dropdown
+				items={options}
+				value={locale}
+				renderValue={renderValue}
+				onChange={saveLocale}
+				menuProps={{ style: { height: 300, width: 300 } }}
+			>
+				{item => <Item key={item}>{languages[item].label}</Item>}
+			</Dropdown>
+			<Button onClick={handleReset}>{formatMessage(labels.reset)}</Button>
+		</Flexbox>
+	);
 }
 
 export default LanguageSetting;

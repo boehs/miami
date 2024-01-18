@@ -5,38 +5,38 @@ import { EVENT_TYPE, FILTER_COLUMNS, SESSION_COLUMNS } from 'lib/constants';
 import { QueryFilters } from 'lib/types';
 
 export async function getInsights(
-  ...args: [websiteId: string, fields: { name: string; type?: string }[], filters: QueryFilters]
+	...args: [websiteId: string, fields: { name: string; type?: string }[], filters: QueryFilters]
 ) {
-  return runQuery({
-    [PRISMA]: () => relationalQuery(...args),
-    [CLICKHOUSE]: () => clickhouseQuery(...args),
-  });
+	return runQuery({
+		[PRISMA]: () => relationalQuery(...args),
+		[CLICKHOUSE]: () => clickhouseQuery(...args),
+	});
 }
 
 async function relationalQuery(
-  websiteId: string,
-  fields: { name: string; type?: string }[],
-  filters: QueryFilters,
+	websiteId: string,
+	fields: { name: string; type?: string }[],
+	filters: QueryFilters,
 ): Promise<
-  {
-    x: string;
-    y: number;
-  }[]
+	{
+		x: string;
+		y: number;
+	}[]
 > {
-  const { parseFilters, rawQuery } = prisma;
-  const { filterQuery, joinSession, params } = await parseFilters(
-    websiteId,
-    {
-      ...filters,
-      eventType: EVENT_TYPE.pageView,
-    },
-    {
-      joinSession: !!fields.find(({ name }) => SESSION_COLUMNS.includes(name)),
-    },
-  );
+	const { parseFilters, rawQuery } = prisma;
+	const { filterQuery, joinSession, params } = await parseFilters(
+		websiteId,
+		{
+			...filters,
+			eventType: EVENT_TYPE.pageView,
+		},
+		{
+			joinSession: !!fields.find(({ name }) => SESSION_COLUMNS.includes(name)),
+		},
+	);
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select 
       ${parseFields(fields)}
     from website_event
@@ -49,28 +49,28 @@ async function relationalQuery(
     order by 1 desc, 2 desc
     limit 500
     `,
-    params,
-  );
+		params,
+	);
 }
 
 async function clickhouseQuery(
-  websiteId: string,
-  fields: { name: string; type?: string }[],
-  filters: QueryFilters,
+	websiteId: string,
+	fields: { name: string; type?: string }[],
+	filters: QueryFilters,
 ): Promise<
-  {
-    x: string;
-    y: number;
-  }[]
+	{
+		x: string;
+		y: number;
+	}[]
 > {
-  const { parseFilters, rawQuery } = clickhouse;
-  const { filterQuery, params } = await parseFilters(websiteId, {
-    ...filters,
-    eventType: EVENT_TYPE.pageView,
-  });
+	const { parseFilters, rawQuery } = clickhouse;
+	const { filterQuery, params } = await parseFilters(websiteId, {
+		...filters,
+		eventType: EVENT_TYPE.pageView,
+	});
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select 
       ${parseFields(fields)}
     from website_event
@@ -82,34 +82,34 @@ async function clickhouseQuery(
     order by 1 desc, 2 desc
     limit 500
     `,
-    params,
-  ).then(a => {
-    return Object.values(a).map(a => {
-      return {
-        ...a,
-        views: Number(a.views),
-        visitors: Number(a.visitors),
-      };
-    });
-  });
+		params,
+	).then(a => {
+		return Object.values(a).map(a => {
+			return {
+				...a,
+				views: Number(a.views),
+				visitors: Number(a.visitors),
+			};
+		});
+	});
 }
 
 function parseFields(fields: any[]) {
-  const query = fields.reduce(
-    (arr, field) => {
-      const { name } = field;
+	const query = fields.reduce(
+		(arr, field) => {
+			const { name } = field;
 
-      return arr.concat(`${FILTER_COLUMNS[name]} as "${name}"`);
-    },
-    ['count(*) as views', 'count(distinct website_event.session_id) as visitors'],
-  );
+			return arr.concat(`${FILTER_COLUMNS[name]} as "${name}"`);
+		},
+		['count(*) as views', 'count(distinct website_event.session_id) as visitors'],
+	);
 
-  return query.join(',\n');
+	return query.join(',\n');
 }
 
 function parseGroupBy(fields: { name: any }[]) {
-  if (!fields.length) {
-    return '';
-  }
-  return `group by ${fields.map(({ name }) => FILTER_COLUMNS[name]).join(',')}`;
+	if (!fields.length) {
+		return '';
+	}
+	return `group by ${fields.map(({ name }) => FILTER_COLUMNS[name]).join(',')}`;
 }

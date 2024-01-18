@@ -5,30 +5,30 @@ import Icons from 'components/icons';
 import useMessages from 'components/hooks/useMessages';
 
 export function RefreshButton({
-  websiteId,
-  isLoading,
+	websiteId,
+	isLoading,
 }: {
-  websiteId: string;
-  isLoading?: boolean;
+	websiteId: string;
+	isLoading?: boolean;
 }) {
-  const { formatMessage, labels } = useMessages();
-  const [dateRange] = useDateRange(websiteId);
+	const { formatMessage, labels } = useMessages();
+	const [dateRange] = useDateRange(websiteId);
 
-  function handleClick() {
-    if (!isLoading && dateRange) {
-      setWebsiteDateRange(websiteId, dateRange);
-    }
-  }
+	function handleClick() {
+		if (!isLoading && dateRange) {
+			setWebsiteDateRange(websiteId, dateRange);
+		}
+	}
 
-  return (
-    <TooltipPopup label={formatMessage(labels.refresh)}>
-      <LoadingButton isLoading={isLoading} onClick={handleClick}>
-        <Icon>
-          <Icons.Refresh />
-        </Icon>
-      </LoadingButton>
-    </TooltipPopup>
-  );
+	return (
+		<TooltipPopup label={formatMessage(labels.refresh)}>
+			<LoadingButton isLoading={isLoading} onClick={handleClick}>
+				<Icon>
+					<Icons.Refresh />
+				</Icon>
+			</LoadingButton>
+		</TooltipPopup>
+	);
 }
 
 export default RefreshButton;

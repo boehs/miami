@@ -7,34 +7,34 @@ import { getActiveVisitors } from 'queries';
 import * as yup from 'yup';
 
 export interface WebsiteActiveRequestQuery {
-  id: string;
+	id: string;
 }
 
 const schema = {
-  GET: yup.object().shape({
-    id: yup.string().uuid().required(),
-  }),
+	GET: yup.object().shape({
+		id: yup.string().uuid().required(),
+	}),
 };
 
 export default async (
-  req: NextApiRequestQueryBody<WebsiteActiveRequestQuery>,
-  res: NextApiResponse<WebsiteActive>,
+	req: NextApiRequestQueryBody<WebsiteActiveRequestQuery>,
+	res: NextApiResponse<WebsiteActive>,
 ) => {
-  await useCors(req, res);
-  await useAuth(req, res);
-  await useValidate(schema, req, res);
+	await useCors(req, res);
+	await useAuth(req, res);
+	await useValidate(schema, req, res);
 
-  const { id: websiteId } = req.query;
+	const { id: websiteId } = req.query;
 
-  if (req.method === 'GET') {
-    if (!(await canViewWebsite(req.auth, websiteId))) {
-      return unauthorized(res);
-    }
+	if (req.method === 'GET') {
+		if (!(await canViewWebsite(req.auth, websiteId))) {
+			return unauthorized(res);
+		}
 
-    const result = await getActiveVisitors(websiteId);
+		const result = await getActiveVisitors(websiteId);
 
-    return ok(res, result);
-  }
+		return ok(res, result);
+	}
 
-  return methodNotAllowed(res);
+	return methodNotAllowed(res);
 };

@@ -1,16 +1,16 @@
 {
-  "name": "Umami",
-  "description": "Umami is a simple, fast, website analytics alternative to Google Analytics.",
-  "keywords": ["analytics", "charts", "statistics", "web-analytics"],
-  "website": "https://umami.is",
-  "repository": "https://github.com/umami-software/umami",
-  "addons": ["heroku-postgresql"],
-  "env": {
-    "APP_SECRET": {
-      "description": "Used to generate unique values for your installation",
-      "required": true,
-      "generator": "secret"
-    }
-  },
-  "success_url": "/"
+	"name": "Umami",
+	"description": "Umami is a simple, fast, website analytics alternative to Google Analytics.",
+	"keywords": ["analytics", "charts", "statistics", "web-analytics"],
+	"website": "https://umami.is",
+	"repository": "https://github.com/umami-software/umami",
+	"addons": ["heroku-postgresql"],
+	"env": {
+		"APP_SECRET": {
+			"description": "Used to generate unique values for your installation",
+			"required": true,
+			"generator": "secret"
+		}
+	},
+	"success_url": "/"
 }

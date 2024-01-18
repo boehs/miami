@@ -8,50 +8,50 @@ import { getRetention } from 'queries';
 import * as yup from 'yup';
 
 export interface RetentionRequestBody {
-  websiteId: string;
-  dateRange: { startDate: string; endDate: string; timezone: string };
+	websiteId: string;
+	dateRange: { startDate: string; endDate: string; timezone: string };
 }
 
 const schema = {
-  POST: yup.object().shape({
-    websiteId: yup.string().uuid().required(),
-    dateRange: yup
-      .object()
-      .shape({
-        startDate: yup.date().required(),
-        endDate: yup.date().required(),
-        timezone: TimezoneTest,
-      })
-      .required(),
-  }),
+	POST: yup.object().shape({
+		websiteId: yup.string().uuid().required(),
+		dateRange: yup
+			.object()
+			.shape({
+				startDate: yup.date().required(),
+				endDate: yup.date().required(),
+				timezone: TimezoneTest,
+			})
+			.required(),
+	}),
 };
 
 export default async (
-  req: NextApiRequestQueryBody<any, RetentionRequestBody>,
-  res: NextApiResponse,
+	req: NextApiRequestQueryBody<any, RetentionRequestBody>,
+	res: NextApiResponse,
 ) => {
-  await useCors(req, res);
-  await useAuth(req, res);
-  await useValidate(schema, req, res);
+	await useCors(req, res);
+	await useAuth(req, res);
+	await useValidate(schema, req, res);
 
-  if (req.method === 'POST') {
-    const {
-      websiteId,
-      dateRange: { startDate, endDate, timezone },
-    } = req.body;
+	if (req.method === 'POST') {
+		const {
+			websiteId,
+			dateRange: { startDate, endDate, timezone },
+		} = req.body;
 
-    if (!(await canViewWebsite(req.auth, websiteId))) {
-      return unauthorized(res);
-    }
+		if (!(await canViewWebsite(req.auth, websiteId))) {
+			return unauthorized(res);
+		}
 
-    const data = await getRetention(websiteId, {
-      startDate: new Date(startDate),
-      endDate: new Date(endDate),
-      timezone,
-    });
+		const data = await getRetention(websiteId, {
+			startDate: new Date(startDate),
+			endDate: new Date(endDate),
+			timezone,
+		});
 
-    return ok(res, data);
-  }
+		return ok(res, data);
+	}
 
-  return methodNotAllowed(res);
+	return methodNotAllowed(res);
 };

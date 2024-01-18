@@ -4,21 +4,21 @@ import useMessages from 'components/hooks/useMessages';
 import TeamAddForm from './TeamAddForm';
 
 export function TeamsAddButton({ onAdd }: { onAdd?: () => void }) {
-  const { formatMessage, labels } = useMessages();
+	const { formatMessage, labels } = useMessages();
 
-  return (
-    <ModalTrigger>
-      <Button variant="primary">
-        <Icon>
-          <Icons.Plus />
-        </Icon>
-        <Text>{formatMessage(labels.createTeam)}</Text>
-      </Button>
-      <Modal title={formatMessage(labels.createTeam)}>
-        {(close: () => void) => <TeamAddForm onSave={onAdd} onClose={close} />}
-      </Modal>
-    </ModalTrigger>
-  );
+	return (
+		<ModalTrigger>
+			<Button variant="primary">
+				<Icon>
+					<Icons.Plus />
+				</Icon>
+				<Text>{formatMessage(labels.createTeam)}</Text>
+			</Button>
+			<Modal title={formatMessage(labels.createTeam)}>
+				{(close: () => void) => <TeamAddForm onSave={onAdd} onClose={close} />}
+			</Modal>
+		</ModalTrigger>
+	);
 }
 
 export default TeamsAddButton;

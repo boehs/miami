@@ -4,33 +4,33 @@ import { saveDashboard } from 'store/dashboard';
 import useMessages from 'components/hooks/useMessages';
 
 export function DashboardSettingsButton() {
-  const { formatMessage, labels } = useMessages();
+	const { formatMessage, labels } = useMessages();
 
-  const handleToggleCharts = () => {
-    saveDashboard(state => ({ showCharts: !state.showCharts }));
-  };
+	const handleToggleCharts = () => {
+		saveDashboard(state => ({ showCharts: !state.showCharts }));
+	};
 
-  const handleEdit = () => {
-    saveDashboard({ editing: true });
-  };
+	const handleEdit = () => {
+		saveDashboard({ editing: true });
+	};
 
-  return (
-    <Flexbox gap={10}>
-      <TooltipPopup label={formatMessage(labels.toggleCharts)} position="bottom">
-        <Button onClick={handleToggleCharts}>
-          <Icon>
-            <Icons.BarChart />
-          </Icon>
-        </Button>
-      </TooltipPopup>
-      <Button onClick={handleEdit}>
-        <Icon>
-          <Icons.Edit />
-        </Icon>
-        <Text>{formatMessage(labels.edit)}</Text>
-      </Button>
-    </Flexbox>
-  );
+	return (
+		<Flexbox gap={10}>
+			<TooltipPopup label={formatMessage(labels.toggleCharts)} position="bottom">
+				<Button onClick={handleToggleCharts}>
+					<Icon>
+						<Icons.BarChart />
+					</Icon>
+				</Button>
+			</TooltipPopup>
+			<Button onClick={handleEdit}>
+				<Icon>
+					<Icons.Edit />
+				</Icon>
+				<Text>{formatMessage(labels.edit)}</Text>
+			</Button>
+		</Flexbox>
+	);
 }
 
 export default DashboardSettingsButton;

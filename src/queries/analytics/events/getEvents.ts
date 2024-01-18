@@ -3,32 +3,32 @@ import { CLICKHOUSE, PRISMA, runQuery } from 'lib/db';
 import prisma from 'lib/prisma';
 
 export function getEvents(...args: [websiteId: string, startDate: Date, eventType: number]) {
-  return runQuery({
-    [PRISMA]: () => relationalQuery(...args),
-    [CLICKHOUSE]: () => clickhouseQuery(...args),
-  });
+	return runQuery({
+		[PRISMA]: () => relationalQuery(...args),
+		[CLICKHOUSE]: () => clickhouseQuery(...args),
+	});
 }
 
 function relationalQuery(websiteId: string, startDate: Date, eventType: number) {
-  return prisma.client.websiteEvent.findMany({
-    where: {
-      websiteId,
-      eventType,
-      createdAt: {
-        gte: startDate,
-      },
-    },
-    orderBy: {
-      createdAt: 'asc',
-    },
-  });
+	return prisma.client.websiteEvent.findMany({
+		where: {
+			websiteId,
+			eventType,
+			createdAt: {
+				gte: startDate,
+			},
+		},
+		orderBy: {
+			createdAt: 'asc',
+		},
+	});
 }
 
 function clickhouseQuery(websiteId: string, startDate: Date, eventType: number) {
-  const { rawQuery } = clickhouse;
+	const { rawQuery } = clickhouse;
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select
       event_id as id,
       website_id as websiteId, 
@@ -44,10 +44,10 @@ function clickhouseQuery(websiteId: string, startDate: Date, eventType: number) 
       and event_type = {eventType:UInt32}
     order by created_at asc
     `,
-    {
-      websiteId,
-      startDate,
-      eventType,
-    },
-  );
+		{
+			websiteId,
+			startDate,
+			eventType,
+		},
+	);
 }

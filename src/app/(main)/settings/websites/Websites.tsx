@@ -4,12 +4,12 @@ import WebsitesDataTable from './WebsitesDataTable';
 import WebsitesHeader from './WebsitesHeader';
 
 export default function Websites() {
-  const { user } = useUser();
+	const { user } = useUser();
 
-  return (
-    <>
-      <WebsitesHeader />
-      <WebsitesDataTable userId={user.id} />
-    </>
-  );
+	return (
+		<>
+			<WebsitesHeader />
+			<WebsitesDataTable userId={user.id} />
+		</>
+	);
 }

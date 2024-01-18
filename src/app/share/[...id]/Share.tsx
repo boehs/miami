@@ -7,19 +7,19 @@ import Header from './Header';
 import Footer from './Footer';
 
 export default function Share({ shareId, link, image, name }) {
-  const { shareToken, isLoading } = useShareToken(shareId);
+	const { shareToken, isLoading } = useShareToken(shareId);
 
-  if (isLoading || !shareToken) {
-    return null;
-  }
+	if (isLoading || !shareToken) {
+		return null;
+	}
 
-  return (
-    <div className={styles.container}>
-      <Page>
-        <Header image={image} link={link} name={name} />
-        <WebsiteDetails websiteId={shareToken.websiteId} />
-        <Footer />
-      </Page>
-    </div>
-  );
+	return (
+		<div className={styles.container}>
+			<Page>
+				<Header image={image} link={link} name={name} />
+				<WebsiteDetails websiteId={shareToken.websiteId} />
+				<Footer />
+			</Page>
+		</div>
+	);
 }

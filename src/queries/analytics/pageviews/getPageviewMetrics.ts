@@ -5,38 +5,38 @@ import { EVENT_TYPE, SESSION_COLUMNS } from 'lib/constants';
 import { QueryFilters } from 'lib/types';
 
 export async function getPageviewMetrics(
-  ...args: [websiteId: string, columns: string, filters: QueryFilters, limit?: number]
+	...args: [websiteId: string, columns: string, filters: QueryFilters, limit?: number]
 ) {
-  return runQuery({
-    [PRISMA]: () => relationalQuery(...args),
-    [CLICKHOUSE]: () => clickhouseQuery(...args),
-  });
+	return runQuery({
+		[PRISMA]: () => relationalQuery(...args),
+		[CLICKHOUSE]: () => clickhouseQuery(...args),
+	});
 }
 
 async function relationalQuery(
-  websiteId: string,
-  column: string,
-  filters: QueryFilters,
-  limit: number = 100,
+	websiteId: string,
+	column: string,
+	filters: QueryFilters,
+	limit: number = 100,
 ) {
-  const { rawQuery, parseFilters } = prisma;
-  const { filterQuery, joinSession, params } = await parseFilters(
-    websiteId,
-    {
-      ...filters,
-      eventType: column === 'event_name' ? EVENT_TYPE.customEvent : EVENT_TYPE.pageView,
-    },
-    { joinSession: SESSION_COLUMNS.includes(column) },
-  );
+	const { rawQuery, parseFilters } = prisma;
+	const { filterQuery, joinSession, params } = await parseFilters(
+		websiteId,
+		{
+			...filters,
+			eventType: column === 'event_name' ? EVENT_TYPE.customEvent : EVENT_TYPE.pageView,
+		},
+		{ joinSession: SESSION_COLUMNS.includes(column) },
+	);
 
-  let excludeDomain = '';
-  if (column === 'referrer_domain') {
-    excludeDomain =
-      'and (website_event.referrer_domain != {{websiteDomain}} or website_event.referrer_domain is null)';
-  }
+	let excludeDomain = '';
+	if (column === 'referrer_domain') {
+		excludeDomain =
+			'and (website_event.referrer_domain != {{websiteDomain}} or website_event.referrer_domain is null)';
+	}
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select ${column} x, count(*) y
     from website_event
     ${joinSession}
@@ -49,29 +49,29 @@ async function relationalQuery(
     order by 2 desc
     limit ${limit}
     `,
-    params,
-  );
+		params,
+	);
 }
 
 async function clickhouseQuery(
-  websiteId: string,
-  column: string,
-  filters: QueryFilters,
-  limit: number = 100,
+	websiteId: string,
+	column: string,
+	filters: QueryFilters,
+	limit: number = 100,
 ): Promise<{ x: string; y: number }[]> {
-  const { rawQuery, parseFilters } = clickhouse;
-  const { filterQuery, params } = await parseFilters(websiteId, {
-    ...filters,
-    eventType: column === 'event_name' ? EVENT_TYPE.customEvent : EVENT_TYPE.pageView,
-  });
+	const { rawQuery, parseFilters } = clickhouse;
+	const { filterQuery, params } = await parseFilters(websiteId, {
+		...filters,
+		eventType: column === 'event_name' ? EVENT_TYPE.customEvent : EVENT_TYPE.pageView,
+	});
 
-  let excludeDomain = '';
-  if (column === 'referrer_domain') {
-    excludeDomain = 'and referrer_domain != {websiteDomain:String}';
-  }
+	let excludeDomain = '';
+	if (column === 'referrer_domain') {
+		excludeDomain = 'and referrer_domain != {websiteDomain:String}';
+	}
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select ${column} x, count(*) y
     from website_event
     where website_id = {websiteId:UUID}
@@ -83,10 +83,10 @@ async function clickhouseQuery(
     order by y desc
     limit ${limit}
     `,
-    params,
-  ).then(a => {
-    return Object.values(a).map(a => {
-      return { x: a.x, y: Number(a.y) };
-    });
-  });
+		params,
+	).then(a => {
+		return Object.values(a).map(a => {
+			return { x: a.x, y: Number(a.y) };
+		});
+	});
 }

@@ -5,84 +5,84 @@ import useApi from './useApi';
 import useMessages from './useMessages';
 
 export function useReport(reportId: string, defaultParameters: { [key: string]: any }) {
-  const [report, setReport] = useState(null);
-  const [isRunning, setIsRunning] = useState(false);
-  const { get, post } = useApi();
-  const [timezone] = useTimezone();
-  const { formatMessage, labels } = useMessages();
+	const [report, setReport] = useState(null);
+	const [isRunning, setIsRunning] = useState(false);
+	const { get, post } = useApi();
+	const [timezone] = useTimezone();
+	const { formatMessage, labels } = useMessages();
 
-  const baseParameters = {
-    name: formatMessage(labels.untitled),
-    description: '',
-    parameters: {},
-  };
+	const baseParameters = {
+		name: formatMessage(labels.untitled),
+		description: '',
+		parameters: {},
+	};
 
-  const loadReport = async (id: string) => {
-    const data: any = await get(`/reports/${id}`);
+	const loadReport = async (id: string) => {
+		const data: any = await get(`/reports/${id}`);
 
-    const { dateRange } = data?.parameters || {};
-    const { startDate, endDate } = dateRange || {};
+		const { dateRange } = data?.parameters || {};
+		const { startDate, endDate } = dateRange || {};
 
-    if (startDate && endDate) {
-      dateRange.startDate = new Date(startDate);
-      dateRange.endDate = new Date(endDate);
-    }
+		if (startDate && endDate) {
+			dateRange.startDate = new Date(startDate);
+			dateRange.endDate = new Date(endDate);
+		}
 
-    setReport(data);
-  };
+		setReport(data);
+	};
 
-  const runReport = useCallback(
-    async (parameters: { [key: string]: any }) => {
-      setIsRunning(true);
+	const runReport = useCallback(
+		async (parameters: { [key: string]: any }) => {
+			setIsRunning(true);
 
-      const { type } = report;
+			const { type } = report;
 
-      const data = await post(`/reports/${type}`, { ...parameters, timezone });
+			const data = await post(`/reports/${type}`, { ...parameters, timezone });
 
-      setReport(
-        produce((state: any) => {
-          state.parameters = parameters;
-          state.data = data;
+			setReport(
+				produce((state: any) => {
+					state.parameters = parameters;
+					state.data = data;
 
-          return state;
-        }),
-      );
+					return state;
+				}),
+			);
 
-      setIsRunning(false);
-    },
-    [report, timezone],
-  );
+			setIsRunning(false);
+		},
+		[report, timezone],
+	);
 
-  const updateReport = useCallback(
-    async (data: { [x: string]: any; parameters: any }) => {
-      setReport(
-        produce((state: any) => {
-          const { parameters, ...rest } = data;
+	const updateReport = useCallback(
+		async (data: { [x: string]: any; parameters: any }) => {
+			setReport(
+				produce((state: any) => {
+					const { parameters, ...rest } = data;
 
-          if (parameters) {
-            state.parameters = { ...state.parameters, ...parameters };
-          }
+					if (parameters) {
+						state.parameters = { ...state.parameters, ...parameters };
+					}
 
-          for (const key in rest) {
-            state[key] = rest[key];
-          }
+					for (const key in rest) {
+						state[key] = rest[key];
+					}
 
-          return state;
-        }),
-      );
-    },
-    [report],
-  );
+					return state;
+				}),
+			);
+		},
+		[report],
+	);
 
-  useEffect(() => {
-    if (!reportId) {
-      setReport({ ...baseParameters, ...defaultParameters });
-    } else {
-      loadReport(reportId);
-    }
-  }, []);
+	useEffect(() => {
+		if (!reportId) {
+			setReport({ ...baseParameters, ...defaultParameters });
+		} else {
+			loadReport(reportId);
+		}
+	}, []);
 
-  return { report, runReport, updateReport, isRunning };
+	return { report, runReport, updateReport, isRunning };
 }
 
 export default useReport;

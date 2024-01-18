@@ -5,36 +5,36 @@ const pkg = require('../package.json');
 const url = 'https://api.umami.is/v1/telemetry';
 
 async function sendTelemetry(type) {
-  const { default: isDocker } = await import('is-docker');
-  const { default: fetch } = await import('node-fetch');
+	const { default: isDocker } = await import('is-docker');
+	const { default: fetch } = await import('node-fetch');
 
-  const data = {
-    type,
-    payload: {
-      version: pkg.version,
-      node: process.version,
-      platform: os.platform(),
-      arch: os.arch(),
-      os: `${os.type()} (${os.version()})`,
-      isDocker: isDocker(),
-      isCi: isCI,
-    },
-  };
+	const data = {
+		type,
+		payload: {
+			version: pkg.version,
+			node: process.version,
+			platform: os.platform(),
+			arch: os.arch(),
+			os: `${os.type()} (${os.version()})`,
+			isDocker: isDocker(),
+			isCi: isCI,
+		},
+	};
 
-  try {
-    await fetch(url, {
-      method: 'post',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-  } catch {
-    // Ignore
-  }
+	try {
+		await fetch(url, {
+			method: 'post',
+			cache: 'no-cache',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+	} catch {
+		// Ignore
+	}
 }
 
 module.exports = {
-  sendTelemetry,
+	sendTelemetry,
 };

@@ -11,56 +11,56 @@ import * as yup from 'yup';
 
 export interface UsersRequestQuery extends SearchFilter {}
 export interface UsersRequestBody {
-  username: string;
-  password: string;
-  id: string;
-  role: Role;
+	username: string;
+	password: string;
+	id: string;
+	role: Role;
 }
 
 const schema = {
-  GET: yup.object().shape({
-    ...pageInfo,
-  }),
-  POST: yup.object().shape({
-    username: yup.string().max(255).required(),
-    password: yup.string().required(),
-    id: yup.string().uuid(),
-    role: yup
-      .string()
-      .matches(/admin|user|view-only/i)
-      .required(),
-  }),
+	GET: yup.object().shape({
+		...pageInfo,
+	}),
+	POST: yup.object().shape({
+		username: yup.string().max(255).required(),
+		password: yup.string().required(),
+		id: yup.string().uuid(),
+		role: yup
+			.string()
+			.matches(/admin|user|view-only/i)
+			.required(),
+	}),
 };
 
 export default async (
-  req: NextApiRequestQueryBody<UsersRequestQuery, UsersRequestBody>,
-  res: NextApiResponse<User[] | User>,
+	req: NextApiRequestQueryBody<UsersRequestQuery, UsersRequestBody>,
+	res: NextApiResponse<User[] | User>,
 ) => {
-  await useAuth(req, res);
-  await useValidate(schema, req, res);
+	await useAuth(req, res);
+	await useValidate(schema, req, res);
 
-  if (req.method === 'POST') {
-    if (!(await canCreateUser(req.auth))) {
-      return unauthorized(res);
-    }
+	if (req.method === 'POST') {
+		if (!(await canCreateUser(req.auth))) {
+			return unauthorized(res);
+		}
 
-    const { username, password, role, id } = req.body;
+		const { username, password, role, id } = req.body;
 
-    const existingUser = await getUserByUsername(username, { showDeleted: true });
+		const existingUser = await getUserByUsername(username, { showDeleted: true });
 
-    if (existingUser) {
-      return badRequest(res, 'User already exists');
-    }
+		if (existingUser) {
+			return badRequest(res, 'User already exists');
+		}
 
-    const created = await createUser({
-      id: id || uuid(),
-      username,
-      password: hashPassword(password),
-      role: role ?? ROLES.user,
-    });
+		const created = await createUser({
+			id: id || uuid(),
+			username,
+			password: hashPassword(password),
+			role: role ?? ROLES.user,
+		});
 
-    return ok(res, created);
-  }
+		return ok(res, created);
+	}
 
-  return methodNotAllowed(res);
+	return methodNotAllowed(res);
 };

@@ -4,22 +4,22 @@ import { CLICKHOUSE, PRISMA, runQuery } from 'lib/db';
 import { QueryFilters, WebsiteEventData } from 'lib/types';
 
 export async function getEventDataFields(
-  ...args: [websiteId: string, filters: QueryFilters & { field?: string }]
+	...args: [websiteId: string, filters: QueryFilters & { field?: string }]
 ): Promise<WebsiteEventData[]> {
-  return runQuery({
-    [PRISMA]: () => relationalQuery(...args),
-    [CLICKHOUSE]: () => clickhouseQuery(...args),
-  });
+	return runQuery({
+		[PRISMA]: () => relationalQuery(...args),
+		[CLICKHOUSE]: () => clickhouseQuery(...args),
+	});
 }
 
 async function relationalQuery(websiteId: string, filters: QueryFilters & { field?: string }) {
-  const { rawQuery, parseFilters } = prisma;
-  const { filterQuery, params } = await parseFilters(websiteId, filters, {
-    columns: { field: 'event_key' },
-  });
+	const { rawQuery, parseFilters } = prisma;
+	const { filterQuery, params } = await parseFilters(websiteId, filters, {
+		columns: { field: 'event_key' },
+	});
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select
       event_key as "fieldName",
       data_type as "dataType",
@@ -33,21 +33,21 @@ async function relationalQuery(websiteId: string, filters: QueryFilters & { fiel
     order by 3 desc, 2 desc, 1 asc
     limit 100
     `,
-    params,
-  );
+		params,
+	);
 }
 
 async function clickhouseQuery(
-  websiteId: string,
-  filters: QueryFilters & { field?: string },
+	websiteId: string,
+	filters: QueryFilters & { field?: string },
 ): Promise<{ fieldName: string; dataType: number; fieldValue: string; total: number }[]> {
-  const { rawQuery, parseFilters } = clickhouse;
-  const { filterQuery, params } = await parseFilters(websiteId, filters, {
-    columns: { field: 'event_key' },
-  });
+	const { rawQuery, parseFilters } = clickhouse;
+	const { filterQuery, params } = await parseFilters(websiteId, filters, {
+		columns: { field: 'event_key' },
+	});
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select
       event_key as fieldName,
       data_type as dataType,
@@ -61,15 +61,15 @@ async function clickhouseQuery(
     order by 3 desc, 2 desc, 1 asc
     limit 100
     `,
-    params,
-  ).then(a => {
-    return Object.values(a).map(a => {
-      return {
-        fieldName: a.fieldName,
-        dataType: Number(a.dataType),
-        fieldValue: a.fieldValue,
-        total: Number(a.total),
-      };
-    });
-  });
+		params,
+	).then(a => {
+		return Object.values(a).map(a => {
+			return {
+				fieldName: a.fieldName,
+				dataType: Number(a.dataType),
+				fieldValue: a.fieldValue,
+				total: Number(a.total),
+			};
+		});
+	});
 }

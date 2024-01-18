@@ -7,32 +7,32 @@ import { deleteTeamUser } from 'queries';
 import * as yup from 'yup';
 
 export interface TeamUserRequestQuery {
-  id: string;
-  userId: string;
+	id: string;
+	userId: string;
 }
 
 const schema = {
-  DELETE: yup.object().shape({
-    id: yup.string().uuid().required(),
-    userId: yup.string().uuid().required(),
-  }),
+	DELETE: yup.object().shape({
+		id: yup.string().uuid().required(),
+		userId: yup.string().uuid().required(),
+	}),
 };
 
 export default async (req: NextApiRequestQueryBody<TeamUserRequestQuery>, res: NextApiResponse) => {
-  await useAuth(req, res);
-  await useValidate(schema, req, res);
+	await useAuth(req, res);
+	await useValidate(schema, req, res);
 
-  if (req.method === 'DELETE') {
-    const { id: teamId, userId } = req.query;
+	if (req.method === 'DELETE') {
+		const { id: teamId, userId } = req.query;
 
-    if (!(await canDeleteTeamUser(req.auth, teamId, userId))) {
-      return unauthorized(res, 'You must be the owner of this team.');
-    }
+		if (!(await canDeleteTeamUser(req.auth, teamId, userId))) {
+			return unauthorized(res, 'You must be the owner of this team.');
+		}
 
-    await deleteTeamUser(teamId, userId);
+		await deleteTeamUser(teamId, userId);
 
-    return ok(res);
-  }
+		return ok(res);
+	}
 
-  return methodNotAllowed(res);
+	return methodNotAllowed(res);
 };

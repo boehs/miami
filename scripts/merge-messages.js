@@ -14,27 +14,27 @@ with the existing files under `lang`. Any newly added
 keys will be printed to the console.
  */
 files.forEach(file => {
-  const lang = require(`../src/lang/${file}`);
+	const lang = require(`../src/lang/${file}`);
 
-  console.log(`Merging ${file}`);
+	console.log(`Merging ${file}`);
 
-  const merged = keys.reduce((obj, key) => {
-    const message = lang[key];
+	const merged = keys.reduce((obj, key) => {
+		const message = lang[key];
 
-    if (file === 'en-US.json') {
-      obj[key] = messages[key].defaultMessage;
-    } else {
-      obj[key] = message || messages[key].defaultMessage;
-    }
+		if (file === 'en-US.json') {
+			obj[key] = messages[key].defaultMessage;
+		} else {
+			obj[key] = message || messages[key].defaultMessage;
+		}
 
-    if (!message) {
-      console.log(`* Added key ${key}`);
-    }
+		if (!message) {
+			console.log(`* Added key ${key}`);
+		}
 
-    return obj;
-  }, {});
+		return obj;
+	}, {});
 
-  const json = prettier.format(JSON.stringify(merged), { parser: 'json' });
+	const json = prettier.format(JSON.stringify(merged), { parser: 'json' });
 
-  fs.writeFileSync(path.resolve(dest, file), json);
+	fs.writeFileSync(path.resolve(dest, file), json);
 });

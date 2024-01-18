@@ -8,104 +8,104 @@ import useMessages from 'components/hooks/useMessages';
 import { RealtimeData } from 'lib/types';
 
 export function RealtimeUrls({
-  websiteDomain,
-  data,
+	websiteDomain,
+	data,
 }: {
-  websiteDomain: string;
-  data: RealtimeData;
+	websiteDomain: string;
+	data: RealtimeData;
 }) {
-  const { formatMessage, labels } = useMessages();
-  const { pageviews } = data || {};
-  const [filter, setFilter] = useState<Key>(FILTER_REFERRERS);
-  const limit = 15;
+	const { formatMessage, labels } = useMessages();
+	const { pageviews } = data || {};
+	const [filter, setFilter] = useState<Key>(FILTER_REFERRERS);
+	const limit = 15;
 
-  const buttons = [
-    {
-      label: formatMessage(labels.referrers),
-      key: FILTER_REFERRERS,
-    },
-    {
-      label: formatMessage(labels.pages),
-      key: FILTER_PAGES,
-    },
-  ];
+	const buttons = [
+		{
+			label: formatMessage(labels.referrers),
+			key: FILTER_REFERRERS,
+		},
+		{
+			label: formatMessage(labels.pages),
+			key: FILTER_PAGES,
+		},
+	];
 
-  const renderLink = ({ x }) => {
-    const domain = x.startsWith('/') ? websiteDomain : '';
-    return (
-      <a href={`//${domain}${x}`} target="_blank" rel="noreferrer noopener">
-        {x}
-      </a>
-    );
-  };
+	const renderLink = ({ x }) => {
+		const domain = x.startsWith('/') ? websiteDomain : '';
+		return (
+			<a href={`//${domain}${x}`} target="_blank" rel="noreferrer noopener">
+				{x}
+			</a>
+		);
+	};
 
-  const [referrers = [], pages = []] = useMemo(() => {
-    if (pageviews) {
-      const referrers = percentFilter(
-        pageviews
-          .reduce((arr, { referrerDomain }) => {
-            if (referrerDomain) {
-              const row = arr.find(({ x }) => x === referrerDomain);
+	const [referrers = [], pages = []] = useMemo(() => {
+		if (pageviews) {
+			const referrers = percentFilter(
+				pageviews
+					.reduce((arr, { referrerDomain }) => {
+						if (referrerDomain) {
+							const row = arr.find(({ x }) => x === referrerDomain);
 
-              if (!row) {
-                arr.push({ x: referrerDomain, y: 1 });
-              } else {
-                row.y += 1;
-              }
-            }
-            return arr;
-          }, [])
-          .sort(thenby.firstBy('y', -1))
-          .slice(0, limit),
-      );
+							if (!row) {
+								arr.push({ x: referrerDomain, y: 1 });
+							} else {
+								row.y += 1;
+							}
+						}
+						return arr;
+					}, [])
+					.sort(thenby.firstBy('y', -1))
+					.slice(0, limit),
+			);
 
-      const pages = percentFilter(
-        pageviews
-          .reduce((arr, { urlPath }) => {
-            const row = arr.find(({ x }) => x === urlPath);
+			const pages = percentFilter(
+				pageviews
+					.reduce((arr, { urlPath }) => {
+						const row = arr.find(({ x }) => x === urlPath);
 
-            if (!row) {
-              arr.push({ x: urlPath, y: 1 });
-            } else {
-              row.y += 1;
-            }
-            return arr;
-          }, [])
-          .sort(thenby.firstBy('y', -1))
-          .slice(0, limit),
-      );
+						if (!row) {
+							arr.push({ x: urlPath, y: 1 });
+						} else {
+							row.y += 1;
+						}
+						return arr;
+					}, [])
+					.sort(thenby.firstBy('y', -1))
+					.slice(0, limit),
+			);
 
-      return [referrers, pages];
-    }
+			return [referrers, pages];
+		}
 
-    return [];
-  }, [pageviews]);
+		return [];
+	}, [pageviews]);
 
-  return (
-    <>
-      <Flexbox justifyContent="center">
-        <ButtonGroup items={buttons} selectedKey={filter} onSelect={setFilter}>
-          {({ key, label }) => <Button key={key}>{label}</Button>}
-        </ButtonGroup>
-      </Flexbox>
-      {filter === FILTER_REFERRERS && (
-        <ListTable
-          title={formatMessage(labels.referrers)}
-          metric={formatMessage(labels.views)}
-          renderLabel={renderLink}
-          data={referrers}
-        />
-      )}
-      {filter === FILTER_PAGES && (
-        <ListTable
-          title={formatMessage(labels.pages)}
-          metric={formatMessage(labels.views)}
-          renderLabel={renderLink}
-          data={pages}
-        />
-      )}
-    </>
-  );
+	return (
+		<>
+			<Flexbox justifyContent="center">
+				<ButtonGroup items={buttons} selectedKey={filter} onSelect={setFilter}>
+					{({ key, label }) => <Button key={key}>{label}</Button>}
+				</ButtonGroup>
+			</Flexbox>
+			{filter === FILTER_REFERRERS && (
+				<ListTable
+					title={formatMessage(labels.referrers)}
+					metric={formatMessage(labels.views)}
+					renderLabel={renderLink}
+					data={referrers}
+				/>
+			)}
+			{filter === FILTER_PAGES && (
+				<ListTable
+					title={formatMessage(labels.pages)}
+					metric={formatMessage(labels.views)}
+					renderLabel={renderLink}
+					data={pages}
+				/>
+			)}
+		</>
+	);
 }
 
 export default RealtimeUrls;

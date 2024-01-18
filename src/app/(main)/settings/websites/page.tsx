@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 import Websites from './Websites';
 
 export default function () {
-  return <Websites />;
+	return <Websites />;
 }
 
 export const metadata: Metadata = {
-  title: 'Websites Settings | umami',
+	title: 'Websites Settings | umami',
 };

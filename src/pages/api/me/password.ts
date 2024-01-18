@@ -2,59 +2,59 @@ import { useAuth, useValidate } from 'lib/middleware';
 import { NextApiRequestQueryBody, User } from 'lib/types';
 import { NextApiResponse } from 'next';
 import {
-  badRequest,
-  checkPassword,
-  forbidden,
-  hashPassword,
-  methodNotAllowed,
-  ok,
+	badRequest,
+	checkPassword,
+	forbidden,
+	hashPassword,
+	methodNotAllowed,
+	ok,
 } from 'next-basics';
 import { getUserById, updateUser } from 'queries';
 import * as yup from 'yup';
 
 export interface UserPasswordRequestQuery {
-  id: string;
+	id: string;
 }
 
 export interface UserPasswordRequestBody {
-  currentPassword: string;
-  newPassword: string;
+	currentPassword: string;
+	newPassword: string;
 }
 
 const schema = {
-  POST: yup.object().shape({
-    currentPassword: yup.string().required(),
-    newPassword: yup.string().min(8).required(),
-  }),
+	POST: yup.object().shape({
+		currentPassword: yup.string().required(),
+		newPassword: yup.string().min(8).required(),
+	}),
 };
 
 export default async (
-  req: NextApiRequestQueryBody<UserPasswordRequestQuery, UserPasswordRequestBody>,
-  res: NextApiResponse<User>,
+	req: NextApiRequestQueryBody<UserPasswordRequestQuery, UserPasswordRequestBody>,
+	res: NextApiResponse<User>,
 ) => {
-  if (process.env.CLOUD_MODE) {
-    return forbidden(res);
-  }
+	if (process.env.CLOUD_MODE) {
+		return forbidden(res);
+	}
 
-  await useAuth(req, res);
-  await useValidate(schema, req, res);
+	await useAuth(req, res);
+	await useValidate(schema, req, res);
 
-  const { currentPassword, newPassword } = req.body;
-  const { id } = req.auth.user;
+	const { currentPassword, newPassword } = req.body;
+	const { id } = req.auth.user;
 
-  if (req.method === 'POST') {
-    const user = await getUserById(id, { includePassword: true });
+	if (req.method === 'POST') {
+		const user = await getUserById(id, { includePassword: true });
 
-    if (!checkPassword(currentPassword, user.password)) {
-      return badRequest(res, 'Current password is incorrect');
-    }
+		if (!checkPassword(currentPassword, user.password)) {
+			return badRequest(res, 'Current password is incorrect');
+		}
 
-    const password = hashPassword(newPassword);
+		const password = hashPassword(newPassword);
 
-    const updated = await updateUser({ password }, { id });
+		const updated = await updateUser({ password }, { id });
 
-    return ok(res, updated);
-  }
+		return ok(res, updated);
+	}
 
-  return methodNotAllowed(res);
+	return methodNotAllowed(res);
 };

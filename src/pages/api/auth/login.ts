@@ -6,12 +6,12 @@ import { useValidate } from 'lib/middleware';
 import { NextApiRequestQueryBody, User } from 'lib/types';
 import { NextApiResponse } from 'next';
 import {
-  checkPassword,
-  createSecureToken,
-  forbidden,
-  methodNotAllowed,
-  ok,
-  unauthorized,
+	checkPassword,
+	createSecureToken,
+	forbidden,
+	methodNotAllowed,
+	ok,
+	unauthorized,
 } from 'next-basics';
 import { getUserByUsername } from 'queries';
 import * as yup from 'yup';
@@ -20,57 +20,57 @@ import { ROLES } from 'lib/constants';
 const log = debug('umami:auth');
 
 export interface LoginRequestBody {
-  username: string;
-  password: string;
+	username: string;
+	password: string;
 }
 
 export interface LoginResponse {
-  token: string;
-  user: User;
+	token: string;
+	user: User;
 }
 
 const schema = {
-  POST: yup.object().shape({
-    username: yup.string().required(),
-    password: yup.string().required(),
-  }),
+	POST: yup.object().shape({
+		username: yup.string().required(),
+		password: yup.string().required(),
+	}),
 };
 
 export default async (
-  req: NextApiRequestQueryBody<any, LoginRequestBody>,
-  res: NextApiResponse<LoginResponse>,
+	req: NextApiRequestQueryBody<any, LoginRequestBody>,
+	res: NextApiResponse<LoginResponse>,
 ) => {
-  if (process.env.DISABLE_LOGIN) {
-    return forbidden(res);
-  }
+	if (process.env.DISABLE_LOGIN) {
+		return forbidden(res);
+	}
 
-  await useValidate(schema, req, res);
+	await useValidate(schema, req, res);
 
-  if (req.method === 'POST') {
-    const { username, password } = req.body;
+	if (req.method === 'POST') {
+		const { username, password } = req.body;
 
-    const user = await getUserByUsername(username, { includePassword: true });
+		const user = await getUserByUsername(username, { includePassword: true });
 
-    if (user && checkPassword(password, user.password)) {
-      if (redis.enabled) {
-        const token = await saveAuth({ userId: user.id });
+		if (user && checkPassword(password, user.password)) {
+			if (redis.enabled) {
+				const token = await saveAuth({ userId: user.id });
 
-        return ok(res, { token, user });
-      }
+				return ok(res, { token, user });
+			}
 
-      const token = createSecureToken({ userId: user.id }, secret());
-      const { id, username, role, createdAt } = user;
+			const token = createSecureToken({ userId: user.id }, secret());
+			const { id, username, role, createdAt } = user;
 
-      return ok(res, {
-        token,
-        user: { id, username, role, createdAt, isAdmin: role === ROLES.admin },
-      });
-    }
+			return ok(res, {
+				token,
+				user: { id, username, role, createdAt, isAdmin: role === ROLES.admin },
+			});
+		}
 
-    log('Login failed:', { username, user });
+		log('Login failed:', { username, user });
 
-    return unauthorized(res, 'message.incorrect-username-password');
-  }
+		return unauthorized(res, 'message.incorrect-username-password');
+	}
 
-  return methodNotAllowed(res);
+	return methodNotAllowed(res);
 };

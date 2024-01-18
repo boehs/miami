@@ -5,19 +5,19 @@ const path = require('path');
 const del = require('del');
 
 function getDatabaseType(url = process.env.DATABASE_URL) {
-  const type = process.env.DATABASE_TYPE || (url && url.split(':')[0]);
+	const type = process.env.DATABASE_TYPE || (url && url.split(':')[0]);
 
-  if (type === 'postgres') {
-    return 'postgresql';
-  }
+	if (type === 'postgres') {
+		return 'postgresql';
+	}
 
-  return type;
+	return type;
 }
 
 const databaseType = getDatabaseType();
 
 if (!databaseType || !['mysql', 'postgresql'].includes(databaseType)) {
-  throw new Error('Missing or invalid database');
+	throw new Error('Missing or invalid database');
 }
 
 console.log(`Database type detected: ${databaseType}`);

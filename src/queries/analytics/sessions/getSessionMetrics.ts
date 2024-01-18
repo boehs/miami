@@ -5,35 +5,35 @@ import { EVENT_TYPE, SESSION_COLUMNS } from 'lib/constants';
 import { QueryFilters } from 'lib/types';
 
 export async function getSessionMetrics(
-  ...args: [websiteId: string, column: string, filters: QueryFilters, limit?: number]
+	...args: [websiteId: string, column: string, filters: QueryFilters, limit?: number]
 ) {
-  return runQuery({
-    [PRISMA]: () => relationalQuery(...args),
-    [CLICKHOUSE]: () => clickhouseQuery(...args),
-  });
+	return runQuery({
+		[PRISMA]: () => relationalQuery(...args),
+		[CLICKHOUSE]: () => clickhouseQuery(...args),
+	});
 }
 
 async function relationalQuery(
-  websiteId: string,
-  column: string,
-  filters: QueryFilters,
-  limit: number = 100,
+	websiteId: string,
+	column: string,
+	filters: QueryFilters,
+	limit: number = 100,
 ) {
-  const { parseFilters, rawQuery } = prisma;
-  const { filterQuery, joinSession, params } = await parseFilters(
-    websiteId,
-    {
-      ...filters,
-      eventType: EVENT_TYPE.pageView,
-    },
-    {
-      joinSession: SESSION_COLUMNS.includes(column),
-    },
-  );
-  const includeCountry = column === 'city' || column === 'subdivision1';
+	const { parseFilters, rawQuery } = prisma;
+	const { filterQuery, joinSession, params } = await parseFilters(
+		websiteId,
+		{
+			...filters,
+			eventType: EVENT_TYPE.pageView,
+		},
+		{
+			joinSession: SESSION_COLUMNS.includes(column),
+		},
+	);
+	const includeCountry = column === 'city' || column === 'subdivision1';
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select 
       ${column} x,
       count(distinct website_event.session_id) y
@@ -48,25 +48,25 @@ async function relationalQuery(
     ${includeCountry ? ', 3' : ''}
     order by 2 desc
     limit ${limit}`,
-    params,
-  );
+		params,
+	);
 }
 
 async function clickhouseQuery(
-  websiteId: string,
-  column: string,
-  filters: QueryFilters,
-  limit: number = 100,
+	websiteId: string,
+	column: string,
+	filters: QueryFilters,
+	limit: number = 100,
 ): Promise<{ x: string; y: number }[]> {
-  const { parseFilters, rawQuery } = clickhouse;
-  const { filterQuery, params } = await parseFilters(websiteId, {
-    ...filters,
-    eventType: EVENT_TYPE.pageView,
-  });
-  const includeCountry = column === 'city' || column === 'subdivision1';
+	const { parseFilters, rawQuery } = clickhouse;
+	const { filterQuery, params } = await parseFilters(websiteId, {
+		...filters,
+		eventType: EVENT_TYPE.pageView,
+	});
+	const includeCountry = column === 'city' || column === 'subdivision1';
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select
       ${column} x,
       count(distinct session_id) y
@@ -81,10 +81,10 @@ async function clickhouseQuery(
     order by y desc
     limit ${limit}
     `,
-    params,
-  ).then(a => {
-    return Object.values(a).map(a => {
-      return { x: a.x, y: Number(a.y), country: a.country };
-    });
-  });
+		params,
+	).then(a => {
+		return Object.values(a).map(a => {
+			return { x: a.x, y: Number(a.y), country: a.country };
+		});
+	});
 }

@@ -6,27 +6,27 @@ import useMessages from 'components/hooks/useMessages';
 import styles from './Page.module.css';
 
 export function Page({
-  className,
-  error,
-  isLoading,
-  children,
+	className,
+	error,
+	isLoading,
+	children,
 }: {
-  className?: string;
-  error?: unknown;
-  isLoading?: boolean;
-  children?: ReactNode;
+	className?: string;
+	error?: unknown;
+	isLoading?: boolean;
+	children?: ReactNode;
 }) {
-  const { formatMessage, messages } = useMessages();
+	const { formatMessage, messages } = useMessages();
 
-  if (error) {
-    return <Banner variant="error">{formatMessage(messages.error)}</Banner>;
-  }
+	if (error) {
+		return <Banner variant="error">{formatMessage(messages.error)}</Banner>;
+	}
 
-  if (isLoading) {
-    return <Loading position="page" />;
-  }
+	if (isLoading) {
+		return <Loading position="page" />;
+	}
 
-  return <div className={classNames(styles.page, className)}>{children}</div>;
+	return <div className={classNames(styles.page, className)}>{children}</div>;
 }
 
 export default Page;

@@ -7,19 +7,19 @@ import UsersHeader from './UsersHeader';
 import useCache from 'store/cache';
 
 export function UsersDataTable() {
-  const { get } = useApi();
-  const modified = useCache((state: any) => state?.users);
-  const queryResult = useFilterQuery({
-    queryKey: ['users', { modified }],
-    queryFn: (params: { [key: string]: any }) => get(`/admin/users`, params),
-  });
+	const { get } = useApi();
+	const modified = useCache((state: any) => state?.users);
+	const queryResult = useFilterQuery({
+		queryKey: ['users', { modified }],
+		queryFn: (params: { [key: string]: any }) => get(`/admin/users`, params),
+	});
 
-  return (
-    <>
-      <UsersHeader />
-      <DataTable queryResult={queryResult}>{({ data }) => <UsersTable data={data} />}</DataTable>
-    </>
-  );
+	return (
+		<>
+			<UsersHeader />
+			<DataTable queryResult={queryResult}>{({ data }) => <UsersTable data={data} />}</DataTable>
+		</>
+	);
 }
 
 export default UsersDataTable;

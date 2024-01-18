@@ -9,20 +9,20 @@ import Lightbulb from 'assets/lightbulb.svg';
 import { REPORT_TYPES } from 'lib/constants';
 
 const defaultParameters = {
-  type: REPORT_TYPES.insights,
-  parameters: { fields: [], filters: [] },
+	type: REPORT_TYPES.insights,
+	parameters: { fields: [], filters: [] },
 };
 
 export default function InsightsReport({ reportId }: { reportId: string }) {
-  return (
-    <Report reportId={reportId} defaultParameters={defaultParameters}>
-      <ReportHeader icon={<Lightbulb />} />
-      <ReportMenu>
-        <InsightsParameters />
-      </ReportMenu>
-      <ReportBody>
-        <InsightsTable />
-      </ReportBody>
-    </Report>
-  );
+	return (
+		<Report reportId={reportId} defaultParameters={defaultParameters}>
+			<ReportHeader icon={<Lightbulb />} />
+			<ReportMenu>
+				<InsightsParameters />
+			</ReportMenu>
+			<ReportBody>
+				<InsightsTable />
+			</ReportBody>
+		</Report>
+	);
 }

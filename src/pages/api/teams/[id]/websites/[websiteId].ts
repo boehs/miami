@@ -7,35 +7,35 @@ import { deleteTeamWebsite } from 'queries/admin/teamWebsite';
 import * as yup from 'yup';
 
 export interface TeamWebsitesRequestQuery {
-  id: string;
-  websiteId: string;
+	id: string;
+	websiteId: string;
 }
 
 const schema = {
-  DELETE: yup.object().shape({
-    id: yup.string().uuid().required(),
-    websiteId: yup.string().uuid().required(),
-  }),
+	DELETE: yup.object().shape({
+		id: yup.string().uuid().required(),
+		websiteId: yup.string().uuid().required(),
+	}),
 };
 
 export default async (
-  req: NextApiRequestQueryBody<TeamWebsitesRequestQuery>,
-  res: NextApiResponse,
+	req: NextApiRequestQueryBody<TeamWebsitesRequestQuery>,
+	res: NextApiResponse,
 ) => {
-  await useAuth(req, res);
-  await useValidate(schema, req, res);
+	await useAuth(req, res);
+	await useValidate(schema, req, res);
 
-  const { id: teamId, websiteId } = req.query;
+	const { id: teamId, websiteId } = req.query;
 
-  if (req.method === 'DELETE') {
-    if (!(await canDeleteTeamWebsite(req.auth, teamId, websiteId))) {
-      return unauthorized(res);
-    }
+	if (req.method === 'DELETE') {
+		if (!(await canDeleteTeamWebsite(req.auth, teamId, websiteId))) {
+			return unauthorized(res);
+		}
 
-    await deleteTeamWebsite(teamId, websiteId);
+		await deleteTeamWebsite(teamId, websiteId);
 
-    return ok(res);
-  }
+		return ok(res);
+	}
 
-  return methodNotAllowed(res);
+	return methodNotAllowed(res);
 };

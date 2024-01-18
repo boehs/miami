@@ -12,66 +12,66 @@ import { pageInfo } from 'lib/schema';
 export interface WebsitesRequestQuery extends SearchFilter {}
 
 export interface WebsitesRequestBody {
-  name: string;
-  domain: string;
-  shareId: string;
+	name: string;
+	domain: string;
+	shareId: string;
 }
 
 const schema = {
-  GET: yup.object().shape({
-    ...pageInfo,
-  }),
-  POST: yup.object().shape({
-    name: yup.string().max(100).required(),
-    domain: yup.string().max(500).required(),
-    shareId: yup.string().max(50).nullable(),
-  }),
+	GET: yup.object().shape({
+		...pageInfo,
+	}),
+	POST: yup.object().shape({
+		name: yup.string().max(100).required(),
+		domain: yup.string().max(500).required(),
+		shareId: yup.string().max(50).nullable(),
+	}),
 };
 
 export default async (
-  req: NextApiRequestQueryBody<WebsitesRequestQuery, WebsitesRequestBody>,
-  res: NextApiResponse,
+	req: NextApiRequestQueryBody<WebsitesRequestQuery, WebsitesRequestBody>,
+	res: NextApiResponse,
 ) => {
-  await useCors(req, res);
-  await useAuth(req, res);
-  await useValidate(schema, req, res);
+	await useCors(req, res);
+	await useAuth(req, res);
+	await useValidate(schema, req, res);
 
-  const {
-    user: { id: userId },
-  } = req.auth;
+	const {
+		user: { id: userId },
+	} = req.auth;
 
-  if (req.method === 'GET') {
-    if (!req.query.id) {
-      req.query.id = userId;
-    }
+	if (req.method === 'GET') {
+		if (!req.query.id) {
+			req.query.id = userId;
+		}
 
-    if (!req.query.pageSize) {
-      req.query.pageSize = 100;
-    }
+		if (!req.query.pageSize) {
+			req.query.pageSize = 100;
+		}
 
-    return userWebsites(req as any, res);
-  }
+		return userWebsites(req as any, res);
+	}
 
-  if (req.method === 'POST') {
-    const { name, domain, shareId } = req.body;
+	if (req.method === 'POST') {
+		const { name, domain, shareId } = req.body;
 
-    if (!(await canCreateWebsite(req.auth))) {
-      return unauthorized(res);
-    }
+		if (!(await canCreateWebsite(req.auth))) {
+			return unauthorized(res);
+		}
 
-    const data: any = {
-      id: uuid(),
-      name,
-      domain,
-      shareId,
-    };
+		const data: any = {
+			id: uuid(),
+			name,
+			domain,
+			shareId,
+		};
 
-    data.userId = userId;
+		data.userId = userId;
 
-    const website = await createWebsite(data);
+		const website = await createWebsite(data);
 
-    return ok(res, website);
-  }
+		return ok(res, website);
+	}
 
-  return methodNotAllowed(res);
+	return methodNotAllowed(res);
 };

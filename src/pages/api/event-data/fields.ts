@@ -7,43 +7,43 @@ import { getEventDataFields } from 'queries';
 import * as yup from 'yup';
 
 export interface EventDataFieldsRequestQuery {
-  websiteId: string;
-  startAt: string;
-  endAt: string;
-  field?: string;
+	websiteId: string;
+	startAt: string;
+	endAt: string;
+	field?: string;
 }
 
 const schema = {
-  GET: yup.object().shape({
-    websiteId: yup.string().uuid().required(),
-    startAt: yup.number().integer().required(),
-    endAt: yup.number().integer().moreThan(yup.ref('startAt')).required(),
-    field: yup.string(),
-  }),
+	GET: yup.object().shape({
+		websiteId: yup.string().uuid().required(),
+		startAt: yup.number().integer().required(),
+		endAt: yup.number().integer().moreThan(yup.ref('startAt')).required(),
+		field: yup.string(),
+	}),
 };
 
 export default async (
-  req: NextApiRequestQueryBody<EventDataFieldsRequestQuery>,
-  res: NextApiResponse<any>,
+	req: NextApiRequestQueryBody<EventDataFieldsRequestQuery>,
+	res: NextApiResponse<any>,
 ) => {
-  await useCors(req, res);
-  await useAuth(req, res);
-  await useValidate(schema, req, res);
+	await useCors(req, res);
+	await useAuth(req, res);
+	await useValidate(schema, req, res);
 
-  if (req.method === 'GET') {
-    const { websiteId, startAt, endAt, field } = req.query;
+	if (req.method === 'GET') {
+		const { websiteId, startAt, endAt, field } = req.query;
 
-    if (!(await canViewWebsite(req.auth, websiteId))) {
-      return unauthorized(res);
-    }
+		if (!(await canViewWebsite(req.auth, websiteId))) {
+			return unauthorized(res);
+		}
 
-    const startDate = new Date(+startAt);
-    const endDate = new Date(+endAt);
+		const startDate = new Date(+startAt);
+		const endDate = new Date(+endAt);
 
-    const data = await getEventDataFields(websiteId, { startDate, endDate, field });
+		const data = await getEventDataFields(websiteId, { startDate, endDate, field });
 
-    return ok(res, data);
-  }
+		return ok(res, data);
+	}
 
-  return methodNotAllowed(res);
+	return methodNotAllowed(res);
 };

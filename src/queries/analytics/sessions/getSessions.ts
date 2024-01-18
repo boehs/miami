@@ -3,31 +3,31 @@ import clickhouse from 'lib/clickhouse';
 import { runQuery, PRISMA, CLICKHOUSE } from 'lib/db';
 
 export async function getSessions(...args: [websiteId: string, startAt: Date]) {
-  return runQuery({
-    [PRISMA]: () => relationalQuery(...args),
-    [CLICKHOUSE]: () => clickhouseQuery(...args),
-  });
+	return runQuery({
+		[PRISMA]: () => relationalQuery(...args),
+		[CLICKHOUSE]: () => clickhouseQuery(...args),
+	});
 }
 
 async function relationalQuery(websiteId: string, startDate: Date) {
-  return prisma.client.session.findMany({
-    where: {
-      websiteId,
-      createdAt: {
-        gte: startDate,
-      },
-    },
-    orderBy: {
-      createdAt: 'asc',
-    },
-  });
+	return prisma.client.session.findMany({
+		where: {
+			websiteId,
+			createdAt: {
+				gte: startDate,
+			},
+		},
+		orderBy: {
+			createdAt: 'asc',
+		},
+	});
 }
 
 async function clickhouseQuery(websiteId: string, startDate: Date) {
-  const { rawQuery } = clickhouse;
+	const { rawQuery } = clickhouse;
 
-  return rawQuery(
-    `
+	return rawQuery(
+		`
     select
       session_id as id,
       website_id as websiteId,
@@ -48,9 +48,9 @@ async function clickhouseQuery(websiteId: string, startDate: Date) {
     and created_at >= {startDate:DateTime64}
     order by created_at asc
     `,
-    {
-      websiteId,
-      startDate,
-    },
-  );
+		{
+			websiteId,
+			startDate,
+		},
+	);
 }

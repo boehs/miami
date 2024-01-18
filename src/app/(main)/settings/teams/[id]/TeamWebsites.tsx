@@ -9,46 +9,46 @@ import DataTable from 'components/common/DataTable';
 import useCache from 'store/cache';
 
 export function TeamWebsites({ teamId, readOnly }: { teamId: string; readOnly: boolean }) {
-  const { formatMessage, labels, messages } = useMessages();
-  const { user } = useUser();
-  const { get } = useApi();
-  const modified = useCache(state => state?.['team:websites']);
-  const queryResult = useFilterQuery({
-    queryKey: ['team:websites', { teamId, modified }],
-    queryFn: params => {
-      return get(`/teams/${teamId}/websites`, {
-        ...params,
-      });
-    },
-    enabled: !!user,
-  });
+	const { formatMessage, labels, messages } = useMessages();
+	const { user } = useUser();
+	const { get } = useApi();
+	const modified = useCache(state => state?.['team:websites']);
+	const queryResult = useFilterQuery({
+		queryKey: ['team:websites', { teamId, modified }],
+		queryFn: params => {
+			return get(`/teams/${teamId}/websites`, {
+				...params,
+			});
+		},
+		enabled: !!user,
+	});
 
-  const handleChange = () => {
-    queryResult.query.refetch();
-  };
+	const handleChange = () => {
+		queryResult.query.refetch();
+	};
 
-  return (
-    <>
-      <ActionForm description={formatMessage(messages.teamWebsitesInfo)}>
-        <ModalTrigger>
-          <Button variant="primary">
-            <Icon>
-              <Icons.Plus />
-            </Icon>
-            <Text>{formatMessage(labels.addWebsite)}</Text>
-          </Button>
-          <Modal title={formatMessage(labels.addWebsite)}>
-            {close => <TeamWebsiteAddForm teamId={teamId} onSave={handleChange} onClose={close} />}
-          </Modal>
-        </ModalTrigger>
-      </ActionForm>
-      <DataTable queryResult={queryResult}>
-        {({ data }) => (
-          <TeamWebsitesTable data={data} onRemove={handleChange} readOnly={readOnly} />
-        )}
-      </DataTable>
-    </>
-  );
+	return (
+		<>
+			<ActionForm description={formatMessage(messages.teamWebsitesInfo)}>
+				<ModalTrigger>
+					<Button variant="primary">
+						<Icon>
+							<Icons.Plus />
+						</Icon>
+						<Text>{formatMessage(labels.addWebsite)}</Text>
+					</Button>
+					<Modal title={formatMessage(labels.addWebsite)}>
+						{close => <TeamWebsiteAddForm teamId={teamId} onSave={handleChange} onClose={close} />}
+					</Modal>
+				</ModalTrigger>
+			</ActionForm>
+			<DataTable queryResult={queryResult}>
+				{({ data }) => (
+					<TeamWebsitesTable data={data} onRemove={handleChange} readOnly={readOnly} />
+				)}
+			</DataTable>
+		</>
+	);
 }
 
 export default TeamWebsites;
