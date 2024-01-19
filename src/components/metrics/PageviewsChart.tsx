@@ -10,11 +10,18 @@ export interface PageviewsChartProps extends BarChartProps {
 	};
 	unit: string;
 	isLoading?: boolean;
+	websiteId?: string;
 }
 
-export function PageviewsChart({ data, unit, isLoading, ...props }: PageviewsChartProps) {
+export function PageviewsChart({
+	data,
+	unit,
+	isLoading,
+	websiteId,
+	...props
+}: PageviewsChartProps) {
 	const { formatMessage, labels } = useMessages();
-	const { colors } = useTheme();
+	const { colors } = useTheme(websiteId);
 	const { locale } = useLocale();
 
 	const datasets = useMemo(() => {
@@ -44,6 +51,7 @@ export function PageviewsChart({ data, unit, isLoading, ...props }: PageviewsCha
 			isLoading={isLoading}
 			renderXLabel={renderDateLabels(unit, locale)}
 			renderTooltipPopup={renderStatusTooltipPopup(unit, locale)}
+			websiteId={websiteId}
 		/>
 	);
 }

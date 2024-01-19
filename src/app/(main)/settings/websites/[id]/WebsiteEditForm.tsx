@@ -55,6 +55,11 @@ export function WebsiteEditForm({
 					<TextField />
 				</FormInput>
 			</FormRow>
+			<FormRow label={'Color'}>
+				<FormInput name="themeColor">
+					<input type="color" value={data}></input>
+				</FormInput>
+			</FormRow>
 			<FormButtons>
 				<SubmitButton variant="primary">{formatMessage(labels.save)}</SubmitButton>
 			</FormButtons>

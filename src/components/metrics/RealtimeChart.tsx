@@ -28,9 +28,10 @@ export interface RealtimeChartProps {
 	data: RealtimeData;
 	unit: string;
 	className?: string;
+	websiteId?: string;
 }
 
-export function RealtimeChart({ data, unit, ...props }: RealtimeChartProps) {
+export function RealtimeChart({ data, unit, websiteId, ...props }: RealtimeChartProps) {
 	const endDate = startOfMinute(new Date());
 	const startDate = subMinutes(endDate, REALTIME_RANGE);
 	const prevEndDate = useRef(endDate);
@@ -56,7 +57,13 @@ export function RealtimeChart({ data, unit, ...props }: RealtimeChartProps) {
 	}, [endDate]);
 
 	return (
-		<PageviewsChart {...props} unit={unit} data={chartData} animationDuration={animationDuration} />
+		<PageviewsChart
+			{...props}
+			websiteId={websiteId}
+			unit={unit}
+			data={chartData}
+			animationDuration={animationDuration}
+		/>
 	);
 }
 

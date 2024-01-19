@@ -4,7 +4,7 @@ import { Website, NextApiRequestQueryBody } from 'lib/types';
 import { canViewWebsite, canUpdateWebsite, canDeleteWebsite } from 'lib/auth';
 import { useAuth, useCors, useValidate } from 'lib/middleware';
 import { deleteWebsite, getWebsiteById, updateWebsite } from 'queries';
-import { SHARE_ID_REGEX } from 'lib/constants';
+import { HEX_REGEX, SHARE_ID_REGEX } from 'lib/constants';
 
 export interface WebsiteRequestQuery {
 	id: string;
@@ -14,6 +14,7 @@ export interface WebsiteRequestBody {
 	name: string;
 	domain: string;
 	shareId: string;
+	themeColor: string;
 }
 
 import * as yup from 'yup';
@@ -27,6 +28,7 @@ const schema = {
 		name: yup.string(),
 		domain: yup.string(),
 		shareId: yup.string().matches(SHARE_ID_REGEX, { excludeEmptyString: true }).nullable(),
+		themeColor: yup.string().matches(HEX_REGEX, { excludeEmptyString: true }).nullable(),
 	}),
 };
 
@@ -55,12 +57,12 @@ export default async (
 			return unauthorized(res);
 		}
 
-		const { name, domain, shareId } = req.body;
+		const { name, domain, themeColor, shareId } = req.body;
 
 		let website;
 
 		try {
-			website = await updateWebsite(websiteId, { name, domain, shareId });
+			website = await updateWebsite(websiteId, { name, domain, shareId, themeColor });
 		} catch (e: any) {
 			if (e.message.includes('Unique constraint') && e.message.includes('share_id')) {
 				return serverError(res, 'That share ID is already taken.');

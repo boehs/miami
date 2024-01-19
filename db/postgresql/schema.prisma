@@ -58,15 +58,16 @@ model Session {
 }
 
 model Website {
-  id        String    @id @unique @map("website_id") @db.Uuid
-  name      String    @db.VarChar(100)
-  domain    String?   @db.VarChar(500)
-  shareId   String?   @unique @map("share_id") @db.VarChar(50)
-  resetAt   DateTime? @map("reset_at") @db.Timestamptz(6)
-  userId    String?   @map("user_id") @db.Uuid
-  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamptz(6)
-  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  id         String    @id @unique @map("website_id") @db.Uuid
+  name       String    @db.VarChar(100)
+  domain     String?   @db.VarChar(500)
+  shareId    String?   @unique @map("share_id") @db.VarChar(50)
+  themeColor String?   @map("theme_color") @db.VarChar(10)
+  resetAt    DateTime? @map("reset_at") @db.Timestamptz(6)
+  userId     String?   @map("user_id") @db.Uuid
+  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime? @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt  DateTime? @map("deleted_at") @db.Timestamptz(6)
 
   user        User?         @relation(fields: [userId], references: [id])
   teamWebsite TeamWebsite[]

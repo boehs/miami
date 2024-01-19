@@ -81,6 +81,7 @@ export function EventsChart({ websiteId, className, token }: EventsChartProps) {
 			stacked
 			renderXLabel={renderDateLabels(unit, locale)}
 			renderTooltipPopup={renderStatusTooltipPopup(unit, locale)}
+			websiteId={websiteId}
 		/>
 	);
 }

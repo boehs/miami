@@ -3,10 +3,11 @@ import useStore, { setTheme } from 'store/app';
 import { getItem, setItem } from 'next-basics';
 import { THEME_COLORS, THEME_CONFIG } from 'lib/constants';
 import { colord } from 'colord';
+import useWebsite from './useWebsite';
 
 const selector = (state: { theme: string }) => state.theme;
 
-export function useTheme() {
+export function useTheme(id: string = undefined) {
 	const defaultTheme =
 		typeof window !== 'undefined'
 			? window?.matchMedia('(prefers-color-scheme: dark)')?.matches
@@ -14,7 +15,10 @@ export function useTheme() {
 				: 'light'
 			: 'light';
 	const theme = useStore(selector) || getItem(THEME_CONFIG) || defaultTheme;
-	const primaryColor = colord(document.body.style.getPropertyValue('--primary'));
+	const { data } = useWebsite(id);
+	const primaryColor = colord(
+		data?.themeColor || document.body.style.getPropertyValue('--primary'),
+	);
 
 	const colors = {
 		theme: {
@@ -37,10 +41,10 @@ export function useTheme() {
 			},
 		},
 		map: {
-			baseColor: document.body.style.getPropertyValue('--primary'),
+			baseColor: primaryColor.toHex(),
 			fillColor: THEME_COLORS[theme].gray100,
-			strokeColor: document.body.style.getPropertyValue('--primary'),
-			hoverColor: document.body.style.getPropertyValue('--primary'),
+			strokeColor: primaryColor.toHex(),
+			hoverColor: primaryColor.toHex(),
 		},
 	};
 

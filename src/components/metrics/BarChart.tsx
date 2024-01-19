@@ -11,6 +11,7 @@ import { renderNumberLabels } from 'lib/charts';
 import styles from './BarChart.module.css';
 import useChartType from 'components/hooks/useChartType';
 import ChartTypeButton from 'components/input/ChartTypeButton';
+import { useWebsite } from 'components/hooks';
 
 export interface BarChartProps {
 	datasets?: any[];
@@ -26,6 +27,7 @@ export interface BarChartProps {
 	onCreate?: (chart: any) => void;
 	onUpdate?: (chart: any) => void;
 	className?: string;
+	websiteId?: string;
 }
 
 export function BarChart({
@@ -42,12 +44,14 @@ export function BarChart({
 	onCreate,
 	onUpdate,
 	className,
+	websiteId = undefined,
 }: BarChartProps) {
 	const canvas = useRef();
 	const chart = useRef(null);
 	const [tooltip, setTooltipPopup] = useState(null);
 	const { locale } = useLocale();
-	const { theme, colors } = useTheme();
+	const { theme, colors } = useTheme(websiteId);
+	const { data } = useWebsite(websiteId);
 	const { chartType } = useChartType();
 
 	const getOptions = useCallback(() => {
@@ -184,7 +188,7 @@ export function BarChart({
 			}
 			createChart();
 		}
-	}, [chartType]);
+	}, [chartType, data]);
 
 	return (
 		<>

@@ -94,10 +94,15 @@ export function Realtime({ websiteId }) {
 	}
 
 	return (
-		<>
+		<div style={{ '--primary': website?.themeColor }}>
 			<WebsiteHeader websiteId={websiteId} />
 			<RealtimeHeader data={realtimeData} />
-			<RealtimeChart className={styles.chart} data={realtimeData} unit="minute" />
+			<RealtimeChart
+				websiteId={websiteId}
+				className={styles.chart}
+				data={realtimeData}
+				unit="minute"
+			/>
 			<Grid>
 				<GridRow columns="one-two">
 					<RealtimeUrls websiteDomain={website?.domain} data={realtimeData} />
@@ -105,10 +110,10 @@ export function Realtime({ websiteId }) {
 				</GridRow>
 				<GridRow columns="one-two">
 					<RealtimeCountries data={realtimeData?.countries} />
-					<WorldMap data={realtimeData?.countries} />
+					<WorldMap data={realtimeData?.countries} websiteId={websiteId} />
 				</GridRow>
 			</Grid>
-		</>
+		</div>
 	);
 }
 

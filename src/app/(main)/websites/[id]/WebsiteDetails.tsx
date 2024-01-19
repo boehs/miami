@@ -25,7 +25,7 @@ export default function WebsiteDetails({ websiteId }: { websiteId: string }) {
 	}
 
 	return (
-		<>
+		<div style={{ '--primary': website.themeColor }}>
 			{showLinks && <WebsiteHeader websiteId={websiteId} showLinks={showLinks} />}
 			<FilterTags params={{ url, referrer, os, browser, device, country, region, city, title }} />
 			<WebsiteMetricsBar websiteId={websiteId} sticky={true} />
@@ -37,6 +37,6 @@ export default function WebsiteDetails({ websiteId }: { websiteId: string }) {
 					{view && <WebsiteExpandedView websiteId={websiteId} domainName={website.domain} />}
 				</>
 			)}
-		</>
+		</div>
 	);
 }

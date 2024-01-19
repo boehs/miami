@@ -45,7 +45,9 @@ export function WebsiteChart({ websiteId }: { websiteId: string }) {
 		return { pageviews: [], sessions: [] };
 	}, [data, startDate, endDate, unit]);
 
-	return <PageviewsChart data={chartData} unit={unit} isLoading={isLoading} />;
+	return (
+		<PageviewsChart data={chartData} unit={unit} isLoading={isLoading} websiteId={websiteId} />
+	);
 }
 
 export default WebsiteChart;

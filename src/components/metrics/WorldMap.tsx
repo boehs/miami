@@ -13,9 +13,17 @@ import { percentFilter } from 'lib/filters';
 import styles from './WorldMap.module.css';
 import { useNavigation } from 'components/hooks/useNavigation';
 
-export function WorldMap({ data = [], className }: { data?: any[]; className?: string }) {
+export function WorldMap({
+	data = [],
+	className,
+	websiteId,
+}: {
+	data?: any[];
+	className?: string;
+	websiteId?: string;
+}) {
 	const [tooltip, setTooltipPopup] = useState();
-	const { theme, colors } = useTheme();
+	const { theme, colors } = useTheme(websiteId);
 	const { locale } = useLocale();
 	const { formatMessage, labels } = useMessages();
 	const { makeUrl, router, query } = useNavigation();

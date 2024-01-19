@@ -36,7 +36,7 @@ export default function WebsiteTableView({
 				<DevicesTable {...tableProps} />
 			</GridRow>
 			<GridRow columns="two-one">
-				<WorldMap data={countryData} />
+				<WorldMap data={countryData} websiteId={websiteId} />
 				<AreaTable {...tableProps} onDataLoad={setCountryData} />
 			</GridRow>
 			<GridRow columns="one-two">
