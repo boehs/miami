@@ -55,7 +55,7 @@
 		hostname,
 		screen,
 		language,
-		title,
+		title: document.title,
 		url: currentUrl,
 		referrer: currentRef,
 	});
@@ -208,24 +208,6 @@
 		document.addEventListener('click', callback, true);
 	};
 
-	const observeTitle = () => {
-		const callback = ([entry]) => {
-			title = entry && entry.target ? entry.target.text : undefined;
-		};
-
-		const observer = new MutationObserver(callback);
-
-		const node = document.querySelector('head > title');
-
-		if (node) {
-			observer.observe(node, {
-				subtree: true,
-				characterData: true,
-				childList: true,
-			});
-		}
-	};
-
 	const send = (payload, type = 'event') => {
 		if (trackingDisabled()) return;
 		const headers = {
@@ -272,7 +254,6 @@
 
 	let currentUrl = `${pathname}${search}`;
 	let currentRef = document.referrer;
-	let title = document.title;
 	let cache;
 	let initialized;
 
@@ -280,7 +261,6 @@
 		history.pushState = hook(history, 'pushState', handlePush);
 		history.replaceState = hook(history, 'replaceState', handlePush);
 		handleClick();
-		observeTitle();
 
 		const init = () => {
 			if (document.readyState === 'complete' && !initialized) {
