@@ -42,7 +42,6 @@
 		"change-password": "node scripts/change-password.js",
 		"lint": "next lint --quiet",
 		"prepare": "node -e \"if (process.env.NODE_ENV !== 'production'){process.exit(1)} \" || husky install",
-		"postbuild": "node scripts/postbuild.js",
 		"format": "prettier --write ."
 	},
 	"lint-staged": {

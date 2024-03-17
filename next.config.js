@@ -129,13 +129,7 @@ const config = {
 		];
 	},
 	async rewrites() {
-		return [
-			...rewrites,
-			{
-				source: '/telemetry.js',
-				destination: '/api/scripts/telemetry',
-			},
-		];
+		return [...rewrites];
 	},
 	async redirects() {
 		return [...redirects];

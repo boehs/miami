@@ -21,8 +21,6 @@ ARG BASE_PATH
 ENV DATABASE_TYPE $DATABASE_TYPE
 ENV BASE_PATH $BASE_PATH
 
-ENV NEXT_TELEMETRY_DISABLED 1
-
 RUN yarn build-docker
 
 # Production image, copy all the files and run next
@@ -30,7 +28,6 @@ FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
