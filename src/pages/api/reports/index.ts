@@ -66,7 +66,7 @@ export default async (
 		const { websiteId, type, name, description, parameters } = req.body;
 
 		const result = await createReport({
-			id: uuid(),
+			id: await uuid(),
 			userId,
 			websiteId,
 			type,

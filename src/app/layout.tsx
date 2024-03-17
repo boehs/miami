@@ -37,3 +37,5 @@ export default function ({ children }) {
 export const metadata: Metadata = {
 	title: 'umami',
 };
+
+export const runtime = 'edge';

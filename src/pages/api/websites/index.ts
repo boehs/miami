@@ -60,7 +60,7 @@ export default async (
 		}
 
 		const data: any = {
-			id: uuid(),
+			id: await uuid(),
 			name,
 			domain,
 			shareId,

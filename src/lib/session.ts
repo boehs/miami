@@ -32,7 +32,7 @@ export async function findSession(req: NextApiRequestCollect): Promise<{
 	const cacheToken = req.headers['x-umami-cache'];
 
 	if (cacheToken) {
-		const result = await parseToken(cacheToken, secret());
+		const result = await parseToken(cacheToken, await secret());
 
 		if (result) {
 			await checkUserBlock(result?.ownerId);
@@ -66,7 +66,7 @@ export async function findSession(req: NextApiRequestCollect): Promise<{
 	const { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device } =
 		await getClientInfo(req, payload);
 
-	const sessionId = uuid(websiteId, hostname, ip, userAgent);
+	const sessionId = await uuid(websiteId, hostname, ip, userAgent);
 
 	// Clickhouse does not require session lookup
 	if (clickhouse.enabled) {

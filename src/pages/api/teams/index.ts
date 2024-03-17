@@ -55,7 +55,7 @@ export default async (
 
 		const team = await createTeam(
 			{
-				id: uuid(),
+				id: await uuid(),
 				name,
 				accessCode: getRandomChars(16),
 			},

@@ -44,7 +44,7 @@ export async function createTeamUser(
 ): Promise<TeamUser> {
 	return prisma.client.teamUser.create({
 		data: {
-			id: uuid(),
+			id: await uuid(),
 			userId,
 			teamId,
 			role,

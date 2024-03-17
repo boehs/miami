@@ -57,7 +57,7 @@ async function relationalQuery(data: {
 		eventData,
 		pageTitle,
 	} = data;
-	const websiteEventId = uuid();
+	const websiteEventId = await uuid();
 
 	const websiteEvent = prisma.client.websiteEvent.create({
 		data: {
@@ -129,14 +129,14 @@ async function clickhouseQuery(data: {
 		...args
 	} = data;
 	const { getDateFormat, sendMessage } = kafka;
-	const eventId = uuid();
+	const eventId = await uuid();
 	const createdAt = getDateFormat(new Date());
 
 	const message = {
 		...args,
 		website_id: websiteId,
 		session_id: sessionId,
-		event_id: uuid(),
+		event_id: await uuid(),
 		country: country,
 		subdivision1:
 			country && subdivision1

@@ -58,7 +58,7 @@ export default async (
 				return ok(res, { token, user });
 			}
 
-			const token = createSecureToken({ userId: user.id }, secret());
+			const token = createSecureToken({ userId: user.id }, await secret());
 			const { id, username, role, createdAt } = user;
 
 			return ok(res, {

@@ -21,7 +21,7 @@ export async function saveAuth(data: any, expire = 0) {
 		await redis.client.expire(authKey, expire);
 	}
 
-	return createSecureToken({ authKey }, secret());
+	return createSecureToken({ authKey }, await secret());
 }
 
 export function getAuthToken(req: NextApiRequest) {

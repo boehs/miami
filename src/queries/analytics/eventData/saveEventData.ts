@@ -32,21 +32,23 @@ async function relationalQuery(data: {
 	const jsonKeys = flattenJSON(eventData);
 
 	// id, websiteEventId, eventStringValue
-	const flattendData = jsonKeys.map(a => ({
-		id: uuid(),
-		websiteEventId: eventId,
-		websiteId,
-		eventKey: a.key,
-		stringValue:
-			a.dynamicDataType === DATA_TYPE.number
-				? parseFloat(a.value).toFixed(4)
-				: a.dynamicDataType === DATA_TYPE.date
-					? a.value.split('.')[0] + 'Z'
-					: a.value.toString(),
-		numberValue: a.dynamicDataType === DATA_TYPE.number ? a.value : null,
-		dateValue: a.dynamicDataType === DATA_TYPE.date ? new Date(a.value) : null,
-		dataType: a.dynamicDataType,
-	}));
+	const flattendData = await Promise.all(
+		jsonKeys.map(async a => ({
+			id: await uuid(),
+			websiteEventId: eventId,
+			websiteId,
+			eventKey: a.key,
+			stringValue:
+				a.dynamicDataType === DATA_TYPE.number
+					? parseFloat(a.value).toFixed(4)
+					: a.dynamicDataType === DATA_TYPE.date
+						? a.value.split('.')[0] + 'Z'
+						: a.value.toString(),
+			numberValue: a.dynamicDataType === DATA_TYPE.number ? a.value : null,
+			dateValue: a.dynamicDataType === DATA_TYPE.date ? new Date(a.value) : null,
+			dataType: a.dynamicDataType,
+		})),
+	);
 
 	return prisma.client.eventData.createMany({
 		data: flattendData,

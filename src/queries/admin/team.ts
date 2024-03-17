@@ -36,7 +36,7 @@ export async function createTeam(data: Prisma.TeamCreateInput, userId: string): 
 		}),
 		prisma.client.teamUser.create({
 			data: {
-				id: uuid(),
+				id: await uuid(),
 				teamId: id,
 				userId,
 				role: ROLES.teamOwner,

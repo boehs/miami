@@ -50,7 +50,7 @@ export const useSession = createMiddleware(async (req, res, next) => {
 
 export const useAuth = createMiddleware(async (req, res, next) => {
 	const token = getAuthToken(req);
-	const payload = parseSecureToken(token, secret());
+	const payload = parseSecureToken(token, await secret());
 	const shareToken = await parseShareToken(req as any);
 
 	let user = null;

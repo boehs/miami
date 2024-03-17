@@ -1,21 +1,29 @@
 import { startOfMonth } from 'date-fns';
-import { hash } from 'next-basics';
 import { v4, v5, validate } from 'uuid';
 
-export function secret() {
+async function hash(...args: string[]) {
+	const encoder = new TextEncoder();
+	const data = encoder.encode(args.join(''));
+	const hashBuffer = await crypto.subtle.digest('SHA-512', data); // hash the message
+	const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+	const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+	return hashHex;
+}
+
+export async function secret() {
 	return hash(process.env.APP_SECRET || process.env.DATABASE_URL);
 }
 
-export function salt() {
-	const ROTATING_SALT = hash(startOfMonth(new Date()).toUTCString());
+export async function salt() {
+	const ROTATING_SALT = await hash(startOfMonth(new Date()).toUTCString());
 
-	return hash(secret(), ROTATING_SALT);
+	return hash(await secret(), ROTATING_SALT);
 }
 
-export function uuid(...args: any) {
+export async function uuid(...args: any) {
 	if (!args.length) return v4();
 
-	return v5(hash(...args, salt()), v5.DNS);
+	return v5(hash(...args, await salt()), v5.DNS);
 }
 
 export function isUuid(value: string) {

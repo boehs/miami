@@ -53,7 +53,7 @@ export default async (
 		}
 
 		const created = await createUser({
-			id: id || uuid(),
+			id: id || (await uuid()),
 			username,
 			password: hashPassword(password),
 			role: role ?? ROLES.user,

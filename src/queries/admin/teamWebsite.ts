@@ -86,7 +86,7 @@ export async function getTeamWebsites(teamId: string): Promise<
 export async function createTeamWebsite(teamId: string, websiteId: string): Promise<TeamWebsite> {
 	return prisma.client.teamWebsite.create({
 		data: {
-			id: uuid(),
+			id: await uuid(),
 			teamId,
 			websiteId,
 		},
@@ -101,13 +101,15 @@ export async function createTeamWebsites(teamId: string, websiteIds: string[]) {
 		websiteId => !currentTeamWebsites.some(a => a.websiteId === websiteId),
 	);
 
-	const teamWebsites: Prisma.TeamWebsiteCreateManyInput[] = addWebsites.map(a => {
-		return {
-			id: uuid(),
-			teamId,
-			websiteId: a,
-		};
-	});
+	const teamWebsites: Prisma.TeamWebsiteCreateManyInput[] = await Promise.all(
+		addWebsites.map(async a => {
+			return {
+				id: await uuid(),
+				teamId,
+				websiteId: a,
+			};
+		}),
+	);
 
 	return prisma.client.teamWebsite.createMany({
 		data: teamWebsites,
