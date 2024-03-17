@@ -129,6 +129,7 @@ export function BarChart({
 	const createChart = () => {
 		Chart.defaults.font.family = 'Inter';
 
+		const options = getOptions();
 		if (chartType == 'line') {
 			datasets = datasets.map(dataset => {
 				dataset.borderWidth = 3;
@@ -145,6 +146,7 @@ export function BarChart({
 						dataset.backgroundColor;
 				return dataset;
 			});
+			options.scales.y.stacked = false;
 		}
 
 		chart.current = new Chart(canvas.current, {
@@ -152,7 +154,7 @@ export function BarChart({
 			data: {
 				datasets,
 			},
-			options: getOptions() as any,
+			options: options,
 		});
 
 		onCreate?.(chart.current);
