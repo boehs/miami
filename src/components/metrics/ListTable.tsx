@@ -1,3 +1,5 @@
+'use client';
+
 import { useSpring, animated, config } from '@react-spring/web';
 import classNames from 'classnames';
 import Empty from 'components/common/Empty';
