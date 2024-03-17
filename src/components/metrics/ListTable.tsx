@@ -1,4 +1,3 @@
-import { FixedSizeList } from 'react-window';
 import { useSpring, animated, config } from '@react-spring/web';
 import classNames from 'classnames';
 import Empty from 'components/common/Empty';
@@ -6,8 +5,6 @@ import { formatLongNumber } from 'lib/format';
 import useMessages from 'components/hooks/useMessages';
 import styles from './ListTable.module.css';
 import { ReactNode } from 'react';
-
-const ITEM_SIZE = 30;
 
 export interface ListTableProps {
 	data?: any[];
@@ -30,7 +27,6 @@ export function ListTable({
 	animate = true,
 	virtualize = false,
 	showPercentage = true,
-	itemCount = 10,
 }: ListTableProps) {
 	const { formatMessage, labels } = useMessages();
 
@@ -49,10 +45,6 @@ export function ListTable({
 		);
 	};
 
-	const Row = ({ index, style }) => {
-		return <div style={style}>{getRow(data[index])}</div>;
-	};
-
 	return (
 		<div className={classNames(styles.table, className)}>
 			<div className={styles.header}>
@@ -61,17 +53,7 @@ export function ListTable({
 			</div>
 			<div className={styles.body}>
 				{data?.length === 0 && <Empty className={styles.empty} />}
-				{virtualize && data.length > 0 ? (
-					<FixedSizeList
-						height={itemCount * ITEM_SIZE}
-						itemCount={data.length}
-						itemSize={ITEM_SIZE}
-					>
-						{Row}
-					</FixedSizeList>
-				) : (
-					data.map(row => getRow(row))
-				)}
+				{data.map(row => getRow(row))}
 			</div>
 		</div>
 	);

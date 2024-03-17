@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { StatusLight, Text, SearchField } from 'react-basics';
-import { FixedSizeList } from 'react-window';
 import { format } from 'date-fns';
 import thenby from 'thenby';
 import { safeDecodeURI } from 'next-basics';
@@ -177,11 +176,9 @@ export function RealtimeLog({ data, websiteDomain }) {
 			<div className={styles.header}>{formatMessage(labels.activityLog)}</div>
 			<div className={styles.body}>
 				{logs?.length === 0 && <Empty />}
-				{logs?.length > 0 && (
-					<FixedSizeList width="100%" height={500} itemCount={logs.length} itemSize={50}>
-						{Row}
-					</FixedSizeList>
-				)}
+				<div style={{ height: 500 }}>
+					{logs?.length > 0 && logs.map((log, i) => <Row key={i} index={i} style={{}} />)}
+				</div>
 			</div>
 		</div>
 	);
