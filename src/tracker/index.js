@@ -18,7 +18,6 @@
 	const website = attr(_data + 'website-id');
 	const hostUrl = attr(_data + 'host-url');
 	const autoTrack = attr(_data + 'auto-track') !== _false;
-	const dnt = attr(_data + 'do-not-track');
 	const domain = attr(_data + 'domains') || '';
 	const domains = domain.split(',').map(n => n.trim());
 	const root = hostUrl
@@ -114,22 +113,8 @@
 		};
 	};
 
-	const doNotTrack = () => {
-		const { doNotTrack, navigator, external } = window;
-
-		const msTrackProtection = 'msTrackingProtectionEnabled';
-		const msTracking = () => {
-			return external && msTrackProtection in external && external[msTrackProtection]();
-		};
-
-		const dnt = doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack || msTracking();
-
-		return dnt == '1' || dnt === 'yes';
-	};
-
 	const trackingDisabled = () =>
 		(localStorage && localStorage.getItem('umami.disabled')) ||
-		(dnt && doNotTrack()) ||
 		(domain && !domains.includes(hostname));
 
 	const handlePush = (state, title, url) => {
