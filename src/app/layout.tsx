@@ -35,7 +35,7 @@ export default function ({ children }) {
 }
 
 export const metadata: Metadata = {
-	title: 'umami',
+	title: 'Miami',
 };
 
 export const runtime = 'edge';
