@@ -135,7 +135,8 @@ export function BarChart({
 				dataset.borderWidth = 3;
 				dataset.pointRadius = 0;
 				dataset.hitRadius = 20;
-				//dataset.fill = true
+				dataset.fill = !options.scales.y.stacked;
+				dataset.lineTension = 0.3;
 				dataset.pointHoverBackgroundColor =
 					dataset.pointHoverBorderColor =
 					dataset.hoverBackgroundColor =
