@@ -5,7 +5,7 @@ export function Footer() {
 	return (
 		<footer className={styles.footer}>
 			<a href={HOMEPAGE_URL}>
-				<b>umami</b> {`v${CURRENT_VERSION}`}
+				<b>miami</b> {`v${CURRENT_VERSION}`}
 			</a>
 		</footer>
 	);
