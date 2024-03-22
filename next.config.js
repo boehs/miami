@@ -12,6 +12,10 @@ const contentSecurityPolicy = [
 	`frame-ancestors 'self' ${process.env.ALLOWED_FRAME_URLS || ''}`,
 ];
 
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+	enabled: process.env.ANALYZE === 'true',
+});
+
 const headers = [
 	{
 		key: 'X-DNS-Prefetch-Control',
@@ -136,4 +140,6 @@ const config = {
 	},
 };
 
-module.exports = config;
+module.exports = () => {
+	return withBundleAnalyzer(config);
+};

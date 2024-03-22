@@ -3,7 +3,7 @@
 Umami is a simple, fast, privacy-focused alternative to Google Analytics, and Miami is a fork of it that introduces many new features:
 
 - Design:
-  - Custom branding
+  - Custom branding for site
   - Higher quality icons
 - API:
   - Some API requests do not need to be bound by date
@@ -12,6 +12,7 @@ Umami is a simple, fast, privacy-focused alternative to Google Analytics, and Mi
   - Click map to set country
     - Set region and city from home page
   - Line charts
+  - Ongoing efforts to reduce script sizes and hosting costs
 
 You can see a demo of miami [here](https://espy.boehs.org/share/JGBYO4bVg3kZVQUb).
 

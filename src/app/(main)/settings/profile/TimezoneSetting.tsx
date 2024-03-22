@@ -1,5 +1,5 @@
 import { Dropdown, Item, Button, Flexbox } from 'react-basics';
-import { listTimeZones } from 'timezone-support';
+import moment from 'moment-timezone';
 import useTimezone from 'components/hooks/useTimezone';
 import useMessages from 'components/hooks/useMessages';
 import { getTimezone } from 'lib/date';
@@ -7,7 +7,7 @@ import { getTimezone } from 'lib/date';
 export function TimezoneSetting() {
 	const { formatMessage, labels } = useMessages();
 	const [timezone, saveTimezone] = useTimezone();
-	const options = listTimeZones();
+	const options = moment.tz.names();
 
 	const handleReset = () => saveTimezone(getTimezone());
 
