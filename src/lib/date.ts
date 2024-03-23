@@ -1,4 +1,3 @@
-import moment from 'moment-timezone';
 import {
 	addMinutes,
 	addHours,
@@ -52,7 +51,7 @@ const dateFuncs = {
 };
 
 export function getTimezone() {
-	return moment.tz.guess();
+	return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 
 export function getLocalTime(t: string | number | Date) {
