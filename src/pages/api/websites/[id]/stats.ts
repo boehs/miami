@@ -6,6 +6,7 @@ import { useAuth, useCors, useValidate } from 'lib/middleware';
 import { NextApiRequestQueryBody, WebsiteStats } from 'lib/types';
 import { parseDateRangeQuery } from 'lib/query';
 import { getWebsiteStats } from 'queries';
+import redis from '@umami/redis-client';
 
 export interface WebsiteStatsRequestQuery {
 	id: string;
@@ -91,23 +92,31 @@ export default async (
 			city,
 		};
 
-		const metrics = await getWebsiteStats(websiteId, { ...filters, startDate, endDate });
+		const getStats = async () => {
+			const metrics = await getWebsiteStats(websiteId, { ...filters, startDate, endDate });
 
-		const prevPeriod = await getWebsiteStats(websiteId, {
-			...filters,
-			startDate: prevStartDate,
-			endDate: prevEndDate,
-		});
+			const prevPeriod = await getWebsiteStats(websiteId, {
+				...filters,
+				startDate: prevStartDate,
+				endDate: prevEndDate,
+			});
 
-		const stats = Object.keys(metrics[0]).reduce((obj, key) => {
-			obj[key] = {
-				value: Number(metrics[0][key]) || 0,
-				change: Number(metrics[0][key]) - Number(prevPeriod[0][key]) || 0,
-			};
-			return obj;
-		}, {});
+			return Object.keys(metrics[0]).reduce((obj, key) => {
+				obj[key] = {
+					value: Number(metrics[0][key]) || 0,
+					change: Number(metrics[0][key]) - Number(prevPeriod[0][key]) || 0,
+				};
+				return obj;
+			}, {});
+		};
 
-		return ok(res, stats);
+		if (redis.enabled && Object.keys(req.query).length == 1 && req.query.url != undefined) {
+			return ok(
+				res,
+				await redis.client.getCache(`hitcount:${req.query.url}`, () => getStats(), 60),
+			);
+		}
+		return ok(res, await getStats());
 	}
 
 	return methodNotAllowed(res);
