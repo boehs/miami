@@ -46,6 +46,10 @@ async function fetchSession(id) {
 	return redis.client.getCache(`session:${id}`, () => getSession(id), 86400);
 }
 
+async function fetchHits(id, func) {
+	return redis.client.getCache(`hits:${id}`, () => func(), 60);
+}
+
 async function storeSession(data) {
 	const { id } = data;
 	const key = `session:${id}`;
@@ -82,5 +86,6 @@ export default {
 	deleteSession,
 	fetchUserBlock,
 	incrementUserBlock,
+	fetchHits,
 	enabled: !!redis.enabled,
 };

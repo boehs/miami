@@ -6,7 +6,7 @@ import { useAuth, useCors, useValidate } from 'lib/middleware';
 import { NextApiRequestQueryBody, WebsiteStats } from 'lib/types';
 import { parseDateRangeQuery } from 'lib/query';
 import { getWebsiteStats } from 'queries';
-import redis from '@umami/redis-client';
+import cache from 'lib/cache';
 
 export interface WebsiteStatsRequestQuery {
 	id: string;
@@ -110,11 +110,8 @@ export default async (
 			}, {});
 		};
 
-		if (redis.enabled && Object.keys(req.query).length == 1 && req.query.url != undefined) {
-			return ok(
-				res,
-				await redis.client.getCache(`hitcount:${req.query.url}`, () => getStats(), 60),
-			);
+		if (cache.enabled && Object.keys(req.query).length == 2 && req.query.url != undefined) {
+			return ok(res, await cache.fetchHits(`hitcount:${req.query.url}`, getStats));
 		}
 		return ok(res, await getStats());
 	}
