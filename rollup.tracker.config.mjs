@@ -11,8 +11,8 @@ export default {
 	plugins: [
 		replace({
 			'/api/send': process.env.COLLECT_API_ENDPOINT || '/api/send',
-			'delimiters': ['', ''],
-			'preventAssignment': true,
+      delimiters: ['', ''],
+      preventAssignment: true,
 		}),
 		terser(),
 	],

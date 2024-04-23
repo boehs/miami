@@ -16,20 +16,20 @@ jobs:
     strategy:
       matrix:
         include:
-          - node-version: 18.x
-            db-type: postgresql
-          - node-version: 18.x
-            db-type: mysql
+        - node-version: 18.x
+          db-type: postgresql
+        - node-version: 18.x
+          db-type: mysql
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-        env:
-          DATABASE_TYPE: ${{ matrix.db-type }}
-      - run: npm install --global yarn
-      - run: yarn install --frozen-lockfile
-      - run: yarn build
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+      env:
+        DATABASE_TYPE: ${{ matrix.db-type }}
+    - run: npm install --global yarn
+    - run: yarn install --frozen-lockfile
+    - run: yarn build

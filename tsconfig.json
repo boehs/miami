@@ -30,14 +30,14 @@
 			"pages/*": ["./pages/*"],
 			"queries/*": ["./queries/*"],
 			"store/*": ["./store/*"],
-			"styles/*": ["./styles/*"]
+			"styles/*": ["./styles/*"],
 		},
 		"plugins": [
 			{
-				"name": "next"
-			}
-		]
+				"name": "next",
+			},
+		],
 	},
 	"include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts", ".next/types/**/*.ts"],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules"],
 }
