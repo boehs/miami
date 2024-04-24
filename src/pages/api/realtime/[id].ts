@@ -9,41 +9,41 @@ import * as yup from 'yup';
 import { REALTIME_RANGE } from 'lib/constants';
 
 export interface RealtimeRequestQuery {
-	id: string;
-	startAt: number;
+  id: string;
+  startAt: number;
 }
 
 const schema = {
-	GET: yup.object().shape({
-		id: yup.string().uuid().required(),
-		startAt: yup.number().integer().required(),
-	}),
+  GET: yup.object().shape({
+    id: yup.string().uuid().required(),
+    startAt: yup.number().integer().required(),
+  }),
 };
 
 export default async (
-	req: NextApiRequestQueryBody<RealtimeRequestQuery>,
-	res: NextApiResponse<RealtimeInit>,
+  req: NextApiRequestQueryBody<RealtimeRequestQuery>,
+  res: NextApiResponse<RealtimeInit>,
 ) => {
-	await useAuth(req, res);
-	await useValidate(schema, req, res);
+  await useAuth(req, res);
+  await useValidate(schema, req, res);
 
-	if (req.method === 'GET') {
-		const { id: websiteId, startAt } = req.query;
+  if (req.method === 'GET') {
+    const { id: websiteId, startAt } = req.query;
 
-		if (!(await canViewWebsite(req.auth, websiteId))) {
-			return unauthorized(res);
-		}
+    if (!(await canViewWebsite(req.auth, websiteId))) {
+      return unauthorized(res);
+    }
 
-		let startTime = subMinutes(startOfMinute(new Date()), REALTIME_RANGE);
+    let startTime = subMinutes(startOfMinute(new Date()), REALTIME_RANGE);
 
-		if (+startAt > startTime.getTime()) {
-			startTime = new Date(+startAt);
-		}
+    if (+startAt > startTime.getTime()) {
+      startTime = new Date(+startAt);
+    }
 
-		const data = await getRealtimeData(websiteId, startTime);
+    const data = await getRealtimeData(websiteId, startTime);
 
-		return ok(res, data);
-	}
+    return ok(res, data);
+  }
 
-	return methodNotAllowed(res);
+  return methodNotAllowed(res);
 };

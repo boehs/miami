@@ -9,51 +9,51 @@ import { getEventMetrics } from 'queries';
 import * as yup from 'yup';
 
 export interface WebsiteEventsRequestQuery {
-	id: string;
-	startAt: string;
-	endAt: string;
-	unit?: string;
-	timezone?: string;
-	url: string;
+  id: string;
+  startAt: string;
+  endAt: string;
+  unit?: string;
+  timezone?: string;
+  url: string;
 }
 
 const schema = {
-	GET: yup.object().shape({
-		id: yup.string().uuid().required(),
-		startAt: yup.number().integer().required(),
-		endAt: yup.number().integer().moreThan(yup.ref('startAt')).required(),
-		unit: UnitTypeTest,
-		timezone: TimezoneTest,
-		url: yup.string(),
-	}),
+  GET: yup.object().shape({
+    id: yup.string().uuid().required(),
+    startAt: yup.number().integer().required(),
+    endAt: yup.number().integer().moreThan(yup.ref('startAt')).required(),
+    unit: UnitTypeTest,
+    timezone: TimezoneTest,
+    url: yup.string(),
+  }),
 };
 
 export default async (
-	req: NextApiRequestQueryBody<WebsiteEventsRequestQuery>,
-	res: NextApiResponse<WebsiteMetric>,
+  req: NextApiRequestQueryBody<WebsiteEventsRequestQuery>,
+  res: NextApiResponse<WebsiteMetric>,
 ) => {
-	await useCors(req, res);
-	await useAuth(req, res);
-	await useValidate(schema, req, res);
+  await useCors(req, res);
+  await useAuth(req, res);
+  await useValidate(schema, req, res);
 
-	const { id: websiteId, timezone, url } = req.query;
-	const { startDate, endDate, unit } = await parseDateRangeQuery(req);
+  const { id: websiteId, timezone, url } = req.query;
+  const { startDate, endDate, unit } = await parseDateRangeQuery(req);
 
-	if (req.method === 'GET') {
-		if (!(await canViewWebsite(req.auth, websiteId))) {
-			return unauthorized(res);
-		}
+  if (req.method === 'GET') {
+    if (!(await canViewWebsite(req.auth, websiteId))) {
+      return unauthorized(res);
+    }
 
-		const events = await getEventMetrics(websiteId, {
-			startDate,
-			endDate,
-			timezone,
-			unit,
-			url,
-		});
+    const events = await getEventMetrics(websiteId, {
+      startDate,
+      endDate,
+      timezone,
+      unit,
+      url,
+    });
 
-		return ok(res, events);
-	}
+    return ok(res, events);
+  }
 
-	return methodNotAllowed(res);
+  return methodNotAllowed(res);
 };

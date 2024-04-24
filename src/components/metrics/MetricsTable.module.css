@@ -1,38 +1,38 @@
 .container {
-	position: relative;
-	min-height: 430px;
-	display: flex;
-	flex-direction: column;
-	flex: 1;
+  position: relative;
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .actions {
-	display: flex;
-	gap: 20px;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 10px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .footer {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .search {
-	max-width: 300px;
+  max-width: 300px;
 }
 
 @media only screen and (max-width: 992px) {
-	.container {
-		min-height: auto;
-	}
+  .container {
+    min-height: auto;
+  }
 
-	.actions {
-		flex-direction: column;
-	}
+  .actions {
+    flex-direction: column;
+  }
 
-	.search {
-		max-width: 100%;
-	}
+  .search {
+    max-width: 100%;
+  }
 }

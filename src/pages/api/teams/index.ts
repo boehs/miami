@@ -11,59 +11,59 @@ import * as yup from 'yup';
 
 export interface TeamsRequestQuery extends SearchFilter {}
 export interface TeamsRequestBody {
-	name: string;
+  name: string;
 }
 
 const schema = {
-	GET: yup.object().shape({
-		...pageInfo,
-	}),
-	POST: yup.object().shape({
-		name: yup.string().max(50).required(),
-	}),
+  GET: yup.object().shape({
+    ...pageInfo,
+  }),
+  POST: yup.object().shape({
+    name: yup.string().max(50).required(),
+  }),
 };
 
 export default async (
-	req: NextApiRequestQueryBody<TeamsRequestQuery, TeamsRequestBody>,
-	res: NextApiResponse<Team[] | Team>,
+  req: NextApiRequestQueryBody<TeamsRequestQuery, TeamsRequestBody>,
+  res: NextApiResponse<Team[] | Team>,
 ) => {
-	await useAuth(req, res);
-	await useValidate(schema, req, res);
+  await useAuth(req, res);
+  await useValidate(schema, req, res);
 
-	const {
-		user: { id: userId },
-	} = req.auth;
+  const {
+    user: { id: userId },
+  } = req.auth;
 
-	if (req.method === 'GET') {
-		const { page, query, pageSize } = req.query;
+  if (req.method === 'GET') {
+    const { page, query, pageSize } = req.query;
 
-		const results = await getTeamsByUserId(userId, {
-			page,
-			query,
-			pageSize: +pageSize || undefined,
-		});
+    const results = await getTeamsByUserId(userId, {
+      page,
+      query,
+      pageSize: +pageSize || undefined,
+    });
 
-		return ok(res, results);
-	}
+    return ok(res, results);
+  }
 
-	if (req.method === 'POST') {
-		if (!(await canCreateTeam(req.auth))) {
-			return unauthorized(res);
-		}
+  if (req.method === 'POST') {
+    if (!(await canCreateTeam(req.auth))) {
+      return unauthorized(res);
+    }
 
-		const { name } = req.body;
+    const { name } = req.body;
 
-		const team = await createTeam(
-			{
-				id: uuid(),
-				name,
-				accessCode: getRandomChars(16),
-			},
-			userId,
-		);
+    const team = await createTeam(
+      {
+        id: uuid(),
+        name,
+        accessCode: getRandomChars(16),
+      },
+      userId,
+    );
 
-		return ok(res, team);
-	}
+    return ok(res, team);
+  }
 
-	return methodNotAllowed(res);
+  return methodNotAllowed(res);
 };

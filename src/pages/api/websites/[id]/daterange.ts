@@ -7,34 +7,34 @@ import { getWebsiteDateRange } from 'queries';
 import * as yup from 'yup';
 
 export interface WebsiteDateRangeRequestQuery {
-	id: string;
+  id: string;
 }
 
 const schema = {
-	GET: yup.object().shape({
-		id: yup.string().uuid().required(),
-	}),
+  GET: yup.object().shape({
+    id: yup.string().uuid().required(),
+  }),
 };
 
 export default async (
-	req: NextApiRequestQueryBody<WebsiteDateRangeRequestQuery>,
-	res: NextApiResponse<WebsiteActive>,
+  req: NextApiRequestQueryBody<WebsiteDateRangeRequestQuery>,
+  res: NextApiResponse<WebsiteActive>,
 ) => {
-	await useCors(req, res);
-	await useAuth(req, res);
-	await useValidate(schema, req, res);
+  await useCors(req, res);
+  await useAuth(req, res);
+  await useValidate(schema, req, res);
 
-	const { id: websiteId } = req.query;
+  const { id: websiteId } = req.query;
 
-	if (req.method === 'GET') {
-		if (!(await canViewWebsite(req.auth, websiteId))) {
-			return unauthorized(res);
-		}
+  if (req.method === 'GET') {
+    if (!(await canViewWebsite(req.auth, websiteId))) {
+      return unauthorized(res);
+    }
 
-		const result = await getWebsiteDateRange(websiteId);
+    const result = await getWebsiteDateRange(websiteId);
 
-		return ok(res, result);
-	}
+    return ok(res, result);
+  }
 
-	return methodNotAllowed(res);
+  return methodNotAllowed(res);
 };

@@ -3,14 +3,14 @@ import WebsitesBrowse from './WebsitesBrowse';
 import { Metadata } from 'next';
 
 export default function WebsitesPage() {
-	return (
-		<>
-			<WebsitesHeader showActions={false} />
-			<WebsitesBrowse />
-		</>
-	);
+  return (
+    <>
+      <WebsitesHeader showActions={false} />
+      <WebsitesBrowse />
+    </>
+  );
 }
 
 export const metadata: Metadata = {
-	title: 'Websites | umami',
+  title: 'Websites | umami',
 };

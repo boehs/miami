@@ -3,43 +3,43 @@ import { CLICKHOUSE, PRISMA, runQuery } from 'lib/db';
 import prisma from 'lib/prisma';
 
 export async function getRetention(
-	...args: [
-		websiteId: string,
-		filters: {
-			startDate: Date;
-			endDate: Date;
-			timezone?: string;
-		},
-	]
+  ...args: [
+    websiteId: string,
+    filters: {
+      startDate: Date;
+      endDate: Date;
+      timezone?: string;
+    },
+  ]
 ) {
-	return runQuery({
-		[PRISMA]: () => relationalQuery(...args),
-		[CLICKHOUSE]: () => clickhouseQuery(...args),
-	});
+  return runQuery({
+    [PRISMA]: () => relationalQuery(...args),
+    [CLICKHOUSE]: () => clickhouseQuery(...args),
+  });
 }
 
 async function relationalQuery(
-	websiteId: string,
-	filters: {
-		startDate: Date;
-		endDate: Date;
-		timezone?: string;
-	},
+  websiteId: string,
+  filters: {
+    startDate: Date;
+    endDate: Date;
+    timezone?: string;
+  },
 ): Promise<
-	{
-		date: string;
-		day: number;
-		visitors: number;
-		returnVisitors: number;
-		percentage: number;
-	}[]
+  {
+    date: string;
+    day: number;
+    visitors: number;
+    returnVisitors: number;
+    percentage: number;
+  }[]
 > {
-	const { startDate, endDate, timezone = 'UTC' } = filters;
-	const { getDateQuery, getDayDiffQuery, getCastColumnQuery, rawQuery } = prisma;
-	const unit = 'day';
+  const { startDate, endDate, timezone = 'UTC' } = filters;
+  const { getDateQuery, getDayDiffQuery, getCastColumnQuery, rawQuery } = prisma;
+  const unit = 'day';
 
-	return rawQuery(
-		`
+  return rawQuery(
+    `
     WITH cohort_items AS (
       select session_id,
         ${getDateQuery('created_at', unit, timezone)} as cohort_date  
@@ -51,9 +51,9 @@ async function relationalQuery(
       select distinct
         w.session_id,
         ${getDayDiffQuery(
-					getDateQuery('created_at', unit, timezone),
-					'c.cohort_date',
-				)} as day_number
+          getDateQuery('created_at', unit, timezone),
+          'c.cohort_date',
+        )} as day_number
       from website_event w
       join cohort_items c
       on w.session_id = c.session_id
@@ -88,38 +88,38 @@ async function relationalQuery(
     on c.cohort_date = s.cohort_date
     where c.day_number <= 31
     order by 1, 2`,
-		{
-			websiteId,
-			startDate,
-			endDate,
-		},
-	).then(results => {
-		return results.map(i => ({ ...i, percentage: Number(i.percentage) || 0 }));
-	});
+    {
+      websiteId,
+      startDate,
+      endDate,
+    },
+  ).then(results => {
+    return results.map(i => ({ ...i, percentage: Number(i.percentage) || 0 }));
+  });
 }
 
 async function clickhouseQuery(
-	websiteId: string,
-	filters: {
-		startDate: Date;
-		endDate: Date;
-		timezone?: string;
-	},
+  websiteId: string,
+  filters: {
+    startDate: Date;
+    endDate: Date;
+    timezone?: string;
+  },
 ): Promise<
-	{
-		date: string;
-		day: number;
-		visitors: number;
-		returnVisitors: number;
-		percentage: number;
-	}[]
+  {
+    date: string;
+    day: number;
+    visitors: number;
+    returnVisitors: number;
+    percentage: number;
+  }[]
 > {
-	const { startDate, endDate, timezone = 'UTC' } = filters;
-	const { getDateQuery, getDateStringQuery, rawQuery } = clickhouse;
-	const unit = 'day';
+  const { startDate, endDate, timezone = 'UTC' } = filters;
+  const { getDateQuery, getDateStringQuery, rawQuery } = clickhouse;
+  const unit = 'day';
 
-	return rawQuery(
-		`
+  return rawQuery(
+    `
     WITH cohort_items AS (
       select
         min(${getDateQuery('created_at', unit, timezone)}) as cohort_date,
@@ -167,20 +167,20 @@ async function clickhouseQuery(
     on c.cohort_date = s.cohort_date
     where c.day_number <= 31
     order by 1, 2`,
-		{
-			websiteId,
-			startDate,
-			endDate,
-		},
-	).then(a => {
-		return Object.values(a).map(a => {
-			return {
-				date: a.date,
-				day: Number(a.day),
-				visitors: Number(a.visitors),
-				returnVisitors: Number(a.returnVisitors),
-				percentage: Number(a.percentage),
-			};
-		});
-	});
+    {
+      websiteId,
+      startDate,
+      endDate,
+    },
+  ).then(a => {
+    return Object.values(a).map(a => {
+      return {
+        date: a.date,
+        day: Number(a.day),
+        visitors: Number(a.visitors),
+        returnVisitors: Number(a.returnVisitors),
+        percentage: Number(a.percentage),
+      };
+    });
+  });
 }

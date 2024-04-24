@@ -4,7 +4,7 @@ import { NextApiResponse } from 'next';
 import { ok } from 'next-basics';
 
 export default async (req: NextApiRequestAuth, res: NextApiResponse) => {
-	await useAuth(req, res);
+  await useAuth(req, res);
 
-	return ok(res, req.auth.user);
+  return ok(res, req.auth.user);
 };

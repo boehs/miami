@@ -1,38 +1,38 @@
 .menu {
-	width: 360px;
-	max-height: 300px;
-	overflow: auto;
+  width: 360px;
+  max-height: 300px;
+  overflow: auto;
 }
 
 .item {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-radius: var(--border-radius);
 }
 
 .item:hover {
-	background: var(--base75);
+  background: var(--base75);
 }
 
 .type {
-	color: var(--font-color300);
+  color: var(--font-color300);
 }
 
 .selected {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .popup {
-	display: flex;
+  display: flex;
 }
 
 .filter {
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .dropdown {
-	min-width: 60px;
+  min-width: 60px;
 }

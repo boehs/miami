@@ -2,9 +2,9 @@ import ReportTemplates from './ReportTemplates';
 import { Metadata } from 'next';
 
 export default function ReportsCreatePage() {
-	return <ReportTemplates />;
+  return <ReportTemplates />;
 }
 
 export const metadata: Metadata = {
-	title: 'Create Report | umami',
+  title: 'Create Report | umami',
 };

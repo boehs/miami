@@ -5,15 +5,15 @@ import { getAuthToken } from 'lib/auth';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	await useAuth(req, res);
+  await useAuth(req, res);
 
-	if (req.method === 'POST') {
-		if (redis.enabled) {
-			await redis.client.del(getAuthToken(req));
-		}
+  if (req.method === 'POST') {
+    if (redis.enabled) {
+      await redis.client.del(getAuthToken(req));
+    }
 
-		return ok(res);
-	}
+    return ok(res);
+  }
 
-	return methodNotAllowed(res);
+  return methodNotAllowed(res);
 };

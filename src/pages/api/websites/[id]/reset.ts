@@ -7,34 +7,34 @@ import { resetWebsite } from 'queries';
 import * as yup from 'yup';
 
 export interface WebsiteResetRequestQuery {
-	id: string;
+  id: string;
 }
 
 const schema = {
-	POST: yup.object().shape({
-		id: yup.string().uuid().required(),
-	}),
+  POST: yup.object().shape({
+    id: yup.string().uuid().required(),
+  }),
 };
 
 export default async (
-	req: NextApiRequestQueryBody<WebsiteResetRequestQuery>,
-	res: NextApiResponse,
+  req: NextApiRequestQueryBody<WebsiteResetRequestQuery>,
+  res: NextApiResponse,
 ) => {
-	await useCors(req, res);
-	await useAuth(req, res);
-	await useValidate(schema, req, res);
+  await useCors(req, res);
+  await useAuth(req, res);
+  await useValidate(schema, req, res);
 
-	const { id: websiteId } = req.query;
+  const { id: websiteId } = req.query;
 
-	if (req.method === 'POST') {
-		if (!(await canUpdateWebsite(req.auth, websiteId))) {
-			return unauthorized(res);
-		}
+  if (req.method === 'POST') {
+    if (!(await canUpdateWebsite(req.auth, websiteId))) {
+      return unauthorized(res);
+    }
 
-		await resetWebsite(websiteId);
+    await resetWebsite(websiteId);
 
-		return ok(res);
-	}
+    return ok(res);
+  }
 
-	return methodNotAllowed(res);
+  return methodNotAllowed(res);
 };

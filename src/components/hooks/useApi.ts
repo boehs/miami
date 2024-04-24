@@ -7,14 +7,14 @@ import useStore from 'store/app';
 const selector = state => state.shareToken;
 
 export function useApi() {
-	const shareToken = useStore(selector);
+  const shareToken = useStore(selector);
 
-	const { get, post, put, del } = nextUseApi(
-		{ authorization: `Bearer ${getClientAuthToken()}`, [SHARE_TOKEN_HEADER]: shareToken?.token },
-		process.env.basePath,
-	);
+  const { get, post, put, del } = nextUseApi(
+    { authorization: `Bearer ${getClientAuthToken()}`, [SHARE_TOKEN_HEADER]: shareToken?.token },
+    process.env.basePath,
+  );
 
-	return { get, post, put, del, ...reactQuery };
+  return { get, post, put, del, ...reactQuery };
 }
 
 export default useApi;

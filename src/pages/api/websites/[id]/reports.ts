@@ -8,41 +8,41 @@ import { getReportsByWebsiteId } from 'queries';
 import { pageInfo } from 'lib/schema';
 
 export interface ReportsRequestQuery extends SearchFilter {
-	id: string;
+  id: string;
 }
 
 const schema = {
-	GET: yup.object().shape({
-		id: yup.string().uuid().required(),
-		...pageInfo,
-	}),
+  GET: yup.object().shape({
+    id: yup.string().uuid().required(),
+    ...pageInfo,
+  }),
 };
 
 export default async (
-	req: NextApiRequestQueryBody<ReportsRequestQuery, any>,
-	res: NextApiResponse,
+  req: NextApiRequestQueryBody<ReportsRequestQuery, any>,
+  res: NextApiResponse,
 ) => {
-	await useCors(req, res);
-	await useAuth(req, res);
-	await useValidate(schema, req, res);
+  await useCors(req, res);
+  await useAuth(req, res);
+  await useValidate(schema, req, res);
 
-	const { id: websiteId } = req.query;
+  const { id: websiteId } = req.query;
 
-	if (req.method === 'GET') {
-		if (!(await canViewWebsite(req.auth, websiteId))) {
-			return unauthorized(res);
-		}
+  if (req.method === 'GET') {
+    if (!(await canViewWebsite(req.auth, websiteId))) {
+      return unauthorized(res);
+    }
 
-		const { page, query, pageSize } = req.query;
+    const { page, query, pageSize } = req.query;
 
-		const data = await getReportsByWebsiteId(websiteId, {
-			page,
-			pageSize: +pageSize || undefined,
-			query,
-		});
+    const data = await getReportsByWebsiteId(websiteId, {
+      page,
+      pageSize: +pageSize || undefined,
+      query,
+    });
 
-		return ok(res, data);
-	}
+    return ok(res, data);
+  }
 
-	return methodNotAllowed(res);
+  return methodNotAllowed(res);
 };

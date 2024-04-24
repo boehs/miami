@@ -5,17 +5,17 @@ import { DateRange } from 'lib/types';
 const store = create(() => ({}));
 
 export function setWebsiteDateRange(websiteId: string, dateRange: DateRange) {
-	store.setState(
-		produce(state => {
-			if (!state[websiteId]) {
-				state[websiteId] = {};
-			}
+  store.setState(
+    produce(state => {
+      if (!state[websiteId]) {
+        state[websiteId] = {};
+      }
 
-			state[websiteId].dateRange = { ...dateRange, modified: Date.now() };
+      state[websiteId].dateRange = { ...dateRange, modified: Date.now() };
 
-			return state;
-		}),
-	);
+      return state;
+    }),
+  );
 }
 
 export default store;

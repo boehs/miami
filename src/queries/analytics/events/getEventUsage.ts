@@ -2,21 +2,21 @@ import clickhouse from 'lib/clickhouse';
 import { CLICKHOUSE, PRISMA, runQuery, notImplemented } from 'lib/db';
 
 export function getEventUsage(...args: [websiteIds: string[], startDate: Date, endDate: Date]) {
-	return runQuery({
-		[PRISMA]: notImplemented,
-		[CLICKHOUSE]: () => clickhouseQuery(...args),
-	});
+  return runQuery({
+    [PRISMA]: notImplemented,
+    [CLICKHOUSE]: () => clickhouseQuery(...args),
+  });
 }
 
 function clickhouseQuery(
-	websiteIds: string[],
-	startDate: Date,
-	endDate: Date,
+  websiteIds: string[],
+  startDate: Date,
+  endDate: Date,
 ): Promise<{ websiteId: string; count: number }[]> {
-	const { rawQuery } = clickhouse;
+  const { rawQuery } = clickhouse;
 
-	return rawQuery(
-		`
+  return rawQuery(
+    `
     select 
       website_id as websiteId,
       count(*) as count
@@ -25,14 +25,14 @@ function clickhouseQuery(
       and created_at between {startDate:DateTime64} and {endDate:DateTime64}
     group by website_id
     `,
-		{
-			websiteIds,
-			startDate,
-			endDate,
-		},
-	).then(a => {
-		return Object.values(a).map(a => {
-			return { websiteId: a.websiteId, count: Number(a.count) };
-		});
-	});
+    {
+      websiteIds,
+      startDate,
+      endDate,
+    },
+  ).then(a => {
+    return Object.values(a).map(a => {
+      return { websiteId: a.websiteId, count: Number(a.count) };
+    });
+  });
 }

@@ -6,24 +6,24 @@ import useFilterQuery from 'components/hooks/useFilterQuery';
 import useCache from 'store/cache';
 
 export function TeamsDataTable() {
-	const { get } = useApi();
-	const modified = useCache((state: any) => state?.teams);
-	const queryResult = useFilterQuery({
-		queryKey: ['teams', { modified }],
-		queryFn: (params: any) => {
-			return get(`/teams`, {
-				...params,
-			});
-		},
-	});
+  const { get } = useApi();
+  const modified = useCache((state: any) => state?.teams);
+  const queryResult = useFilterQuery({
+    queryKey: ['teams', { modified }],
+    queryFn: (params: any) => {
+      return get(`/teams`, {
+        ...params,
+      });
+    },
+  });
 
-	return (
-		<DataTable queryResult={queryResult}>
-			{({ data }) => {
-				return <TeamsTable data={data} />;
-			}}
-		</DataTable>
-	);
+  return (
+    <DataTable queryResult={queryResult}>
+      {({ data }) => {
+        return <TeamsTable data={data} />;
+      }}
+    </DataTable>
+  );
 }
 
 export default TeamsDataTable;

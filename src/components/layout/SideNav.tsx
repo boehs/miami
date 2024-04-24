@@ -5,42 +5,42 @@ import Link from 'next/link';
 import styles from './SideNav.module.css';
 
 export interface SideNavProps {
-	selectedKey: string;
-	items: any[];
-	shallow?: boolean;
-	scroll?: boolean;
-	className?: string;
-	onSelect?: () => void;
+  selectedKey: string;
+  items: any[];
+  shallow?: boolean;
+  scroll?: boolean;
+  className?: string;
+  onSelect?: () => void;
 }
 
 export function SideNav({
-	selectedKey,
-	items,
-	shallow = true,
-	scroll = false,
-	className,
-	onSelect = () => {},
+  selectedKey,
+  items,
+  shallow = true,
+  scroll = false,
+  className,
+  onSelect = () => {},
 }: SideNavProps) {
-	const pathname = usePathname();
-	return (
-		<Menu
-			items={items}
-			selectedKey={selectedKey}
-			className={classNames(styles.menu, className)}
-			onSelect={onSelect}
-		>
-			{({ key, label, url }) => (
-				<Item
-					key={key}
-					className={classNames(styles.item, { [styles.selected]: pathname.startsWith(url) })}
-				>
-					<Link href={url} shallow={shallow} scroll={scroll}>
-						{label}
-					</Link>
-				</Item>
-			)}
-		</Menu>
-	);
+  const pathname = usePathname();
+  return (
+    <Menu
+      items={items}
+      selectedKey={selectedKey}
+      className={classNames(styles.menu, className)}
+      onSelect={onSelect}
+    >
+      {({ key, label, url }) => (
+        <Item
+          key={key}
+          className={classNames(styles.item, { [styles.selected]: pathname.startsWith(url) })}
+        >
+          <Link href={url} shallow={shallow} scroll={scroll}>
+            {label}
+          </Link>
+        </Item>
+      )}
+    </Menu>
+  );
 }
 
 export default SideNav;

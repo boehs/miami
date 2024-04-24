@@ -8,17 +8,17 @@ import TeamsJoinButton from './TeamsJoinButton';
 import TeamsAddButton from './TeamsAddButton';
 
 export function TeamsHeader() {
-	const { formatMessage, labels } = useMessages();
-	const { user } = useUser();
+  const { formatMessage, labels } = useMessages();
+  const { user } = useUser();
 
-	return (
-		<PageHeader title={formatMessage(labels.teams)}>
-			<Flexbox gap={10}>
-				<TeamsJoinButton />
-				{user.role !== ROLES.viewOnly && <TeamsAddButton />}
-			</Flexbox>
-		</PageHeader>
-	);
+  return (
+    <PageHeader title={formatMessage(labels.teams)}>
+      <Flexbox gap={10}>
+        <TeamsJoinButton />
+        {user.role !== ROLES.viewOnly && <TeamsAddButton />}
+      </Flexbox>
+    </PageHeader>
+  );
 }
 
 export default TeamsHeader;

@@ -4,10 +4,10 @@ import { NextApiRequestQueryBody, User } from 'lib/types';
 import { ok } from 'next-basics';
 
 export default async (
-	req: NextApiRequestQueryBody<unknown, unknown>,
-	res: NextApiResponse<User>,
+  req: NextApiRequestQueryBody<unknown, unknown>,
+  res: NextApiResponse<User>,
 ) => {
-	await useAuth(req, res);
+  await useAuth(req, res);
 
-	return ok(res, req.auth.user);
+  return ok(res, req.auth.user);
 };
